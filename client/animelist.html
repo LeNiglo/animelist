@@ -1,0 +1,353 @@
+<head>
+	<!-- Title -->
+	<title>My Super Anime List</title>
+	<meta charset="UTF-8" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!-- /Title -->
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<!-- /CSS -->
+	<!-- JS -->
+	<script src="/js/jquery-2.1.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/transit.min.js"></script>
+	<!-- /JS -->
+</head>
+
+<body>
+	{{#if loggingIn}}
+	
+	{{> loader}}
+	
+	{{else}}
+	
+	{{#if currentUser}}
+	
+	{{> header}}
+	{{> yield}}
+	{{> footer}}
+
+	<script type="text/javascript">
+	(function($) {
+		$(document).ready(function() {
+			$('*[data-dismiss]').click(function() {
+				$('.modal').hide(500);
+			});
+
+			$("ul.nav-justified a").click(function(e) {
+				e.preventDefault();
+				var section = $(this).attr('href');
+				$('html, body').animate({scrollTop: $(section).offset().top}, 750);
+			});
+
+			$('.back2top').click(function(e) {
+				e.preventDefault();
+				$('html, body').animate({scrollTop: 0}, 500);
+			});
+
+		});
+	})(jQuery)
+	</script>
+	
+	{{else}}
+	
+	{{> login}}
+	
+	{{/if}}
+	
+	{{/if}}
+</body>
+
+<template name="loader">
+	<br /><br /><br /><br /><br /><br />
+	<p class="text-center">
+		<img src="/img/loading.gif" alt="loading ..." />
+	</p>
+</template>
+
+<template name="login">
+	<div class="container">
+		<div class="col-md-6 col-md-offset-3 white">
+			<h1 class="text-center page-header">My Super Anime List</h1>
+			<form>
+				<input type="text" class="form-control" name="username" placeholder="Username" style="margin-bottom: 7px;" />
+				<input type="password" class="form-control" name="password" placeholder="Password" />
+				<br />
+				<p class="text-center">
+					<input type="submit" class="btn btn-info" value="Log Me" />
+				</p>
+			</form>
+		</div>
+	</div>
+	<div class="text-center" style="position: fixed; bottom: 0; left: 0; right: 0; padding-bottom: 10px;">
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 white">
+				<h3 class="page-header">No Account ?</h3>
+				<p>Please contact me at <a href="mailto:lefrantguillaume@gmail.com">lefrantguillaume@gmail.com</a></p>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="header">
+	<header>
+		<div class="container">
+			<div class="row">
+				<h1>
+					<span class="pull-right" style="margin-top: -19px;">
+						<ul class="sortBy nav navbar-nav navbar-right">
+							<li>
+								<a id="showCategories" title="Sort by Category" href="#" class="{{show_cat}}">
+									<i class="glyphicon glyphicon-sort-by-attributes"></i>
+								</a>
+							</li>
+							<li>
+								<a id="showFinished" title="Show Finished ones" href="#" class="{{show_finished}}">
+									<i class="glyphicon glyphicon-ok"></i>
+								</a>
+							</li>
+							<li>
+								<a id="sortAlpha" title="Sort by Alpha" href="#" class="{{sort_alpha "class"}}">
+									{{{sort_alpha "glyph"}}}
+								</a>
+							</li>
+							<li>
+								<a id="sortDate" title="Sort by Date" href="#" class="{{sort_date "class"}}">
+									{{{sort_date "glyph"}}}
+								</a>
+							</li>
+							<li>
+								<input type="text" class="form-control" id="search" placeholder="Search" style="margin-left: 7px; margin-top: 17px;" />
+							</li>
+						</ul>
+					</span>
+					My Super Anime List
+				</h1>
+			</div>
+			<div class="row">
+				<ul class="nav nav-tabs nav-justified" role="navigation">
+					<li><a href="#animes"><i class="glyphicon glyphicon-leaf"></i> Animes</a></li>
+					<li><a href="#series"><i class="glyphicon glyphicon-fire"></i> Series</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+</template>
+
+<template name="footer">
+	<footer style="padding-top: 15px;">
+		<div class="container text-right">
+			<h2>
+				<span class="pull-left" style="font-size: 48px;">
+					<a id="logout" title="Logout" href="#"><i class="glyphicon glyphicon-off"></i></a>
+					<a id="export" title="Export to JSON" href="#"><i class="glyphicon glyphicon-export"></i></a>
+					<a id="import" title="Import JSON" href="#"><i class="glyphicon glyphicon-import"></i></a>
+				</span>
+				<span>Created &amp; Designed by Guillaume Lefrant.</span>
+			</h2>
+			<p>Please contact me at <a href="mailto:lefrantguillaume@gmail.com">lefrantguillaume@gmail.com</a></p>
+		</div>
+	</footer>
+</template>
+
+<template name="yield">
+	{{> animes}}
+	{{> series}}
+	<div id="modal_import_export" class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Import | Export</h4>
+				</div>
+				<div class="modal-body">
+					<p>To <strong>Import</strong>, paste your JSON here and click Import.<br />To <strong>Export</strong>, copy the JSON and close.</p>
+					<p><textarea rows="7" class="form-control"></textarea></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="import_json">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="change_picture" class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Change Picture</h4>
+				</div>
+				<div class="modal-body">
+					<p>The picture can be an external link or a file on /img/ folder of the app.</p>
+					<p>
+						<input type="hidden" name="collec" value="" />
+						<input type="hidden" name="_id" value="" />
+						<input type="text" class="form-control" name="pic" placeholder="Picture link" />
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="change_picture_apply">Apply</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="animes">
+	<section id="animes">
+		<div class="container">
+			<h2 class="page-header text-center">Animes <small>({{number}})</small></h2>
+			{{#if show_cat}}
+			{{#each state}}
+			<h3 class="col-md-6 col-md-offset-3 text-center page-header onHover">
+				<span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img src="/img/loader.gif" alt="minimize" /></a></span>
+				{{st}}
+				<span class="pull-right">{{{glyphicon st}}}</span>
+			</h3>
+			<ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+				<!-- Anime -->
+				{{#each animes st}}
+				<li>
+					{{> item}}
+				</li>
+				{{/each}}
+				<!-- /Anime -->
+			</ul>
+			{{/each}}
+			{{else}}
+			<ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+				<!-- Anime -->
+				{{#each animes}}
+				<li>
+					{{> item}}
+				</li>
+				{{/each}}
+				<!-- /Anime -->
+			</ul>
+			{{/if}}
+		</div>
+		{{> toTop}}
+	</section>
+</template>
+
+<template name="series">
+	<section id="series">
+		<div class="container">
+			<h2 class="page-header text-center">Series <small>({{number}})</small></h2>
+			{{#if show_cat}}
+			{{#each state}}
+			<h3 class="col-md-6 col-md-offset-3 text-center page-header onHover">
+				<span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img src="/img/loader.gif" alt="minimize" /></a></span>
+				{{st}}
+				<span class="pull-right">{{{glyphicon st}}}</span>
+			</h3>
+			<ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+				<!-- Serie -->
+				{{#each series st}}
+				<li>
+					{{> item}}
+				</li>
+				{{/each}}
+				<!-- /Serie -->
+			</ul>
+			{{/each}}
+			{{else}}
+			<ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+				<!-- Serie -->
+				{{#each series}}
+				<li>
+					{{> item}}
+				</li>
+				{{/each}}
+				<!-- /Serie -->
+			</ul>
+			{{/if}}
+		</div>
+		{{> toTop}}
+	</section>
+</template>
+
+<template name="addItem">
+	<div class="container">
+		<h2 class="page-header">
+			<i class="glyphicon glyphicon-certificate orange"></i>&nbsp;&nbsp;&nbsp;Add New !
+		</h2>
+		<form class="form-horinzontal addItem">
+			<div class="row" style="border-bottom: 1px solid #e1e1e1; padding-bottom: 7px; margin-bottom: 7px;">
+				<div class="col-md-6">
+					<input type="text" class="form-control" name="name" placeholder="Name" />
+					<select class="form-control" name="status">
+						{{{select_status "To See"}}}
+					</select>
+				</div>
+				<div class="col-md-6">
+					<input type="number" class="form-control" name="season" placeholder="Season" />
+					<input type="number" class="form-control" name="episode" placeholder="Episode" />
+				</div>
+			</div>
+			<div class="row" style="margin-bottom: 7px;">
+				<div class="col-md-12">
+					<input type="submit" class="btn btn-default" value="Create !" style="width: 100%;"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="toTop">
+	{{> addItem}}
+	<p><a class="btn btn-info col-xs-12 back2top" href="#" style="border-radius: 0;">Back to Top</a></p>
+</template>
+
+<template name="item">
+	<div class="item">
+		<div class="row">
+			<div class="col-md-3">
+				<img class="img-responsive" src="{{pic}}" alt="{{name}}" />
+			</div>
+			<div class="col-md-9">
+				<h2 class="less-page-header">
+					<span class="pull-right">{{{glyphicon status}}}</span>
+					<big>{{name}}</big> <small>{{status}}</small>
+				</h2>
+				<form style="padding-top: 10px;">
+					<input type="hidden" name="id" value="{{_id}}" />
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<select class="form-control" name="status">
+									{{{select_status status}}}
+								</select>
+							</div>
+							<div class="col-md-4 form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" name="season" value="{{season}}" placeholder="saison" />
+									<span class="input-group-addon"><a href="#" class="add_season"><i class="glyphicon glyphicon-plus"></i></a></span>
+								</div>
+							</div>
+							<div class="col-md-4 form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" name="episode" value="{{episode}}" placeholder="episode" />
+									<span class="input-group-addon"><a href="#" class="add_episode"><i class="glyphicon glyphicon-plus"></i></a></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<a class="input-group-addon save" title="Save."><i class="glyphicon glyphicon-save green"></i></a>
+						<a class="input-group-addon change_pic" title="Change Picture"><i class="glyphicon glyphicon-picture"></i></a>
+						<a class="input-group-addon remove_item" title="Delete."><i class="glyphicon glyphicon-remove red"></i></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</template>

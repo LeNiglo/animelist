@@ -1,0 +1,72 @@
+/* CSS declarations go here */
+body {
+	font-family: Ubuntu, 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif!important;
+	background-color: #222;
+	background: url("/img/back.png"), no-repeat, fixed, center!important;
+}
+#animes {
+	background-color: #ddd;
+	/*background-image: url(/img/back.png);*/
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#series {
+	background-color: #ccc;
+	/*background-image: url(/img/back.png);*/
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+#films {
+	background-color: #bbb;
+	/*background-image: url(/img/back.png);*/
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+header {
+	border-bottom: 5px solid #5BC0DE;
+	background-color: white;
+}
+footer {
+	border-top: 5px solid #5BC0DE;
+	background-color: white;
+}
+
+.item {
+	padding: 15px;
+	margin: 15px 0;
+}
+.item .input-group-addon {
+	cursor: pointer;
+}
+
+.blue { color: #5BC0DE!important; }
+.green { color: #5cb85c!important; }
+.red { color: red!important; }
+.orange { color: #ffaa00!important; }
+.purple { color: purple!important; }
+.white { color: white!important; }
+.black { color: black!important; }
+.grey { color: darkgrey!important; }
+
+.spacer {
+	height: 10px;
+	width: 100%;
+}
+
+.onHover .pull-left { visibility: hidden; }
+.onHover:hover .pull-left { visibility: visible; }
+
+li a.active {
+	color: #5cb85c !important;
+	background-color: rgba(50, 50, 50, 0.1) !important;
+	border: 1px solid rgba(50, 50, 50, 0.3) !important;
+	border-radius: 5px;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url(/fonts/Ubuntu-L.ttf);
+}
