@@ -6,7 +6,7 @@ Serie.before.insert(function (userId, it) {
 		return false;
 	}
 	
-	it.pic = '/img/noPic.png';
+	it.pic = it.pic ? it.pic : '/img/noPic.png';
 
 	it.season = (it.season === '' ? 0 : parseInt(it.season));
 	it.episode = (it.episode === '' ? 0 : parseInt(it.episode));
