@@ -1,2 +1,3 @@
-# animelist
-My service to know where I am into my animes and series
+# MyAnimeList
+This is a usefull service available for one person only at the moment.
+It allows me to list every anime and serie that I'm looking (or have looked) at.
