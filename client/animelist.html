@@ -16,13 +16,13 @@
 
 <body>
 	{{#if loggingIn}}
-	
+
 	{{> loader}}
-	
+
 	{{else}}
-	
+
 	{{#if currentUser}}
-	
+
 	{{> header}}
 	{{> yield}}
 	{{> footer}}
@@ -48,13 +48,13 @@
 		});
 	})(jQuery)
 	</script>
-	
+
 	{{else}}
-	
+
 	{{> login}}
-	
+
 	{{/if}}
-	
+
 	{{/if}}
 </body>
 
@@ -121,7 +121,7 @@
 							</li>
 						</ul>
 					</span>
-					My Super Anime List
+					My Super Anime List ({{ currentUser.username }})
 				</h1>
 			</div>
 			<div class="row">

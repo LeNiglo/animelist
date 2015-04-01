@@ -1,18 +1,18 @@
 status_array = [{st:"Running"}, {st:"Waiting"}, {st:"To See"}, {st:"Finished"}];
 
-Handlebars.registerHelper('showFinished', function(st) {
+UI.registerHelper('showFinished', function(st) {
 	if (st === status_array[3].st && Session.get('showFinished') === false) {
 		return 'display: none;';
 	} else {
-		return '';		
+		return '';
 	}
 });
 
-Handlebars.registerHelper('state', function() {
+UI.registerHelper('state', function() {
 	return status_array;
 });
 
-Handlebars.registerHelper('glyphicon', function(status) {
+UI.registerHelper('glyphicon', function(status) {
 	if (status === status_array[2].st)
 		return '<i class="glyphicon glyphicon-asterisk blue"></i>';
 	else if (status === status_array[0].st)
@@ -25,7 +25,7 @@ Handlebars.registerHelper('glyphicon', function(status) {
 		return '';
 });
 
-Handlebars.registerHelper('select_status', function(status) {
+UI.registerHelper('select_status', function(status) {
 	var str = '';
 	status_array.forEach(function (elem, index, array) {
 		str += '<option value="' + elem.st + '" ' + (elem.st === status ? 'selected' : '') + '>' + elem.st + '</option>';
@@ -33,22 +33,22 @@ Handlebars.registerHelper('select_status', function(status) {
 	return str;
 });
 
-Handlebars.registerHelper('same', function(v1, v2) {
+UI.registerHelper('same', function(v1, v2) {
 	if (v1 === v2)
 		return true;
 	else
 		return false;
 });
 
-Handlebars.registerHelper('show_cat', function() {
+UI.registerHelper('show_cat', function() {
 	return (Session.get('showCat') ? 'active' : '');
 });
 
-Handlebars.registerHelper('show_finished', function() {
+UI.registerHelper('show_finished', function() {
 	return (Session.get('showFinished') ? 'active' : '');
 });
 
-Handlebars.registerHelper('sort_alpha', function(o) {
+UI.registerHelper('sort_alpha', function(o) {
 	if (o === "class") {
 		return (Session.get('sortBy') === 'name' ? 'active' : '');
 	} else if (o === "glyph") {
@@ -60,7 +60,7 @@ Handlebars.registerHelper('sort_alpha', function(o) {
 	}
 });
 
-Handlebars.registerHelper('sort_date', function(o) {
+UI.registerHelper('sort_date', function(o) {
 	if (o === "class") {
 		return (Session.get('sortBy') === 'updatedAt' ? 'active' : '');
 	} else if (o === "glyph") {

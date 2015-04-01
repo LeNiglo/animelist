@@ -40,7 +40,7 @@ Template.footer.events({
 });
 
 Template.header.events({
-	
+
 	/*
 	**	Instant Search
 	*/
@@ -139,13 +139,13 @@ Template.yield.events({
 		e.preventDefault();
 		var $form = $(e.target).parents('form');
 		var collec = $form.parents('section').attr('id');
-		
+
 		obj = {};
 		obj._id = $form.find('input[name="id"]').val();
 		obj.status = $form.find('select[name="status"]').val();
 		obj.season = $form.find('input[name="season"]').val();
 		obj.episode = $form.find('input[name="episode"]').val();
-		
+
 		if (collec === "animes") {
 			Anime.update({_id: obj._id}, { $set: {status: obj.status, season: obj.season, episode: obj.episode} }, function() {
 				console.log('saved.');
@@ -190,7 +190,7 @@ Template.yield.events({
 		e.preventDefault;
 		var json = $("#modal_import_export").find("textarea").val();
 		try {
-			var obj = JSON.parse(json);			
+			var obj = JSON.parse(json);
 		} catch (e) {
 			$("#modal_import_export").hide(500);
 			alert("Don't try to trick us !\nJSON isn't well formatted.\n"+e.toString());
@@ -203,7 +203,7 @@ Template.yield.events({
 			var test = Anime.findOne({name: e.name});
 			if (test) {
 				if (test.updatedAt === null || e.updatedAt > test.updatedAt) {
-					Anime.update({name: e.name}, { $set: {pic: e.pic, status: e.status, season: e.season, episode: e.episode} }, function() { ++count; });
+					Anime.update({name: e.name}, { $set: {pic: e.pic, status: e.status, season: e.season, episode: e.episode, owner: Meteor.userId()()} }, function() { ++count; });
 				}
 			} else {
 				Anime.insert({
@@ -212,6 +212,7 @@ Template.yield.events({
 					season: e.season,
 					episode: e.episode,
 					pic: e.pic,
+					owner: Meteor.userId(),
 					createdAt: e.createdAt
 				});
 				++count;
@@ -221,7 +222,7 @@ Template.yield.events({
 			var test = Serie.findOne({name: e.name});
 			if (test) {
 				if (test.updatedAt === null || e.updatedAt > test.updatedAt) {
-					Serie.update({name: e.name}, { $set: {pic: e.pic, status: e.status, season: e.season, episode: e.episode} }, function() { ++count; });
+					Serie.update({name: e.name}, { $set: {pic: e.pic, status: e.status, season: e.season, episode: e.episode, owner: Meteor.userId()()} }, function() { ++count; });
 				}
 			} else {
 				Serie.insert({
@@ -230,6 +231,7 @@ Template.yield.events({
 					season: e.season,
 					episode: e.episode,
 					pic: e.pic,
+					owner: Meteor.userId(),
 					createdAt: e.createdAt
 				});
 				++count;
@@ -242,7 +244,7 @@ Template.yield.events({
 
 Template.animes.helpers({
 	number: function() {
-		return Anime.find({'name' : new RegExp(Session.get('searchQ'), 'i')}).count();
+		return Anime.find({'owner': Meteor.userId(), 'name' : new RegExp(Session.get('searchQ'), 'i')}).count();
 	},
 	animes: function (st) {
 		if (!st) {
@@ -253,7 +255,8 @@ Template.animes.helpers({
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
 			return Anime.find({ $and: [
-				{ 'status': st }, 
+				{ 'owner': Meteor.userId() },
+				{ 'status': st },
 				{ 'name' : new RegExp(Session.get('searchQ'), 'i') }
 				] }, filter);
 		}
@@ -262,7 +265,7 @@ Template.animes.helpers({
 
 Template.series.helpers({
 	number: function() {
-		return Serie.find({'name' : new RegExp(Session.get('searchQ'), 'i')}).count();
+		return Serie.find({'owner': Meteor.userId(), 'name' : new RegExp(Session.get('searchQ'), 'i')}).count();
 	},
 	series: function (st) {
 		if (!st) {
@@ -273,7 +276,8 @@ Template.series.helpers({
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
 			return Serie.find({ $and: [
-				{ 'status': st }, 
+				{ 'owner': Meteor.userId() },
+				{ 'status': st },
 				{ 'name' : new RegExp(Session.get('searchQ'), 'i') }
 				] }, filter);
 		}
@@ -291,6 +295,9 @@ Template.addItem.events({
 		obj.status = $form.find('select[name="status"]').val();
 		obj.season = $form.find('input[name="season"]').val();
 		obj.episode = $form.find('input[name="episode"]').val();
+		obj.owner = Meteor.userId();
+
+		console.log(obj);
 
 		if (collec === "animes") {
 			Anime.insert(obj, function(err, res) {
