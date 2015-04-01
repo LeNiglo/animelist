@@ -250,7 +250,7 @@ Template.animes.helpers({
 		if (!st) {
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
-			return Anime.find({'name' : new RegExp(Session.get('searchQ'), 'i')}, filter);
+			return Anime.find({'owner': Meteor.userId(), 'name' : new RegExp(Session.get('searchQ'), 'i')}, filter);
 		} else {
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
@@ -271,7 +271,7 @@ Template.series.helpers({
 		if (!st) {
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
-			return Serie.find({'name' : new RegExp(Session.get('searchQ'), 'i')}, filter);
+			return Serie.find({'owner': Meteor.userId(), 'name' : new RegExp(Session.get('searchQ'), 'i')}, filter);
 		} else {
 			var filter = {sort: {}};
 			filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
