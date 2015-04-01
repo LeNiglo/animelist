@@ -62,7 +62,7 @@ Handlebars.registerHelper('sort_alpha', function(o) {
 
 Handlebars.registerHelper('sort_date', function(o) {
 	if (o === "class") {
-		return (Session.get('sortBy') === 'createdAt' ? 'active' : '');
+		return (Session.get('sortBy') === 'updatedAt' ? 'active' : '');
 	} else if (o === "glyph") {
 		if (Session.get('sortOrder') === 1) {
 			return '<i class="glyphicon glyphicon-sort-by-order"></i>';
