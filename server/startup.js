@@ -1,13 +1,21 @@
 Meteor.startup(function() {
-	if (!Meteor.users.findOne({username: 'leniglo'})) {
+	if (Meteor.users.find().count() < 1) {
 		Accounts.createUser({
-			username: 'leniglo',
+			username: 'LeNiglo',
 			password: 'gsnrx01tk',
 			email: 'lefrantguillaume@gmail.com',
 			profile: {
 				name: 'Guillaume Lefrant'
 			}
-		});	
+		});
+		Accounts.createUser({
+			username: 'La Chose',
+			password: 'MDLuffy',
+			email: 'javelc.vo@gmail.com',
+			profile: {
+				name: 'Jade Vera Ortiz'
+			}
+		});
 	}
 	var d = new Date();
 	var animes = Anime.find();
