@@ -25,7 +25,7 @@ Meteor.startup(function() {
     }
   }];
 
-  if (Meteor.users.find().count() < users.length {
+  if (Meteor.users.find().count() < users.length) {
     users.forEach(function(e) {
       Accounts.createUser(e);
     });
