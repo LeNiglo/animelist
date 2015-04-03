@@ -103,9 +103,9 @@ Template.yield.events({
 		var $this = $(e.target);
 		var $list = $this.parent().parent().parent().next('ul');
 		if ($list.is(":visible"))
-			$list.slideUp();
+		$list.slideUp();
 		else
-			$list.slideDown();
+		$list.slideDown();
 	},
 	'click .change_pic': function (e) {
 		e.preventDefault();
@@ -146,12 +146,23 @@ Template.yield.events({
 		obj.season = $form.find('input[name="season"]').val();
 		obj.episode = $form.find('input[name="episode"]').val();
 
+		var glyph = $(e.target).hasClass('glyphicon') ? $(e.target) : $($(e.target).find('.glyphicon'));
+		if (glyph.hasClass('disabled')) {
+			return false;
+		}
+		glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').addClass('disabled');
 		if (collec === "animes") {
 			Anime.update({_id: obj._id}, { $set: {status: obj.status, season: obj.season, episode: obj.episode} }, function() {
+				Meteor.setTimeout(function() {
+					glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+				}, 2000);
 				console.log('saved.');
 			});
 		} else if (collec === "series") {
 			Serie.update({_id: obj._id}, { $set: {status: obj.status, season: obj.season, episode: obj.episode} }, function() {
+				Meteor.setTimeout(function() {
+					glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+				}, 2000);
 				console.log('saved.');
 			});
 		} else {
@@ -258,7 +269,7 @@ Template.animes.helpers({
 				{ 'owner': Meteor.userId() },
 				{ 'status': st },
 				{ 'name' : new RegExp(Session.get('searchQ'), 'i') }
-				] }, filter);
+			] }, filter);
 		}
 	}
 });
@@ -279,7 +290,7 @@ Template.series.helpers({
 				{ 'owner': Meteor.userId() },
 				{ 'status': st },
 				{ 'name' : new RegExp(Session.get('searchQ'), 'i') }
-				] }, filter);
+			] }, filter);
 		}
 	}
 });

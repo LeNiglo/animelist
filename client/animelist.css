@@ -1,8 +1,21 @@
 /* CSS declarations go here */
+html {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
 body {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
 	font-family: Ubuntu, 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif!important;
 	background-color: #222;
-	background: url("/img/back.png"), no-repeat, fixed, center!important;
+	background-image: url("/img/back.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center!important;
 }
 #animes {
 	background-color: #ddd;
@@ -43,7 +56,8 @@ footer {
 }
 
 .blue { color: #5BC0DE!important; }
-.green { color: #5cb85c!important; }
+.light-green { color: #B6D0B6!important; }
+.green { color: #00D500!important; }
 .red { color: red!important; }
 .orange { color: #ffaa00!important; }
 .purple { color: purple!important; }
