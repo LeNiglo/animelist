@@ -4,6 +4,9 @@ Serie.allow({
 	insert: function(userId, it) {
 		return _.without(_.keys(it), 'name').length === 0;
 	},
+	update: function(userId, it) {
+		return (userId == it.owner);
+	},
 	remove: function(userId, it) {
 		return (userId == it.owner);
 	}
@@ -11,11 +14,16 @@ Serie.allow({
 
 Serie.before.insert(function (userId, it) {
 
-	if (it.name === '' ) {
+	if (!userId) {
+		return false;
+	}
+
+	if (it.name === '') {
 		return false;
 	}
 
 	it.pic = it.pic ? it.pic : '/img/noPic.png';
+	it.owner = it.owner == userId ? it.owner : userId;
 
 	try {
 		it.season = (it.season === '' ? 0 : parseInt(it.season));
@@ -25,8 +33,9 @@ Serie.before.insert(function (userId, it) {
 	}
 
 	if (!(Match.test(it.name, String) && Match.test(it.pic, String) && Match.test(it.season, Number) &&
-	Match.test(it.episode, Number) && Match.test(it.status, String)))
-	return false;
+	Match.test(it.episode, Number) && Match.test(it.status, String) && Match.test(it.owner, String))) {
+		return false;
+	}
 
 	var d = new Date();
 	it.createdAt = it.createdAt || d.YYYYMMDDHHMMSS();
@@ -34,8 +43,12 @@ Serie.before.insert(function (userId, it) {
 });
 
 Serie.before.update(function (userId, it) {
-	var d = new Date();
-	it.updatedAt = d.YYYYMMDDHHMMSS();
+	if (userId == it.owner) {
+		var d = new Date();
+		it.updatedAt = d.YYYYMMDDHHMMSS();
+	} else {
+		return false;
+	}
 });
 
 Serie.before.remove(function (userId, it) {

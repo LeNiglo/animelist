@@ -126,11 +126,13 @@ Template.yield.events({
 		var picture = $("#change_picture").find('input[name="pic"]').val();
 
 		if (collec === "animes") {
-			Anime.update({_id: id}, { $set: {pic: picture} }, function() {
+			Anime.update({_id: id}, { $set: {pic: picture} }, function(err, res) {
+				console.log(err, res);
 				$('#change_picture').hide(500);
 			});
 		} else if (collec === "series") {
-			Serie.update({_id: id}, { $set: {'pic': picture} }, function() {
+			Serie.update({_id: id}, { $set: {'pic': picture} }, function(err, res) {
+				console.log(err, res);
 				$('#change_picture').hide(500);
 			});
 		} else {
