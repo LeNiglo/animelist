@@ -4,6 +4,8 @@ Session.setDefault('showCat', true);
 Session.setDefault('showFinished', false);
 Session.setDefault('searchQ', '');
 
+Meteor.subscribe('mylist');
+
 Template.login.events({
 	'submit form': function (e) {
 		e.preventDefault();
@@ -24,8 +26,8 @@ Template.footer.events({
 	'click #export': function (e) {
 		e.preventDefault();
 		var json = {
-			animes: Anime.find().fetch(),
-			series: Serie.find().fetch()
+			animes: Anime.find({'owner': Meteor.userId()}).fetch(),
+			series: Serie.find({'owner': Meteor.userId()}).fetch()
 		};
 		$("#modal_import_export").find("textarea").val(JSON.stringify(json));
 		$("#modal_import_export").show(500);
@@ -156,14 +158,12 @@ Template.yield.events({
 				Meteor.setTimeout(function() {
 					glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
 				}, 2000);
-				console.log('saved.');
 			});
 		} else if (collec === "series") {
 			Serie.update({_id: obj._id}, { $set: {status: obj.status, season: obj.season, episode: obj.episode} }, function() {
 				Meteor.setTimeout(function() {
 					glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
 				}, 2000);
-				console.log('saved.');
 			});
 		} else {
 			alert('Error while creating. not inside a section tag.');
@@ -185,13 +185,9 @@ Template.yield.events({
 		var r = confirm("Are you sure you want to remove " + name + " from your " + collec + " list ?");
 		if (r === true) {
 			if (collec === "animes") {
-				Anime.remove({_id: id}, function() {
-					console.log('removed.');
-				});
+				Anime.remove({_id: id}, function() {});
 			} else if (collec === "series") {
-				Serie.remove({_id: id}, function() {
-					console.log('removed.');
-				});
+				Serie.remove({_id: id}, function() {});
 			} else {
 				alert('Error while deleting. not inside a section tag.');
 			}
@@ -307,8 +303,6 @@ Template.addItem.events({
 		obj.season = $form.find('input[name="season"]').val();
 		obj.episode = $form.find('input[name="episode"]').val();
 		obj.owner = Meteor.userId();
-
-		console.log(obj);
 
 		if (collec === "animes") {
 			Anime.insert(obj, function(err, res) {
