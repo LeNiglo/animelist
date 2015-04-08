@@ -6,6 +6,30 @@ Session.setDefault('searchQ', '');
 
 Meteor.subscribe('mylist');
 
+Template.yield.rendered = function () {
+    cg_pic = $('#change_picture');
+    md_imp_exp = $("#modal_import_export");
+    search = $("#search");
+    body = $("body");
+
+    $('*[data-dismiss]').click(function () {
+        $('.modal').hide(500);
+    });
+
+    $('ul.nav-justified a').click(function (e) {
+        e.preventDefault();
+        var section = $(this).attr('href');
+        $('html, body').animate({scrollTop: $(section).offset().top}, 750);
+    });
+
+    $('.back2top').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, 500);
+    });
+
+    search.focus();
+};
+
 Template.login.events({
     'submit form': function (e) {
         e.preventDefault();
@@ -29,11 +53,11 @@ Template.footer.events({
             animes: Anime.find({'owner': Meteor.userId()}).fetch(),
             series: Serie.find({'owner': Meteor.userId()}).fetch()
         };
-        $("#modal_import_export").find("textarea").val(JSON.stringify(json)).show(500).find("textarea").focus();
+        md_imp_exp.show(500).find("textarea").focus().val(JSON.stringify(json));
     },
     'click #import': function (e) {
         e.preventDefault();
-        $("#modal_import_export").find("textarea").val("").show(500).find("textarea").focus();
+        md_imp_exp.show(500).find("textarea").focus().val("");
     }
 });
 
@@ -56,14 +80,14 @@ Template.header.events({
         e.preventDefault();
         Session.set('showCat', (Session.get('showCat') !== true));
         console.log('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"));
-        $('body').focus();
+        body.focus();
     },
 
     'click #showFinished': function (e) {
         e.preventDefault();
         Session.set('showFinished', (Session.get('showFinished') !== true));
         console.log('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"));
-        $('body').focus();
+        body.focus();
     },
 
     /*
@@ -79,7 +103,7 @@ Template.header.events({
             Session.set('sortBy', 'name');
             console.log('Sort By changed to : Alpha');
         }
-        $('body').focus();
+        body.focus();
     },
     'click #sortDate': function (e) {
         e.preventDefault();
@@ -90,9 +114,8 @@ Template.header.events({
             Session.set('sortBy', 'updatedAt');
             console.log('Sort By changed to : Date');
         }
-        $('body').focus();
-    },
-
+        body.focus();
+    }
 });
 
 Template.yield.events({
@@ -110,26 +133,29 @@ Template.yield.events({
         var $form = $(e.target);
         var collec = $form.parents('section').attr('id');
         var _id = $form.parents('form').find('input[name="id"]').val();
-        $('#change_picture').find('input[name="collec"]').val(collec)
-            .find('input[name="_id"]').val(_id)
-            .find('input[name="pic"]').val('')
-            .show(500)
-            .find('input[name="pic"]').focus();
+        cg_pic.find('input[name="collec"]').val(collec);
+        cg_pic.find('input[name="_id"]').val(_id);
+        cg_pic.find('input[name="pic"]').val('');
+        cg_pic.show(500);
+        cg_pic.find('input[name="pic"]').focus();
     },
     'click #change_picture_apply': function (e) {
         e.preventDefault();
-        var ch_pic = $("#change_picture");
-        var collec = ch_pic.find('input[name="collec"]').val();
-        var id = ch_pic.find('input[name="_id"]').val();
-        var picture = ch_pic.find('input[name="pic"]').val();
+        var collec = cg_pic.find('input[name="collec"]').val();
+        var id = cg_pic.find('input[name="_id"]').val();
+        var picture = cg_pic.find('input[name="pic"]').val();
 
         if (collec === "animes") {
             Anime.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
-                $('#change_picture').hide(500);
+                if (err)
+                    alert(err);
+                cg_pic.hide(500);
             });
         } else if (collec === "series") {
             Serie.update({_id: id}, {$set: {'pic': picture}}, function (err, res) {
-                $('#change_picture').hide(500);
+                if (err)
+                    alert(err);
+                cg_pic.hide(500);
             });
         } else {
             alert('Error while applying picture.');
@@ -207,8 +233,7 @@ Template.yield.events({
     },
     'click #import_json': function (e) {
         e.preventDefault();
-        var md_import_export = $("#modal_import_export");
-        var json = md_import_export.find("textarea").val();
+        var json = md_imp_exp.find("textarea").val();
         try {
             var obj = JSON.parse(json);
         } catch (e) {
@@ -277,51 +302,60 @@ Template.yield.events({
                 ++count;
             }
         });
-        md_import_export.hide(500);
+        md_imp_exp.hide(500);
         alert("Imported " + count + " elements.");
     }
 });
 
 Template.animes.helpers({
-    number: function () {
-        return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+    number: function (st) {
+        if (!st) {
+            return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+        } else {
+            return Anime.find({
+                'owner': Meteor.userId(),
+                'status': st,
+                'name': new RegExp(Session.get('searchQ'), 'i')
+            }).count();
+        }
     },
     animes: function (st) {
+        var filter = {sort: {}};
+        filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
         if (!st) {
-            var filter = {sort: {}};
-            filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
             return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
         } else {
-            var filter = {sort: {}};
-            filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
             return Anime.find({
-                $and: [
-                    {'owner': Meteor.userId()},
-                    {'status': st},
-                    {'name': new RegExp(Session.get('searchQ'), 'i')}
-                ]
+                'owner': Meteor.userId(),
+                'status': st,
+                'name': new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         }
     }
 });
 
 Template.series.helpers({
-    number: function () {
-        return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+    number: function (st) {
+        if (!st) {
+            return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+        } else {
+            return Serie.find({
+                'owner': Meteor.userId(),
+                'status': st,
+                'name': new RegExp(Session.get('searchQ'), 'i')
+            }).count();
+        }
     },
     series: function (st) {
         var filter = {sort: {}};
         filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
-
         if (!st) {
             return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
         } else {
             return Serie.find({
-                $and: [
-                    {'owner': Meteor.userId()},
-                    {'status': st},
-                    {'name': new RegExp(Session.get('searchQ'), 'i')}
-                ]
+                'owner': Meteor.userId(),
+                'status': st,
+                'name': new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         }
     }

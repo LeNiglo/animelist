@@ -27,28 +27,6 @@
         {{> yield}}
         {{> footer}}
 
-        <script type="text/javascript">
-            (function ($) {
-                $(document).ready(function () {
-                    $('*[data-dismiss]').click(function () {
-                        $('.modal').hide(500);
-                    });
-
-                    $('ul.nav-justified a').click(function (e) {
-                        e.preventDefault();
-                        var section = $(this).attr('href');
-                        $('html, body').animate({scrollTop: $(section).offset().top}, 750);
-                    });
-
-                    $('.back2top').click(function (e) {
-                        e.preventDefault();
-                        $('html, body').animate({scrollTop: 0}, 500);
-                    });
-                    $('#search').focus();
-                });
-            })(jQuery)
-        </script>
-
     {{else}}
 
         {{> login}}
@@ -223,6 +201,7 @@
                         <span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img
                                 src="/img/loader.gif" alt="minimize"/></a></span>
                         {{st}}
+                        <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
@@ -263,6 +242,7 @@
                         <span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img
                                 src="/img/loader.gif" alt="minimize"/></a></span>
                         {{st}}
+                        <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
