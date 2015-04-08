@@ -1,15 +1,19 @@
 Serie = new Meteor.Collection('series');
 
 Serie.allow({
-	insert: function(userId, it) {
-		return _.without(_.keys(it), 'name').length === 0;
+	insert: function (userId, doc) {
+		// the user must be logged in, and the document must be owned by the user
+		return (userId && doc.owner === userId);
 	},
-	update: function(userId, it) {
-		return (userId == it.owner);
+	update: function (userId, doc, fields, modifier) {
+		// can only change your own documents
+		return doc.owner === userId;
 	},
-	remove: function(userId, it) {
-		return (userId == it.owner);
-	}
+	remove: function (userId, doc) {
+		// can only remove your own documents
+		return doc.owner === userId;
+	},
+	fetch: ['owner']
 });
 
 Serie.before.insert(function (userId, it) {
