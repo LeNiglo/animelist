@@ -149,13 +149,15 @@ Template.yield.events({
             Anime.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
                 if (err)
                     alert(err);
-                cg_pic.hide(500);
+                if (res > 0)
+                    cg_pic.hide(500);
             });
         } else if (collec === "series") {
             Serie.update({_id: id}, {$set: {'pic': picture}}, function (err, res) {
                 if (err)
                     alert(err);
-                cg_pic.hide(500);
+                if (res > 0)
+                    cg_pic.hide(500);
             });
         } else {
             alert('Error while applying picture.');
@@ -184,10 +186,11 @@ Template.yield.events({
                     season: obj.season,
                     episode: obj.episode
                 }
-            }, function () {
-                Meteor.setTimeout(function () {
-                    glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                }, 2000);
+            }, function (error, result) {
+                if (result > 0)
+                    Meteor.setTimeout(function () {
+                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+                    }, 2000);
             });
         } else if (collec === "series") {
             Serie.update({_id: obj._id}, {
@@ -196,10 +199,11 @@ Template.yield.events({
                     season: obj.season,
                     episode: obj.episode
                 }
-            }, function () {
-                Meteor.setTimeout(function () {
-                    glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                }, 2000);
+            }, function (error, result) {
+                if (result > 0)
+                    Meteor.setTimeout(function () {
+                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+                    }, 2000);
             });
         } else {
             alert('Error while creating. not inside a section tag.');
@@ -376,13 +380,13 @@ Template.addItem.events({
 
         if (collec === "animes") {
             Anime.insert(obj, function (err, res) {
-                if (!err) {
+                if (!err && res) {
                     $form.trigger('reset');
                 }
             });
         } else if (collec === "series") {
             Serie.insert(obj, function (err, res) {
-                if (!err) {
+                if (!err && res) {
                     $form.trigger('reset');
                 }
             });
