@@ -1,7 +1,9 @@
-status_array = [{id: "running", st: "Running"}, {id: "waiting", st: "Waiting"}, {
-    id: "tosee",
-    st: "To See"
-}, {id: "finished", st: "Finished"}];
+status_array = [
+    {id: "running", st: "Running"},
+    {id: "waiting", st: "Waiting"},
+    {id: "tosee", st: "To See"},
+    {id: "finished", st: "Finished"}
+];
 
 UI.registerHelper('showFinished', function (st) {
     if (st === status_array[3].st && Session.get('showFinished') === false) {

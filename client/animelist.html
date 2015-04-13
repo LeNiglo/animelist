@@ -203,8 +203,8 @@
             </h2>
             {{#if show_cat}}
                 {{#each state}}
-                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{id}}">
-                        <span class="{{#if isDesktop}}onHover{{/if}} pull-left">
+                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
+                        <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
                                 {{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
@@ -255,8 +255,8 @@
             </h2>
             {{#if show_cat}}
                 {{#each state}}
-                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{id}}">
-                        <span class="{{#if isDesktop}}onHover{{/if}} pull-left">
+                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
+                        <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
                                 {{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
@@ -337,7 +337,7 @@
         <div class="row">
             {{#if isDesktop}}
                 <div class="col-md-3">
-                    <img class="img-responsive" src="{{pic}}" alt="{{name}}"/>
+                    <img class="img-responsive hidden-xs hidden-sm hidden-print" src="{{pic}}" alt="{{name}}"/>
                 </div>
             {{/if}}
             <div class="col-xs-12 col-md-9">
