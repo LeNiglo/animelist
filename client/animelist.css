@@ -89,11 +89,11 @@ footer {
     width: 100%;
 }
 
-.onHover .pull-left {
+.pull-left.onHover {
     visibility: hidden;
 }
 
-.onHover:hover .pull-left {
+.pull-left.onHover:hover {
     visibility: visible;
 }
 

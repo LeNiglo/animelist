@@ -203,9 +203,20 @@
             </h2>
             {{#if show_cat}}
                 {{#each state}}
-                    <h3 class="col-md-6 col-md-offset-3 text-center page-header onHover">
-                        <span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img
-                                src="/img/loader.gif" alt="minimize"/></a></span>
+                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{id}}">
+                        <span class="{{#if isDesktop}}onHover{{/if}} pull-left">
+                            <a class="hide-section" style="text-decoration: none;">
+                                {{#if isDesktop}}
+                                    <img src="/img/loader.gif" alt="minimize"/>
+                                {{else}}
+                                    {{#if stateVisible .}}
+                                        <i class="glyphicon glyphicon-resize-small"></i>
+                                    {{else}}
+                                        <i class="glyphicon glyphicon-resize-full"></i>
+                                    {{/if}}
+                                {{/if}}
+                            </a>
+                        </span>
                         {{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
@@ -244,9 +255,20 @@
             </h2>
             {{#if show_cat}}
                 {{#each state}}
-                    <h3 class="col-md-6 col-md-offset-3 text-center page-header onHover">
-                        <span class="pull-left"><a class="hide-section" style="text-decoration: none;"><img
-                                src="/img/loader.gif" alt="minimize"/></a></span>
+                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{id}}">
+                        <span class="{{#if isDesktop}}onHover{{/if}} pull-left">
+                            <a class="hide-section" style="text-decoration: none;">
+                                {{#if isDesktop}}
+                                    <img src="/img/loader.gif" alt="minimize"/>
+                                {{else}}
+                                    {{#if stateVisible .}}
+                                        <i class="glyphicon glyphicon-resize-small"></i>
+                                    {{else}}
+                                        <i class="glyphicon glyphicon-resize-full"></i>
+                                    {{/if}}
+                                {{/if}}
+                            </a>
+                        </span>
                         {{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>

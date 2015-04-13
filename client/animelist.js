@@ -3,8 +3,15 @@ Session.setDefault('sortOrder', 1);
 Session.setDefault('showCat', true);
 Session.setDefault('showFinished', false);
 Session.setDefault('searchQ', '');
+Session.set('reload', 0);
 
 Meteor.subscribe('mylist');
+
+$(document).ready(function () {
+    Meteor.setTimeout(function () {
+        Session.set('reload', 1);
+    }, 500);
+});
 
 Template.yield.rendered = function () {
     cg_pic = $('#change_picture');
@@ -123,10 +130,13 @@ Template.yield.events({
         e.preventDefault();
         var $this = $(e.target);
         var $list = $this.parent().parent().parent().next('ul');
+        Meteor.setTimeout(function () {
+            Session.set('reload', Session.get('reload') + 1);
+        }, 150);
         if ($list.is(":visible"))
-            $list.slideUp();
+            $list.slideUp(100);
         else
-            $list.slideDown();
+            $list.slideDown(100);
     },
     'click .change_pic': function (e) {
         e.preventDefault();
@@ -335,6 +345,13 @@ Template.animes.helpers({
                 'name': new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         }
+    },
+    stateVisible: function (st) {
+        if (!!Session.get('reload')) {
+            return ($('#animes').find('h3.' + st.id).next('ul').is(":visible"));
+        } else {
+            return false;
+        }
     }
 });
 
@@ -361,6 +378,13 @@ Template.series.helpers({
                 'status': st,
                 'name': new RegExp(Session.get('searchQ'), 'i')
             }, filter);
+        }
+    },
+    stateVisible: function (st) {
+        if (!!Session.get('reload')) {
+            return ($('#series').find('h3.' + st.id).next('ul').is(":visible"));
+        } else {
+            return false;
         }
     }
 });
