@@ -27,6 +27,7 @@ Serie.before.insert(function (userId, it) {
     }
 
     it.pic = it.pic ? it.pic : '/img/noPic.png';
+    it.link = it.link ? it.link : '#';
     it.owner = it.owner == userId ? it.owner : userId;
 
     try {
@@ -36,7 +37,7 @@ Serie.before.insert(function (userId, it) {
         return false;
     }
 
-    if (!(Match.test(it.name, String) && Match.test(it.pic, String) && Match.test(it.season, Number) &&
+    if (!(Match.test(it.name, String) && Match.test(it.pic, String) && Match.test(it.link, String) && Match.test(it.season, Number) &&
         Match.test(it.episode, Number) && Match.test(it.status, String) && Match.test(it.owner, String))) {
         return false;
     }

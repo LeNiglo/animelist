@@ -6,3 +6,12 @@ Meteor.publish('mylist', function () {
 
     ];
 });
+
+Meteor.publish('showNames', function() {
+    return [
+
+        Anime.find({owner: this.userId}, {fields: {'name': 1}}),
+        Serie.find({owner: this.userId}, {fields: {'name': 1}})
+
+    ];
+});

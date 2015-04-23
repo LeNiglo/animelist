@@ -1,0 +1,12 @@
+/* basic typeahead styles */
+
+.tt-dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 3px 8px;
+    width: 100%;
+}
+
+.twitter-typeahead {
+    width: 100%;
+}

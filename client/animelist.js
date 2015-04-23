@@ -6,15 +6,31 @@ Session.setDefault('searchQ', '');
 Session.set('reload', 0);
 
 Meteor.subscribe('mylist');
+Meteor.subscribe('showNames');
 
-$(document).ready(function () {
-    Meteor.setTimeout(function () {
-        Session.set('reload', 1);
-    }, 500);
-});
+var showNames = [];
+
+var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+        var matches, substrRegex;
+
+        matches = [];
+
+        substrRegex = new RegExp(q, 'i');
+
+        $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+                matches.push({ value: str });
+            }
+        });
+
+        cb(matches);
+    };
+};
 
 Template.yield.rendered = function () {
     cg_pic = $('#change_picture');
+    cg_link = $('#change_link');
     md_imp_exp = $("#modal_import_export");
     search = $("#search");
     body = $("body");
@@ -35,6 +51,11 @@ Template.yield.rendered = function () {
     });
 
     search.focus();
+    Meteor.setTimeout(function () {
+        Session.set('reload', 1);
+    }, 500);
+
+    Meteor.typeahead.inject();
 };
 
 Template.login.events({
@@ -163,11 +184,46 @@ Template.yield.events({
                     cg_pic.hide(500);
             });
         } else if (collec === "series") {
-            Serie.update({_id: id}, {$set: {'pic': picture}}, function (err, res) {
+            Serie.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
                 if (err)
                     alert(err);
                 if (res > 0)
                     cg_pic.hide(500);
+            });
+        } else {
+            alert('Error while applying picture.');
+        }
+    },
+    'click .change_link': function (e) {
+        e.preventDefault();
+        var $form = $(e.target);
+        var collec = $form.parents('section').attr('id');
+        var _id = $form.parents('form').find('input[name="id"]').val();
+        cg_link.find('input[name="collec"]').val(collec);
+        cg_link.find('input[name="_id"]').val(_id);
+        cg_link.find('input[name="link"]').val('');
+        cg_link.show(500);
+        cg_link.find('input[name="link"]').focus();
+    },
+    'click #change_link_apply': function (e) {
+        e.preventDefault();
+        var collec = cg_link.find('input[name="collec"]').val();
+        var id = cg_link.find('input[name="_id"]').val();
+        var link = cg_link.find('input[name="link"]').val();
+
+        if (collec === "animes") {
+            Anime.update({_id: id}, {$set: {link: link}}, function (err, res) {
+                if (err)
+                    alert(err);
+                if (res > 0)
+                    cg_link.hide(500);
+            });
+        } else if (collec === "series") {
+            Serie.update({_id: id}, {$set: {link: link}}, function (err, res) {
+                if (err)
+                    alert(err);
+                if (res > 0)
+                    cg_link.hide(500);
             });
         } else {
             alert('Error while applying picture.');
@@ -417,5 +473,30 @@ Template.addItem.events({
         } else {
             console.log('Error while creating. not inside a section tag.');
         }
+    }
+});
+
+Template.addItem.helpers({
+    shownames: function() {
+        return [
+            {
+                name: 'animes',
+                valueKey: 'name',
+                local: function () {
+                    return Anime.find().fetch();
+                },
+                template: 'showsuggest',
+                header: '<p><em>Animes</em></p>'
+            },
+            {
+                name: 'series',
+                valueKey: 'name',
+                local: function () {
+                    return Serie.find().fetch();
+                },
+                template: 'showsuggest',
+                header: '<p><em>Series</em></p>'
+            }
+        ];
     }
 });
