@@ -7,11 +7,15 @@ Meteor.publish('mylist', function () {
     ];
 });
 
-Meteor.publish('showNames', function() {
+Meteor.publish('showNames', function () {
+    var animes = Anime.find({}, {fields: {'name': 1, 'owner': 1}}),
+        series = Serie.find({}, {fields: {'name': 1, 'owner': 1}});
+
     return [
 
-        Anime.find({owner: this.userId}, {fields: {'name': 1}}),
-        Serie.find({owner: this.userId}, {fields: {'name': 1}})
+        animes,
+        series,
+        Meteor.users.find({}, {fields: {'username': 1, '_id': 1}})
 
     ];
 });

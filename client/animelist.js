@@ -500,3 +500,11 @@ Template.addItem.helpers({
         ];
     }
 });
+
+Template.showsuggest.helpers({
+
+    getOwner: function(ow) {
+        return Meteor.users.findOne({_id: ow}).username;
+    }
+
+});
