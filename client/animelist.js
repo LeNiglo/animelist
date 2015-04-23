@@ -482,6 +482,7 @@ Template.addItem.helpers({
             {
                 name: 'animes',
                 valueKey: 'name',
+                displayKey: 'name',
                 local: function () {
                     return Anime.find().fetch();
                 },
@@ -491,6 +492,7 @@ Template.addItem.helpers({
             {
                 name: 'series',
                 valueKey: 'name',
+                displayKey: 'name',
                 local: function () {
                     return Serie.find().fetch();
                 },
