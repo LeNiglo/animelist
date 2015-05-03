@@ -10,7 +10,7 @@ Meteor.subscribe('showNames');
 
 var showNames = [];
 
-var substringMatcher = function(strs) {
+var substringMatcher = function (strs) {
     return function findMatches(q, cb) {
         var matches, substrRegex;
 
@@ -18,9 +18,9 @@ var substringMatcher = function(strs) {
 
         substrRegex = new RegExp(q, 'i');
 
-        $.each(strs, function(i, str) {
+        $.each(strs, function (i, str) {
             if (substrRegex.test(str)) {
-                matches.push({ value: str });
+                matches.push({value: str});
             }
         });
 
@@ -194,6 +194,42 @@ Template.yield.events({
             alert('Error while applying picture.');
         }
     },
+    'change .show_commentary': function (e) {
+        e.preventDefault();
+        var $form = $(e.target);
+        var collec = $form.parents('section').attr('id');
+        var id = $form.parent().parent().parent().find('input[name="id"]').val();
+        var commentary = $form.val();
+
+        var glyph = $form.parent().parent().parent().find('.glyphicon-save');
+        if (glyph.hasClass('disabled')) {
+            return false;
+        }
+        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').addClass('disabled');
+        if (collec === "animes") {
+            Anime.update({_id: id}, {$set: {commentary: commentary}}, function (err, res) {
+                if (err)
+                    alert(err);
+                if (res > 0) {
+                    Meteor.setTimeout(function () {
+                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+                    }, 2000);
+                }
+            });
+        } else if (collec === "series") {
+            Serie.update({_id: id}, {$set: {commentary: commentary}}, function (err, res) {
+                if (err)
+                    alert(err);
+                if (res > 0) {
+                    Meteor.setTimeout(function () {
+                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
+                    }, 2000);
+                }
+            });
+        } else {
+            alert('Error while applying commentary.');
+        }
+    },
     'click .change_link': function (e) {
         e.preventDefault();
         var $form = $(e.target);
@@ -226,7 +262,7 @@ Template.yield.events({
                     cg_link.hide(500);
             });
         } else {
-            alert('Error while applying picture.');
+            alert('Error while changing link.');
         }
     },
     'click .save': function (e) {
@@ -477,7 +513,7 @@ Template.addItem.events({
 });
 
 Template.addItem.helpers({
-    shownames: function() {
+    shownames: function () {
         return [
             {
                 name: 'animes',
@@ -505,7 +541,7 @@ Template.addItem.helpers({
 
 Template.showsuggest.helpers({
 
-    getOwner: function(ow) {
+    getOwner: function (ow) {
         return Meteor.users.findOne({_id: ow}).username;
     }
 

@@ -406,15 +406,15 @@
     <div class="item">
         <div class="row">
             {{#if isDesktop}}
-                <div class="col-md-3">
+                <div class="pull-left col-md-3">
                     <img class="img-responsive hidden-xs hidden-sm hidden-print" src="{{pic}}" alt="{{name}}"/>
                 </div>
             {{/if}}
             <div class="col-xs-12 col-md-9">
                 <h2 class="row less-page-header">
-                    <span class="pull-right"><a class="item-title" href="{{link}}" target="_blank"><i class="glyphicon glyphicon-film"></i></a></span>
-                    <strong>{{name}}</strong>
+                    <strong class="col-xs-9">{{name}}</strong>
                     <small>{{status}}</small>
+                    <span class="pull-right"><a class="item-title" href="{{link}}" target="_blank"><i class="glyphicon glyphicon-film"></i></a></span>
                 </h2>
                 <form style="padding-top: 10px;">
                     <input type="hidden" name="id" value="{{_id}}"/>
@@ -453,6 +453,9 @@
                                 class="glyphicon glyphicon-picture orange"></i></a>
                         <a class="input-group-addon remove_item" title="Delete."><i
                                 class="glyphicon glyphicon-remove red"></i></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <small><input type="text" class="show_commentary" value="{{commentary}}"/></small>
                     </div>
                 </form>
             </div>
