@@ -1,6 +1,7 @@
 /* basic typeahead styles */
 
-.tt-dropdown-menu {
+.tt-dropdown-menu,
+.tt-menu {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 3px 8px;
