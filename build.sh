@@ -1,13 +1,12 @@
 git pull
 meteor update
 meteor build .
-sudo mv animelist.tar.gz /home/animelist/.
-cd /home/animelist/
-sudo tar -xvzf animelist.tar.gz
+sudo mv animelist.tar.gz /opt/animelist/.
+cd /opt/animelist/
 sudo rm -rf bundle/
 sudo tar -xvzf animelist.tar.gz
 cd bundle/programs/server/
 sudo npm install
-cd ../../..
-sudo chown animelist -R *
+cd /opt/animelist
+sudo chown animelist -R /opt/animelist
 sudo service animelist restart
