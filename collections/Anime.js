@@ -27,7 +27,7 @@ Anime.before.insert(function (userId, it) {
     }
 
     it.pic = it.pic ? it.pic : '/img/noPic.png';
-    it.link = it.link ? it.link : '#';
+    it.link = it.link ? it.link : '';
     it.owner = it.owner == userId ? it.owner : userId;
 
     try {

@@ -8,6 +8,6 @@ sudo tar -xvzf animelist.tar.gz
 sudo rm -f animelist.tar.gz
 cd bundle/programs/server/
 sudo npm install
-cd ../../..
-sudo chown animelist -R *
+cd /opt/animelist
+sudo chown animelist -R /opt/animelist
 sudo service animelist restart
