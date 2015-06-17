@@ -76,3 +76,14 @@ UI.registerHelper('sort_date', function (o) {
         }
     }
 });
+
+UI.registerHelper('changeBackground', function () {
+    var me = Meteor.user();
+
+    if (me != null) {
+        if (me.profile.background)
+            $('body').css('background-image', 'url(' + me.profile.background + ')');
+        else
+            $('body').css('background-image', '');
+    }
+});

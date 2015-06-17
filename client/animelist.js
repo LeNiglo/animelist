@@ -32,6 +32,7 @@ Template.yield.rendered = function () {
     cg_pic = $('#change_picture');
     cg_link = $('#change_link');
     md_imp_exp = $("#modal_import_export");
+    md_chg_back = $("#modal_change_background");
     search = $("#search");
     body = $("body");
 
@@ -85,7 +86,11 @@ Template.footer.events({
     },
     'click #import': function (e) {
         e.preventDefault();
-        md_imp_exp.show(500).find("textarea").focus().val("");
+        md_imp_exp.show(500).find("textarea").val("").focus();
+    },
+    'click #changeBackground': function (e) {
+        e.preventDefault();
+        md_chg_back.show(500).find("input").val("").focus();
     }
 });
 
@@ -410,6 +415,27 @@ Template.yield.events({
         });
         md_imp_exp.hide(500);
         alert("Imported " + count + " elements.");
+    },
+    'click #confirmChangeBackground': function (e) {
+        e.preventDefault();
+        var input = md_chg_back.find('input').val();
+        if (Meteor.userId() != null) {
+            Meteor.call('changeUserBackground', input, function (error, result) {
+                if (result) {
+                    md_chg_back.hide();
+                }
+            });
+        }
+    },
+    'click #resetChangeBackground': function (e) {
+        e.preventDefault();
+        if (Meteor.userId()) {
+            Meteor.call('changeUserBackground', null, function (error, result) {
+                if (result) {
+                    md_chg_back.hide();
+                }
+            });
+        }
     }
 });
 
