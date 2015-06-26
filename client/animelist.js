@@ -54,27 +54,17 @@ Template.yield.rendered = function () {
 
     $('#go2new').click(function (e) {
         e.preventDefault();
-        var nextForm = {
-            real: -1,
-            relative: -1
-        };
-        console.clear();
-        $('form.addItem').each(function() {
 
-            var tmpOffset = Math.abs($(window).scrollTop() + ($(window).height() / 2) - $(this).position().top);
-
-            if (nextForm.real == -1) {
-                nextForm.real = $(this).position().top;
-                nextForm.relative = tmpOffset;
-            } else if (tmpOffset < nextForm.relative) {
-                nextForm.real = $(this).position().top;
-                nextForm.relative = tmpOffset;
+        var currentScroll = $(window).scrollTop();
+        var newScroll = -1;
+        $('form.addItem').each(function () {
+            if (newScroll == -1 && $(this).offset().top > currentScroll) {
+                newScroll = $(this).offset().top - ($(window).height() / 1.5);
             }
         });
-        if (nextForm.real != -1) {
-            var newScroll = nextForm.real - 150 - ($(window).height() / 1.5);
+        if (newScroll > 0)
             $('html, body').animate({scrollTop: newScroll}, 750);
-        }
+
     });
 
     search.focus();
