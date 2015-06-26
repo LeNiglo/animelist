@@ -18,22 +18,22 @@
 <body>
 {{#if loggingIn}}
 
-    {{> loader}}
+	{{> loader}}
 
 {{else}}
 
-    {{#if currentUser}}
+	{{#if currentUser}}
 
-        {{ changeBackground }}
-        {{> header}}
-        {{> yield}}
-        {{> footer}}
+		{{ changeBackground }}
+		{{> header}}
+		{{> yield}}
+		{{> footer}}
 
-    {{else}}
+	{{else}}
 
-        {{> login}}
+		{{> login}}
 
-    {{/if}}
+	{{/if}}
 
 {{/if}}
 </body>
@@ -82,6 +82,16 @@
 					<span class="pull-right" style="margin-top: -19px;">
 						<ul class="sortBy nav navbar-nav navbar-right">
                             <li>
+                                <a id="go2new" title="Create New" href="#" class="">
+                                    <i class="glyphicon glyphicon-certificate"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="back2top" title="Back to Top" href="#" class="">
+                                    <i class="glyphicon glyphicon-arrow-up"></i>
+                                </a>
+                            </li>
+                            <li>
                                 <a id="showCategories" title="Sort by Category" href="#" class="{{show_cat}}">
                                     <i class="glyphicon glyphicon-sort-by-attributes"></i>
                                 </a>
@@ -93,28 +103,36 @@
                             </li>
                             <li>
                                 <a id="sortAlpha" title="Sort by Alpha" href="#" class="{{sort_alpha "class"}}">
-                                    {{{sort_alpha "glyph"}}}
+									{{{sort_alpha "glyph"}}}
                                 </a>
                             </li>
                             <li>
                                 <a id="sortDate" title="Sort by Date" href="#" class="{{sort_date "class"}}">
-                                    {{{sort_date "glyph"}}}
+									{{{sort_date "glyph"}}}
                                 </a>
                             </li>
                             <li>
-                                <input type="text" class="form-control" id="search" placeholder="Search"
-                                       style="margin-left: 7px; margin-top: 17px;"/>
+                                <input type="text" class="form-control" id="search" placeholder="Search"/>
                             </li>
                         </ul>
 					</span>
-                    {{#if isDesktop}}
-                        My Super Anime List ({{ currentUser.username }})
-                    {{else}}
-                        {{ currentUser.username }} #MSAL
-                    {{/if}}
+					<span id="site-title">
+						{{#if isDesktop}}
+                            My Super Anime List ({{ currentUser.username }})
+						{{else}}
+							{{ currentUser.username }} #MSAL
+						{{/if}}
+                    </span>
+
+                    <div class="col-md-4" id="navigation-affix" style="margin-top: -19px;">
+                        <ul class="nav nav-tabs nav-justified" role="navigation">
+                            <li><a href="#animes"><span style="font-size: 24px;">Animes</span></a></li>
+                            <li><a href="#series"><span style="font-size: 24px;">Series</span></a></li>
+                        </ul>
+                    </div>
                 </h1>
             </div>
-            <div class="row">
+            <div class="row" id="navigation-affix-top">
                 <ul class="nav nav-tabs nav-justified" role="navigation">
                     <li><a href="#animes"><span style="font-size: 24px;">Animes</span></a></li>
                     <li><a href="#series"><span style="font-size: 24px;">Series</span></a></li>
@@ -130,11 +148,12 @@
             <h2>
 				<span class="pull-left" style="font-size: 48px;">
 					<a id="logout" title="Logout" href="#"><i class="glyphicon glyphicon-off"></i></a>
-                    {{#if isDesktop}}
+					{{#if isDesktop}}
                         <a id="export" title="Export to JSON" href="#"><i class="glyphicon glyphicon-export"></i></a>
 					    <a id="import" title="Import JSON" href="#"><i class="glyphicon glyphicon-import"></i></a>
-                    {{/if}}
-                    <a id="changeBackground" title="Change Background" href="#"><i class="glyphicon glyphicon-cloud-upload"></i></a>
+					{{/if}}
+                    <a id="changeBackground" title="Change Background" href="#"><i
+                            class="glyphicon glyphicon-cloud-upload"></i></a>
 				</span>
                 <span>Created &amp; Designed by Guillaume Lefrant.</span>
             </h2>
@@ -145,8 +164,8 @@
 </template>
 
 <template name="yield">
-    {{> animes}}
-    {{> series}}
+	{{> animes}}
+	{{> series}}
     <div id="modal_import_export" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -185,8 +204,8 @@
                     <p>The picture can be an external link to an image (prefer small ones for better reactivity).</p>
 
                     <p>
-						<input type="text" class="form-control" name="pic" placeholder="Picture link"/>
-					</p>
+                        <input type="text" class="form-control" name="pic" placeholder="Picture link"/>
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -261,49 +280,49 @@
             <h2 class="page-header text-center">Animes
                 <small>({{number}})</small>
             </h2>
-            {{#if show_cat}}
-                {{#each state}}
+			{{#if show_cat}}
+				{{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
                         <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
-                                {{#if isDesktop}}
+								{{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
-                                {{else}}
-                                    {{#if stateVisible .}}
+								{{else}}
+									{{#if stateVisible .}}
                                         <i class="glyphicon glyphicon-resize-small"></i>
-                                    {{else}}
+									{{else}}
                                         <i class="glyphicon glyphicon-resize-full"></i>
-                                    {{/if}}
-                                {{/if}}
+									{{/if}}
+								{{/if}}
                             </a>
                         </span>
-                        {{st}}
+						{{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                         <!-- Anime -->
-                        {{#each animes st}}
+						{{#each animes st}}
                             <li>
-                                {{> item}}
+								{{> item}}
                             </li>
-                        {{/each}}
+						{{/each}}
                         <!-- /Anime -->
                     </ul>
-                {{/each}}
-            {{else}}
+				{{/each}}
+			{{else}}
                 <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                     <!-- Anime -->
-                    {{#each animes}}
+					{{#each animes}}
                         <li>
-                            {{> item}}
+							{{> item}}
                         </li>
-                    {{/each}}
+					{{/each}}
                     <!-- /Anime -->
                 </ul>
-            {{/if}}
+			{{/if}}
         </div>
-        {{> toTop}}
+		{{> toTop}}
     </section>
 </template>
 
@@ -313,49 +332,49 @@
             <h2 class="page-header text-center">Series
                 <small>({{number}})</small>
             </h2>
-            {{#if show_cat}}
-                {{#each state}}
+			{{#if show_cat}}
+				{{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
                         <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
-                                {{#if isDesktop}}
+								{{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
-                                {{else}}
-                                    {{#if stateVisible .}}
+								{{else}}
+									{{#if stateVisible .}}
                                         <i class="glyphicon glyphicon-resize-small"></i>
-                                    {{else}}
+									{{else}}
                                         <i class="glyphicon glyphicon-resize-full"></i>
-                                    {{/if}}
-                                {{/if}}
+									{{/if}}
+								{{/if}}
                             </a>
                         </span>
-                        {{st}}
+						{{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                         <!-- Serie -->
-                        {{#each series st}}
+						{{#each series st}}
                             <li>
-                                {{> item}}
+								{{> item}}
                             </li>
-                        {{/each}}
+						{{/each}}
                         <!-- /Serie -->
                     </ul>
-                {{/each}}
-            {{else}}
+				{{/each}}
+			{{else}}
                 <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                     <!-- Serie -->
-                    {{#each series}}
+					{{#each series}}
                         <li>
-                            {{> item}}
+							{{> item}}
                         </li>
-                    {{/each}}
+					{{/each}}
                     <!-- /Serie -->
                 </ul>
-            {{/if}}
+			{{/if}}
         </div>
-        {{> toTop}}
+		{{> toTop}}
     </section>
 </template>
 
@@ -368,9 +387,11 @@
         <form class="form-horinzontal addItem">
             <div class="row" style="border-bottom: 1px solid #e1e1e1; padding-bottom: 7px; margin-bottom: 7px;">
                 <div class="col-xs-6">
-                    <input type="text" class="form-control typeahead" name="name" placeholder="Name" autocomplete="off" spellcheck="off"  data-sets="shownames" data-template="showsuggest" data-hint="true" data-highlight="true" data-autoselect="true" data-value-key="name" />
+                    <input type="text" class="form-control typeahead" name="name" placeholder="Name" autocomplete="off"
+                           spellcheck="off" data-sets="shownames" data-template="showsuggest" data-hint="true"
+                           data-highlight="true" data-autoselect="true" data-value-key="name"/>
                     <select class="form-control" name="status">
-                        {{{select_status "To See"}}}
+						{{{select_status "To See"}}}
                     </select>
                 </div>
                 <div class="col-xs-6">
@@ -392,23 +413,24 @@
 </template>
 
 <template name="toTop">
-    {{> addItem}}
+	{{> addItem}}
     <p><a class="btn btn-info col-xs-12 back2top" href="#" style="border-radius: 0;">Back to Top</a></p>
 </template>
 
 <template name="item">
     <div class="item">
         <div class="row">
-            {{#if isDesktop}}
+			{{#if isDesktop}}
                 <div class="pull-left col-md-3">
                     <img class="img-responsive hidden-xs hidden-sm hidden-print" src="{{pic}}" alt="{{name}}"/>
                 </div>
-            {{/if}}
+			{{/if}}
             <div class="col-xs-12 col-md-9">
                 <h2 class="row less-page-header">
                     <strong class="col-xs-9">{{name}}</strong>
                     <small>{{status}}</small>
-                    <span class="pull-right"><a class="item-title" href="{{link}}" target="_blank"><i class="glyphicon glyphicon-film"></i></a></span>
+                    <span class="pull-right"><a class="item-title" href="{{link}}" target="_blank"><i
+                            class="glyphicon glyphicon-film"></i></a></span>
                 </h2>
                 <form style="padding-top: 10px;">
                     <input type="hidden" name="id" value="{{_id}}"/>
@@ -417,7 +439,7 @@
                         <div class="row">
                             <div class="col-xs-4 form-group">
                                 <select class="form-control" name="status">
-                                    {{{select_status status}}}
+									{{{select_status status}}}
                                 </select>
                             </div>
                             <div class="col-xs-4 form-group">

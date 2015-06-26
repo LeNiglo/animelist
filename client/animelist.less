@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  padding: 0;
+  padding: 130px 0 0 0;
   margin: 0;
   width: 100%;
   height: 100%;
@@ -37,6 +37,49 @@ section#series {
 header {
   border-bottom: 5px solid @base;
   background-color: white;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  &.affix {
+    height: 75px;
+    overflow: hidden;
+    #back2top {
+      display: inline-block;
+    }
+    #go2new {
+      display: inline-block;
+    }
+    #navigation-affix {
+      display: inline-block;
+    }
+    #navigation-affix-top {
+      display: none;
+    }
+    #site-title {
+      display: none;
+    }
+  }
+  &.affix-top {
+    height: 130px;
+    overflow: visible;
+    #back2top {
+      display: none;
+    }
+    #go2new {
+      display: none;
+    }
+    #navigation-affix {
+      display: none;
+    }
+    #navigation-affix-top {
+      display: inline-block;
+    }
+    #site-title {
+      display: inline-block;
+    }
+  }
   .nav {
     li > a {
       color: darken(@base, 10%);
@@ -48,7 +91,6 @@ header {
         color: darken(@secondary, 10%) !important;
         background-color: rgba(50, 50, 50, 0.1) !important;
         border: 1px solid rgba(50, 50, 50, 0.3) !important;
-        border-radius: 5px;
         &:hover {
           color: darken(@secondary, 5%) !important;
           background-color: rgba(50, 50, 50, 0.2) !important;
@@ -64,6 +106,11 @@ header {
       -moz-border-radius: 0 !important;
       border-radius: 0 !important;
     }
+  }
+  #search {
+    margin: 10px 0 0 7px;
+    height: 48px;
+    border-radius: 0;
   }
 }
 

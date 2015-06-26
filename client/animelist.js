@@ -35,6 +35,7 @@ Template.yield.rendered = function () {
     md_chg_back = $("#modal_change_background");
     search = $("#search");
     body = $("body");
+    header = $("header");
 
     $('*[data-dismiss]').click(function () {
         $('.modal').hide(500);
@@ -43,15 +44,62 @@ Template.yield.rendered = function () {
     $('ul.nav-justified a').click(function (e) {
         e.preventDefault();
         var section = $(this).attr('href');
-        $('html, body').animate({scrollTop: $(section).offset().top}, 750);
+        $('html, body').animate({scrollTop: $(section).position().top - 50}, 750);
     });
 
-    $('.back2top').click(function (e) {
+    $('.back2top, #back2top').click(function (e) {
         e.preventDefault();
         $('html, body').animate({scrollTop: 0}, 500);
     });
 
+    $('#go2new').click(function (e) {
+        e.preventDefault();
+        var nextForm = {
+            real: -1,
+            relative: -1
+        };
+        console.clear();
+        $('form.addItem').each(function() {
+
+            var tmpOffset = Math.abs($(window).scrollTop() + ($(window).height() / 2) - $(this).position().top);
+
+            if (nextForm.real == -1) {
+                nextForm.real = $(this).position().top;
+                nextForm.relative = tmpOffset;
+            } else if (tmpOffset < nextForm.relative) {
+                nextForm.real = $(this).position().top;
+                nextForm.relative = tmpOffset;
+            }
+        });
+        if (nextForm.real != -1) {
+            var newScroll = nextForm.real - 150 - ($(window).height() / 1.5);
+            $('html, body').animate({scrollTop: newScroll}, 750);
+        }
+    });
+
     search.focus();
+
+    body.keyup(function (e) {
+        if (e.keyCode == 27) {
+            search.val("");
+            Session.set('searchQ', '');
+        }
+    });
+
+    header.affix({
+        offset: {
+            top: 69
+        }
+    });
+
+    header.on('affix.bs.affix', function () {
+        header.transition({height: '75px'}, 300, 'ease');
+    });
+
+    header.on('affix-top.bs.affix', function () {
+        header.transition({height: '130px'}, 250, 'ease');
+    });
+
     Meteor.setTimeout(function () {
         Session.set('reload', 1);
     }, 500);
