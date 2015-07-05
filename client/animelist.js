@@ -60,6 +60,7 @@ Template.yield.rendered = function () {
         $('form.addItem').each(function () {
             if (newScroll == -1 && $(this).offset().top > currentScroll) {
                 newScroll = $(this).offset().top - ($(window).height() / 1.5);
+                $(this).find('input[name="name"]').focus();
                 return false;
             }
         });
