@@ -4,10 +4,27 @@
 .tt-menu {
     background-color: #fff;
     border: 1px solid #ccc;
-    padding: 3px 8px;
     width: 100%;
+}
+
+.tt-dataset .tt-title {
+    text-align: center;
+    display: block;
+    padding: 3px;
+    border-bottom: 1px solid #ccc;
+    font-size: 24px;
 }
 
 .twitter-typeahead {
     width: 100%;
+}
+
+.tt-selectable {
+    padding: 3px 8px;
+}
+
+.tt-selectable:hover ,
+.tt-selectable:active {
+    background-color: #ccc;
+    cursor: pointer;
 }

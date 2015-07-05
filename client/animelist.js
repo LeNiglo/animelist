@@ -95,7 +95,7 @@ Template.yield.rendered = function () {
             search.val("");
             Session.set('searchQ', '');
             search.focus();
-        } else if (e.keyCode == 38) { // UP
+        } else if (e.keyCode == 38 && !$(e.target).hasClass('typeahead')) { // UP
             e.preventDefault();
             var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
@@ -107,7 +107,7 @@ Template.yield.rendered = function () {
             });
             if (newScroll > 0)
                 $('html, body').animate({scrollTop: newScroll}, 150);
-        } else if (e.keyCode == 40) { // DOWN
+        } else if (e.keyCode == 40 && !$(e.target).hasClass('typeahead')) { // DOWN
             e.preventDefault();
             var currentScroll = $(window).scrollTop() + 180;
             var newScroll = -1;
@@ -634,7 +634,7 @@ Template.addItem.helpers({
                     return Anime.find().fetch();
                 },
                 template: 'showsuggest',
-                header: '<p><em>Animes</em></p>'
+                header: '<p><em class="tt-title">Animes</em></p>'
             },
             {
                 name: 'series',
@@ -644,7 +644,7 @@ Template.addItem.helpers({
                     return Serie.find().fetch();
                 },
                 template: 'showsuggest',
-                header: '<p><em>Series</em></p>'
+                header: '<p><em class="tt-title">Series</em></p>'
             }
         ];
     }
