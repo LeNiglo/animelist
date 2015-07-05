@@ -82,7 +82,7 @@ Template.yield.rendered = function () {
             e.preventDefault();
         }
     }, false);
-    
+
     window.addEventListener("keyup", function(e) {
         // arrow keys
         if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
@@ -101,7 +101,7 @@ Template.yield.rendered = function () {
             var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
             $($(".item").get().reverse()).each(function () {
-                console.log($(this), $(this).offset().top);
+                console.log($(this), $(this).offset().top, $(this).offset().top < currentScroll);
                 if (newScroll == -1 && $(this).offset().top < currentScroll) {
                     newScroll = $(this).offset().top - 120;
                     return false;
