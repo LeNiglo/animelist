@@ -94,6 +94,7 @@ Template.yield.rendered = function () {
             var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
             $($(".item").get().reverse()).each(function () {
+                console.log($(this), $(this).offset().top);
                 if (newScroll == -1 && $(this).offset().top < currentScroll) {
                     newScroll = $(this).offset().top - 120;
                     return false;
