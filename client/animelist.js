@@ -100,7 +100,7 @@ Template.yield.rendered = function () {
             console.log("UP");
             var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
-            $($(".item").get().reverse()).each(function () {
+            $($(".item:visible").get().reverse()).each(function () {
                 console.log($(this), $(this).offset().top, $(this).offset().top < currentScroll);
                 if (newScroll == -1 && $(this).offset().top < currentScroll) {
                     newScroll = $(this).offset().top - 120;
@@ -114,7 +114,7 @@ Template.yield.rendered = function () {
             console.log("DOWN");
             var currentScroll = $(window).scrollTop() + 180;
             var newScroll = -1;
-            $('.item').each(function () {
+            $('.item:visible').each(function () {
                 if (newScroll == -1 && $(this).offset().top > currentScroll) {
                     newScroll = $(this).offset().top - 120;
                     return false;
