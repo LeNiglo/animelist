@@ -84,10 +84,10 @@ Template.yield.rendered = function () {
             search.focus();
         } else if (e.keyCode == 38) { // UP
             e.preventDefault();
-            var currentScroll = $(window).scrollTop() - 120;
+            var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
-            $('.item').each(function () {
-                if (newScroll == -1 && $(this).offset().top > currentScroll) {
+            $($(".item").get().reverse()).each(function () {
+                if (newScroll == -1 && $(this).offset().top < currentScroll) {
                     newScroll = $(this).offset().top - 120;
                     return false;
                 }
