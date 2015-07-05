@@ -8,8 +8,8 @@ Meteor.publish('mylist', function () {
 });
 
 Meteor.publish('showNames', function () {
-    var animes = Anime.find({}, {fields: {'name': 1, 'owner': 1}}),
-        series = Serie.find({}, {fields: {'name': 1, 'owner': 1}});
+    var animes = Anime.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}}),
+        series = Serie.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}});
 
     return [
 
