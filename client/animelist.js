@@ -82,6 +82,13 @@ Template.yield.rendered = function () {
             e.preventDefault();
         }
     }, false);
+    
+    window.addEventListener("keyup", function(e) {
+        // arrow keys
+        if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+            e.preventDefault();
+        }
+    }, false);
 
     body.keyup(function (e) {
         if (e.keyCode == 27) { // ESC
