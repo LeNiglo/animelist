@@ -97,11 +97,9 @@ Template.yield.rendered = function () {
             search.focus();
         } else if (e.keyCode == 38) { // UP
             e.preventDefault();
-            console.log("UP");
             var currentScroll = $(window).scrollTop() + 120;
             var newScroll = -1;
             $($(".item:visible").get().reverse()).each(function () {
-                console.log($(this), $(this).offset().top, $(this).offset().top < currentScroll);
                 if (newScroll == -1 && $(this).offset().top < currentScroll) {
                     newScroll = $(this).offset().top - 120;
                     return false;
@@ -111,7 +109,6 @@ Template.yield.rendered = function () {
                 $('html, body').animate({scrollTop: newScroll}, 150);
         } else if (e.keyCode == 40) { // DOWN
             e.preventDefault();
-            console.log("DOWN");
             var currentScroll = $(window).scrollTop() + 180;
             var newScroll = -1;
             $('.item:visible').each(function () {
