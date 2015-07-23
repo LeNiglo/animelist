@@ -357,7 +357,6 @@ Template.yield.events({
     },
     'click .save': function (e) {
         e.preventDefault();
-        console.log(e);
         var $form = $(e.target).parents('form');
         var collec = $form.parents('section').attr('id');
 
@@ -371,7 +370,6 @@ Template.yield.events({
         if (glyph.hasClass('disabled') && (e.clientX && e.clientY)) {
             return false;
         }
-        console.log("saving ...");
         glyph.addClass('glyphicon-saved').addClass('green').removeClass('glyphicon-save').removeClass('light-green').addClass('disabled');
         if (collec === "animes") {
             Anime.update({_id: obj._id}, {
