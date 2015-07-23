@@ -357,6 +357,7 @@ Template.yield.events({
     },
     'click .save': function (e) {
         e.preventDefault();
+        console.log(e);
         var $form = $(e.target).parents('form');
         var collec = $form.parents('section').attr('id');
 
@@ -367,10 +368,11 @@ Template.yield.events({
         obj.episode = $form.find('input[name="episode"]').val();
 
         var glyph = $(e.target).hasClass('glyphicon') ? $(e.target) : $($(e.target).find('.glyphicon'));
-        if (glyph.hasClass('disabled')) {
+        if (glyph.hasClass('disabled') && (e.clientX && e.clientY)) {
             return false;
         }
-        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').addClass('disabled');
+        console.log("saving ...");
+        glyph.addClass('glyphicon-saved').addClass('green').removeClass('glyphicon-save').removeClass('light-green').addClass('disabled');
         if (collec === "animes") {
             Anime.update({_id: obj._id}, {
                 $set: {
@@ -381,8 +383,8 @@ Template.yield.events({
             }, function (error, result) {
                 if (result > 0)
                     Meteor.setTimeout(function () {
-                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                    }, 2000);
+                        glyph.addClass('glyphicon-save').addClass('light-green').removeClass('glyphicon-saved').removeClass('green').removeClass('disabled');
+                    }, 500);
             });
         } else if (collec === "series") {
             Serie.update({_id: obj._id}, {
@@ -394,8 +396,8 @@ Template.yield.events({
             }, function (error, result) {
                 if (result > 0)
                     Meteor.setTimeout(function () {
-                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                    }, 2000);
+                        glyph.addClass('glyphicon-save').addClass('light-green').removeClass('glyphicon-saved').removeClass('green').removeClass('disabled');
+                    }, 500);
             });
         } else {
             alert('Error while creating. not inside a section tag.');
@@ -403,11 +405,21 @@ Template.yield.events({
     },
     'click .add_season': function (e) {
         e.preventDefault();
-        $(e.target).parent().parent().prev('input').val(1 + parseInt($(e.target).parent().parent().prev('input').val()));
+        var $form = $(e.target).closest('form');
+        var $input = $form.find('input[name="season"]');
+
+        $input.val(1 + parseInt($input.val()));
+        $form.find('.save')[0].click();
+        return false;
     },
     'click .add_episode': function (e) {
         e.preventDefault();
-        $(e.target).parent().parent().prev('input').val(1 + parseInt($(e.target).parent().parent().prev('input').val()));
+        var $form = $(e.target).closest('form');
+        var $input = $form.find('input[name="episode"]');
+
+        $input.val(1 + parseInt($input.val()));
+        $form.find('.save')[0].click();
+        return false;
     },
     'click .remove_item': function (e) {
         e.preventDefault();
