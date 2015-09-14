@@ -18,33 +18,40 @@
 <body>
 {{#if loggingIn}}
 
-	{{> loader}}
+    {{> loader}}
 
 {{else}}
 
-	{{#if currentUser}}
+    {{#if currentUser}}
 
-		{{ changeBackground }}
-		{{> header}}
+        {{ changeBackground }}
+        {{> header}}
         {{> errors}}
-		{{> yield}}
-		{{> footer}}
+        {{> yield}}
+        {{> footer}}
 
-	{{else}}
+    {{else}}
 
-		{{> login}}
+        {{> login}}
 
-	{{/if}}
+    {{/if}}
 
 {{/if}}
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-67560863-2', 'auto');
-  ga('send', 'pageview');
+    ga('create', 'UA-67560863-2', 'auto');
+    ga('send', 'pageview');
 </script>
 </body>
 
@@ -76,7 +83,8 @@
             <div class="col-md-6 col-md-offset-3 white">
                 <h3 class="page-header">No Account ?</h3>
 
-                <p>Please contact me at <a href="http://lefrantguillaume.com/contact?to=1" target="_blank">lefrantguillaume@gmail.com</a></p>
+                <p>Please contact me at <a href="http://lefrantguillaume.com/contact?to=1" target="_blank">lefrantguillaume@gmail.com</a>
+                </p>
             </div>
         </div>
     </div>
@@ -111,25 +119,26 @@
                             </li>
                             <li>
                                 <a id="sortAlpha" title="Sort by Alpha" href="#" class="{{sort_alpha "class"}}">
-									{{{sort_alpha "glyph"}}}
+                                    {{{sort_alpha "glyph"}}}
                                 </a>
                             </li>
                             <li>
                                 <a id="sortDate" title="Sort by Date" href="#" class="{{sort_date "class"}}">
-									{{{sort_date "glyph"}}}
+                                    {{{sort_date "glyph"}}}
                                 </a>
                             </li>
                             <li>
-                                <input type="text" class="form-control" id="search" placeholder="Search" autocomplete="off" />
+                                <input type="text" class="form-control" id="search" placeholder="Search"
+                                       autocomplete="off"/>
                             </li>
                         </ul>
 					</span>
 					<span id="site-title">
-						{{#if isDesktop}}
+                        {{#if isDesktop}}
                             <span class="hidden-xs hidden-sm">My Super Anime List</span> ({{ currentUser.username }})
-						{{else}}
-							{{ currentUser.username }} #MSAL
-						{{/if}}
+                        {{else}}
+                            {{ currentUser.username }} #MSAL
+                        {{/if}}
                     </span>
 
                     <div class="col-md-4" id="navigation-affix" style="margin-top: -19px;">
@@ -156,10 +165,10 @@
             <h2>
 				<span class="pull-left" style="font-size: 48px;">
 					<a id="logout" title="Logout" href="#"><i class="glyphicon glyphicon-off"></i></a>
-					{{#if isDesktop}}
+                    {{#if isDesktop}}
                         <a id="export" title="Export to JSON" href="#"><i class="glyphicon glyphicon-export"></i></a>
 					    <a id="import" title="Import JSON" href="#"><i class="glyphicon glyphicon-import"></i></a>
-					{{/if}}
+                    {{/if}}
                     <a id="changeBackground" title="Change Background" href="#"><i
                             class="glyphicon glyphicon-cloud-upload"></i></a>
 				</span>
@@ -172,8 +181,8 @@
 </template>
 
 <template name="yield">
-	{{> animes}}
-	{{> series}}
+    {{> animes}}
+    {{> series}}
     <div id="modal_import_export" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -288,49 +297,49 @@
             <h2 class="page-header text-center">Animes
                 <small>({{number}})</small>
             </h2>
-			{{#if show_cat}}
-				{{#each state}}
+            {{#if show_cat}}
+                {{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
                         <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
-								{{#if isDesktop}}
+                                {{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
-								{{else}}
-									{{#if stateVisible .}}
+                                {{else}}
+                                    {{#if stateVisible .}}
                                         <i class="glyphicon glyphicon-resize-small"></i>
-									{{else}}
+                                    {{else}}
                                         <i class="glyphicon glyphicon-resize-full"></i>
-									{{/if}}
-								{{/if}}
+                                    {{/if}}
+                                {{/if}}
                             </a>
                         </span>
-						{{st}}
+                        {{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                         <!-- Anime -->
-						{{#each animes st}}
+                        {{#each animes st}}
                             <li>
-								{{> item}}
+                                {{> item}}
                             </li>
-						{{/each}}
+                        {{/each}}
                         <!-- /Anime -->
                     </ul>
-				{{/each}}
-			{{else}}
+                {{/each}}
+            {{else}}
                 <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                     <!-- Anime -->
-					{{#each animes}}
+                    {{#each animes}}
                         <li>
-							{{> item}}
+                            {{> item}}
                         </li>
-					{{/each}}
+                    {{/each}}
                     <!-- /Anime -->
                 </ul>
-			{{/if}}
+            {{/if}}
         </div>
-		{{> toTop}}
+        {{> toTop}}
     </section>
 </template>
 
@@ -340,49 +349,49 @@
             <h2 class="page-header text-center">Series
                 <small>({{number}})</small>
             </h2>
-			{{#if show_cat}}
-				{{#each state}}
+            {{#if show_cat}}
+                {{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
                         <span class="pull-left">
                             <a class="hide-section" style="text-decoration: none;">
-								{{#if isDesktop}}
+                                {{#if isDesktop}}
                                     <img src="/img/loader.gif" alt="minimize"/>
-								{{else}}
-									{{#if stateVisible .}}
+                                {{else}}
+                                    {{#if stateVisible .}}
                                         <i class="glyphicon glyphicon-resize-small"></i>
-									{{else}}
+                                    {{else}}
                                         <i class="glyphicon glyphicon-resize-full"></i>
-									{{/if}}
-								{{/if}}
+                                    {{/if}}
+                                {{/if}}
                             </a>
                         </span>
-						{{st}}
+                        {{st}}
                         <small>({{number st}})</small>
                         <span class="pull-right">{{{glyphicon st}}}</span>
                     </h3>
                     <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                         <!-- Serie -->
-						{{#each series st}}
+                        {{#each series st}}
                             <li>
-								{{> item}}
+                                {{> item}}
                             </li>
-						{{/each}}
+                        {{/each}}
                         <!-- /Serie -->
                     </ul>
-				{{/each}}
-			{{else}}
+                {{/each}}
+            {{else}}
                 <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
                     <!-- Serie -->
-					{{#each series}}
+                    {{#each series}}
                         <li>
-							{{> item}}
+                            {{> item}}
                         </li>
-					{{/each}}
+                    {{/each}}
                     <!-- /Serie -->
                 </ul>
-			{{/if}}
+            {{/if}}
         </div>
-		{{> toTop}}
+        {{> toTop}}
     </section>
 </template>
 
@@ -414,7 +423,7 @@
                            spellcheck="off" data-sets="shownames" data-template="showsuggest" data-hint="true"
                            data-highlight="true" data-autoselect="true" data-value-key="name"/>
                     <select class="form-control" name="status">
-						{{{select_status "To See"}}}
+                        {{{select_status "To See"}}}
                     </select>
                 </div>
                 <div class="col-xs-6">
@@ -436,18 +445,18 @@
 </template>
 
 <template name="toTop">
-	{{> addItem}}
+    {{> addItem}}
     <p><a class="btn btn-info col-xs-12 back2top" href="#" style="border-radius: 0;">Back to Top</a></p>
 </template>
 
 <template name="item">
     <div class="item">
         <div class="row">
-			{{#if isDesktop}}
+            {{#if isDesktop}}
                 <div class="pull-left col-md-3">
                     <img class="img-responsive hidden-xs hidden-sm hidden-print" src="{{pic}}" alt="{{name}}"/>
                 </div>
-			{{/if}}
+            {{/if}}
             <div class="col-xs-12 col-md-9">
                 <h2 class="row less-page-header">
                     <strong class="col-xs-9">{{name}}</strong>
@@ -462,7 +471,7 @@
                         <div class="row">
                             <div class="col-xs-4 form-group">
                                 <select class="form-control" name="status">
-									{{{select_status status}}}
+                                    {{{select_status status}}}
                                 </select>
                             </div>
                             <div class="col-xs-4 form-group">
