@@ -1,0 +1,20 @@
+Meteor.startup(function() {
+	var users = [{
+		username: 'Rocky',
+		password: 'balboa75',
+		email: 'rocky.balboa@gmail.com',
+		profile: {
+			name: 'Rocky Balboa'
+		}
+	}];
+
+	if (Meteor.users.find().count() < users.length) {
+		_.each(users, function(user){
+			try {
+				Accounts.createUser(user);
+			} catch(e) {
+
+			}
+		});
+	}
+});
