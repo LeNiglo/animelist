@@ -10,7 +10,7 @@ Meteor.subscribe('showNames');
 
 var showNames = [];
 
-var deltaPress = 250;
+var deltaPress = 150;
 var lastUpPress = 0;
 var lastDownPress = 0;
 
