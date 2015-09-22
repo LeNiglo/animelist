@@ -461,8 +461,12 @@
                 <h2 class="row less-page-header">
                     <strong class="col-xs-9">{{name}}</strong>
                     <small>{{status}}</small>
-                    <span class="pull-right"><a class="item-title" href="{{link}}" target="_blank"><i
-                            class="glyphicon glyphicon-film"></i></a></span>
+                    <span class="pull-right">
+                        {{#if validLink link}}
+                            <a class="item-title" href="{{link}}" target="_blank"><i
+                                    class="glyphicon glyphicon-film"></i></a>
+                        {{/if}}
+                    </span>
                 </h2>
                 <form style="padding-top: 10px;">
                     <input type="hidden" name="id" value="{{_id}}"/>

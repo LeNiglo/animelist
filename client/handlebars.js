@@ -38,6 +38,11 @@ UI.registerHelper('select_status', function (status) {
     return str;
 });
 
+UI.registerHelper('validLink', function (link) {
+    var links = [null, '', 'http://localhost:3000', 'http://lefrantguillaume.com', 'http://lefrantguillaume.com#'];
+    return (links.indexOf(link) === -1);
+});
+
 UI.registerHelper('same', function (v1, v2) {
     if (v1 === v2)
         return true;
