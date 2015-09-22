@@ -39,7 +39,7 @@ UI.registerHelper('select_status', function (status) {
 });
 
 UI.registerHelper('validLink', function (link) {
-    var links = [null, '', 'http://localhost:3000', 'http://lefrantguillaume.com', 'http://lefrantguillaume.com#'];
+    var links = [null, '', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
     return (links.indexOf(link) === -1);
 });
 
