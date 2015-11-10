@@ -1,0 +1,106 @@
+<template name="modals">
+    <div id="modal_import_export" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Import | Export</h4>
+                </div>
+                <div class="modal-body">
+                    <p>To <strong>Import</strong>, paste your JSON here and click Import.<br/>To <strong>Export</strong>,
+                        copy the JSON and close.</p>
+
+                    <p><textarea rows="7" class="form-control"></textarea></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="import_json">Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_change_background" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Change Background</h4>
+                </div>
+                <div class="modal-body">
+                    <p>The picture can be an external link to an image (prefer small ones for better reactivity).</p>
+
+                    <p>
+                        <input type="text" class="form-control" name="pic" placeholder="Picture link"/>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" id="resetChangeBackground">Reset</button>
+                    <button type="button" class="btn btn-primary" id="confirmChangeBackground">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="change_picture" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Change Picture</h4>
+                </div>
+                <div class="modal-body">
+                    <p>The picture can be an external link to an image (prefer small ones for better reactivity).</p>
+
+                    <p>
+                        <input type="hidden" name="collec" value=""/>
+                        <input type="hidden" name="_id" value=""/>
+                        <input type="text" class="form-control" name="pic" placeholder="Picture link"/>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="change_picture_apply">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="change_link" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Change Link</h4>
+                </div>
+                <div class="modal-body">
+                    <p>The link can be an external link that allow you to see your show.</p>
+
+                    <p>
+                        <input type="hidden" name="collec" value=""/>
+                        <input type="hidden" name="_id" value=""/>
+                        <input type="text" class="form-control" name="link" placeholder="Show link"/>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="change_link_apply">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,20 @@
+<template name="footer">
+    <footer style="padding-top: 15px;">
+        <div class="container text-right">
+            <h2>
+				<span class="pull-left" style="font-size: 48px;">
+					<a id="logout" title="Logout" href="#"><i class="glyphicon glyphicon-off"></i></a>
+                    {{#if isDesktop}}
+                        <a id="export" title="Export to JSON" href="#"><i class="glyphicon glyphicon-export"></i></a>
+					    <a id="import" title="Import JSON" href="#"><i class="glyphicon glyphicon-import"></i></a>
+                    {{/if}}
+                    <a id="changeBackground" title="Change Background" href="#"><i
+                            class="glyphicon glyphicon-cloud-upload"></i></a>
+				</span>
+                <span>Created &amp; Designed by Guillaume Lefrant.</span>
+            </h2>
+
+            <p>You can contact me at <a href="mailto:lefrantguillaume@gmail.com">lefrantguillaume@gmail.com</a></p>
+        </div>
+    </footer>
+</template>

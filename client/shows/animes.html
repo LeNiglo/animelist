@@ -1,0 +1,51 @@
+<template name="animes">
+    <section id="animes">
+        <div class="container">
+            <h2 class="page-header text-center">Animes
+                <small>({{number}})</small>
+            </h2>
+            {{#if show_cat}}
+                {{#each state}}
+                    <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
+                        <span class="pull-left">
+                            <a class="hide-section" style="text-decoration: none;">
+                                {{#if isDesktop}}
+                                    <img src="/img/loader.gif" alt="minimize"/>
+                                {{else}}
+                                    {{#if stateVisible .}}
+                                        <i class="glyphicon glyphicon-resize-small"></i>
+                                    {{else}}
+                                        <i class="glyphicon glyphicon-resize-full"></i>
+                                    {{/if}}
+                                {{/if}}
+                            </a>
+                        </span>
+                        {{st}}
+                        <small>({{number st}})</small>
+                        <span class="pull-right">{{{glyphicon st}}}</span>
+                    </h3>
+                    <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+                        <!-- Anime -->
+                        {{#each animes st}}
+                            <li>
+                                {{> item}}
+                            </li>
+                        {{/each}}
+                        <!-- /Anime -->
+                    </ul>
+                {{/each}}
+            {{else}}
+                <ul class="col-md-12 list-unstyled" style="{{showFinished st}}">
+                    <!-- Anime -->
+                    {{#each animes}}
+                        <li>
+                            {{> item}}
+                        </li>
+                    {{/each}}
+                    <!-- /Anime -->
+                </ul>
+            {{/if}}
+        </div>
+        {{> toTop}}
+    </section>
+</template>

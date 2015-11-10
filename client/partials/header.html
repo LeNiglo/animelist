@@ -1,0 +1,68 @@
+<template name="header">
+    <header>
+        <div class="container">
+            <div class="row">
+                <h1>
+					<span class="pull-right" style="margin-top: -19px;">
+						<ul class="sortBy nav navbar-nav navbar-right">
+                            <li>
+                                <a id="go2new" title="Create New" href="#" class="">
+                                    <i class="glyphicon glyphicon-certificate"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="back2top" title="Back to Top" href="#" class="">
+                                    <i class="glyphicon glyphicon-arrow-up"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="showCategories" title="Sort by Category" href="#" class="{{show_cat}}">
+                                    <i class="glyphicon glyphicon-sort-by-attributes"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="showFinished" title="Show Finished ones" href="#" class="{{show_finished}}">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="sortAlpha" title="Sort by Alpha" href="#" class="{{sort_alpha "class"}}">
+                                    {{{sort_alpha "glyph"}}}
+                                </a>
+                            </li>
+                            <li>
+                                <a id="sortDate" title="Sort by Date" href="#" class="{{sort_date "class"}}">
+                                    {{{sort_date "glyph"}}}
+                                </a>
+                            </li>
+                            <li>
+                                <input type="text" class="form-control" id="search" placeholder="Search"
+                                       autocomplete="off"/>
+                            </li>
+                        </ul>
+					</span>
+					<span id="site-title">
+                        {{#if isDesktop}}
+                            <span class="hidden-xs hidden-sm">My Super Anime List</span> ({{ currentUser.username }})
+                        {{else}}
+                            {{ currentUser.username }} #MSAL
+                        {{/if}}
+                    </span>
+
+                    <div class="col-md-4" id="navigation-affix" style="margin-top: -19px;">
+                        <ul class="nav nav-tabs nav-justified" role="navigation">
+                            <li><a href="#animes"><span style="font-size: 24px;">Animes</span></a></li>
+                            <li><a href="#series"><span style="font-size: 24px;">Series</span></a></li>
+                        </ul>
+                    </div>
+                </h1>
+            </div>
+            <div class="row" id="navigation-affix-top">
+                <ul class="nav nav-tabs nav-justified" role="navigation">
+                    <li><a href="#animes"><span style="font-size: 24px;">Animes</span></a></li>
+                    <li><a href="#series"><span style="font-size: 24px;">Series</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+</template>
