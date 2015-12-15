@@ -109,8 +109,7 @@ Template.item.helpers({
         return Session.get("TargetedItem") && Session.get("TargetedItem") === this._id;
     },
     validLink: function () {
-        var links = [null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
-        console.log(this.link, links.indexOf(this.link) === -1);
+        var links = [undefined, null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
         return (links.indexOf(this.link) === -1);
     }
 });
