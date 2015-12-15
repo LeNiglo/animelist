@@ -8,15 +8,11 @@
                 {{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
                         <span class="pull-left">
-                            <a class="hide-section" style="text-decoration: none;">
-                                {{#if isDesktop}}
-                                    <img src="/img/loader.gif" alt="minimize"/>
+                            <a class="hide-section" tabindex="-1" style="text-decoration: none;">
+                                {{#if stateVisible .}}
+                                    <i class="glyphicon glyphicon-resize-small"></i>
                                 {{else}}
-                                    {{#if stateVisible .}}
-                                        <i class="glyphicon glyphicon-resize-small"></i>
-                                    {{else}}
-                                        <i class="glyphicon glyphicon-resize-full"></i>
-                                    {{/if}}
+                                    <i class="glyphicon glyphicon-resize-full"></i>
                                 {{/if}}
                             </a>
                         </span>

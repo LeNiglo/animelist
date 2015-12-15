@@ -8,11 +8,17 @@
             {{/if}}
             <div class="col-xs-12 col-md-9">
                 <h2 class="row less-page-header">
-                    <strong class="col-xs-9">{{name}}</strong>
+                    <div class="col-xs-9">
+                        {{#if currentlyEditing}}
+                            <input type="text" tabindex="-1" class="edited-name" value="{{name}}" autofocus/>
+                        {{else}}
+                            <strong class="editable-name">{{name}}</strong>
+                        {{/if}}
+                    </div>
                     <small>{{status}}</small>
                     <span class="pull-right">
-                        {{#if validLink link}}
-                            <a class="item-title" href="{{link}}" target="_blank"><i
+                        {{#if validLink}}
+                            <a class="item-title" tabindex="-1" href="{{link}}" target="_blank"><i
                                     class="glyphicon glyphicon-film"></i></a>
                         {{/if}}
                     </span>
@@ -23,13 +29,14 @@
                     <div class="col-xs-9">
                         <div class="row">
                             <div class="col-xs-4 form-group">
-                                <select class="form-control" name="status">
+                                <select tabindex="-1" class="form-control" name="status">
                                     {{{select_status status}}}
                                 </select>
                             </div>
                             <div class="col-xs-4 form-group">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="season" value="{{season}}"
+                                    <input type="number" tabindex="-1" class="form-control" name="season"
+                                           value="{{season}}"
                                            placeholder="saison"/>
                                     <span class="input-group-addon"><a class="add_season"><i
                                             class="glyphicon glyphicon-plus"></i></a></span>
@@ -37,7 +44,8 @@
                             </div>
                             <div class="col-xs-4 form-group">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="episode" value="{{episode}}"
+                                    <input type="number" tabindex="-1" class="form-control" name="episode"
+                                           value="{{episode}}"
                                            placeholder="episode"/>
                                     <span class="input-group-addon"><a class="add_episode"><i
                                             class="glyphicon glyphicon-plus"></i></a></span>
@@ -46,17 +54,17 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <a class="input-group-addon save" title="Save."><i
+                        <a class="input-group-addon save" title="Save." tabindex="-1"><i
                                 class="glyphicon glyphicon-save light-green"></i></a>
-                        <a class="input-group-addon change_link" title="Link."><i
+                        <a class="input-group-addon change_link" title="Link." tabindex="-1"><i
                                 class="glyphicon glyphicon-link purple"></i></a>
-                        <a class="input-group-addon change_pic" title="Change Picture"><i
+                        <a class="input-group-addon change_pic" title="Change Picture" tabindex="-1"><i
                                 class="glyphicon glyphicon-picture orange"></i></a>
-                        <a class="input-group-addon remove_item" title="Delete."><i
+                        <a class="input-group-addon remove_item" title="Delete." tabindex="-1"><i
                                 class="glyphicon glyphicon-remove red"></i></a>
                     </div>
                     <div class="col-xs-12">
-                        <small><input type="text" class="show_commentary" value="{{commentary}}"/></small>
+                        <small><input type="text" tabindex="-1" class="show_commentary" value="{{commentary}}"/></small>
                     </div>
                 </form>
             </div>

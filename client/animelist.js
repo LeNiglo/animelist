@@ -53,12 +53,12 @@ var substringMatcher = function (strs) {
 };
 
 Template.yield.rendered = function () {
-    cg_pic = $('#change_picture');
-    cg_link = $('#change_link');
-    md_imp_exp = $("#modal_import_export");
-    md_chg_back = $("#modal_change_background");
-    search = $("#search");
-    body = $("body");
+    $cg_pic = $('#change_picture');
+    $cg_link = $('#change_link');
+    $md_imp_exp = $("#modal_import_export");
+    $md_chg_back = $("#modal_change_background");
+    $search = $("#search");
+    $body = $("body");
     header = $("header");
 
     $('*[data-dismiss]').click(function () {
@@ -98,7 +98,7 @@ Template.yield.rendered = function () {
 
     });
 
-    search.focus();
+    $search.focus();
 
     window.addEventListener("keydown", function (e) {
         // arrow keys
@@ -114,54 +114,54 @@ Template.yield.rendered = function () {
         }
     }, false);
 
-    body.keyup(function (e) {
+    $body.keyup(function (e) {
+        var currentScroll = $(window).scrollTop() + 150;
+        var newScroll = -1;
+
         if (e.keyCode == 27) { // ESC
-            search.val("");
+            $search.val("");
             Session.set('searchQ', '');
-            search.focus();
+            $search.focus();
+            Session.set("TargetedItem", null);
+            $('.edited-name').trigger('blur');
         } else if (e.keyCode == 38 && !$(e.target).hasClass('typeahead')) { // UP
             e.preventDefault();
-            var keyUpPress = new Date();
 
-            if (keyUpPress - lastUpPress >= deltaPress) {
-                var currentScroll = $(window).scrollTop() + 120;
-                var newScroll = -1;
-                $($(".item:visible").get().reverse()).each(function () {
-                    if (newScroll == -1 && $(this).offset().top < currentScroll) {
-                        newScroll = $(this).offset().top - 120;
-                        return false;
-                    }
-                });
-                if (newScroll > 0)
-                    $('html, body').animate({scrollTop: newScroll}, 150);
-            } else {
+            if (e.shiftKey) {
                 $('html, body').animate({scrollTop: 0}, 150);
-                keyUpPress = 0;
+                return false;
             }
-            lastUpPress = keyUpPress;
 
+            currentScroll -= 30;
+            $($(".item:visible").get().reverse()).each(function () {
+                if (newScroll == -1 && $(this).offset().top < currentScroll) {
+                    newScroll = $(this).offset().top - 120;
+                    return false;
+                }
+            });
+            if (newScroll > 0)
+                $('html, body').animate({scrollTop: newScroll}, 150);
+            return false;
         } else if (e.keyCode == 40 && !$(e.target).hasClass('typeahead')) { // DOWN
             e.preventDefault();
-            var keyDownPress = new Date();
 
-            if (keyDownPress - lastDownPress >= deltaPress) {
-                var currentScroll = $(window).scrollTop() + 180;
-                var newScroll = -1;
-                $('.item:visible').each(function () {
-                    if (newScroll == -1 && $(this).offset().top > currentScroll) {
-                        newScroll = $(this).offset().top - 120;
-                        return false;
-                    }
-                });
-                if (newScroll > 0)
-                    $('html, body').animate({scrollTop: newScroll}, 150);
-            } else {
+            if (e.shiftKey) {
                 $('html, body').animate({scrollTop: $(document).height()}, 150);
-                keyDownPress = 0;
+                return false;
             }
-            lastDownPress = keyDownPress;
+
+            currentScroll += 30;
+            $('.item:visible').each(function () {
+                if (newScroll == -1 && $(this).offset().top > currentScroll) {
+                    newScroll = $(this).offset().top - 120;
+                    return false;
+                }
+            });
+            if (newScroll > 0)
+                $('html, body').animate({scrollTop: newScroll}, 150);
+            return false;
         }
-        return false;
+        return true;
     });
 
     header.affix({
@@ -185,102 +185,6 @@ Template.yield.rendered = function () {
     Meteor.typeahead.inject();
 };
 
-Template.login.events({
-    'submit form': function (e) {
-        e.preventDefault();
-        $form = $(e.target);
-        Meteor.loginWithPassword($form.find('input[name="username"]').val(), $form.find('input[name="password"]').val(), function (res) {
-            if (res) {
-                console.log(res.reason);
-            } else {
-                console.log('Logged In. Have Fun using My Super Anime List !');
-            }
-        });
-    }
-});
-
-Template.footer.events({
-    'click #logout': function (e) {
-        e.preventDefault();
-        Meteor.logout(function () {
-            console.log('Logged Out. Thanks for using My Super Anime List !');
-        });
-    },
-    'click #export': function (e) {
-        e.preventDefault();
-        var json = {
-            animes: Anime.find({'owner': Meteor.userId()}).fetch(),
-            series: Serie.find({'owner': Meteor.userId()}).fetch()
-        };
-        md_imp_exp.show(500).find("textarea").focus().val(JSON.stringify(json));
-    },
-    'click #import': function (e) {
-        e.preventDefault();
-        md_imp_exp.show(500).find("textarea").val("").focus();
-    },
-    'click #changeBackground': function (e) {
-        e.preventDefault();
-        md_chg_back.show(500).find("input").val("").focus();
-    }
-});
-
-Template.header.events({
-
-    /*
-     **	Instant Search
-     */
-
-    'keyup #search': function (e) {
-        e.preventDefault();
-        Session.set('searchQ', $(e.target).val());
-    },
-
-    /*
-     **	Turn On/Off the Category View
-     */
-
-    'click #showCategories': function (e) {
-        e.preventDefault();
-        Session.set('showCat', (Session.get('showCat') !== true));
-        console.log('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"));
-        body.focus();
-    },
-
-    'click #showFinished': function (e) {
-        e.preventDefault();
-        Session.set('showFinished', (Session.get('showFinished') !== true));
-        console.log('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"));
-        body.focus();
-    },
-
-    /*
-     **	Set Orders
-     */
-
-    'click #sortAlpha': function (e) {
-        e.preventDefault();
-        if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
-            Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
-        } else {
-            Session.set('sortBy', 'name');
-            console.log('Sort By changed to : Alpha');
-        }
-        body.focus();
-    },
-    'click #sortDate': function (e) {
-        e.preventDefault();
-        if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
-            Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
-        } else {
-            Session.set('sortBy', 'updatedAt');
-            console.log('Sort By changed to : Date');
-        }
-        body.focus();
-    }
-});
-
 Template.yield.events({
     'click .hide-section': function (e) {
         e.preventDefault();
@@ -294,199 +198,78 @@ Template.yield.events({
         else
             $list.slideDown(100);
     },
-    'click .change_pic': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-        var collec = $form.parents('section').attr('id');
-        var _id = $form.parents('form').find('input[name="id"]').val();
-        cg_pic.find('input[name="collec"]').val(collec);
-        cg_pic.find('input[name="_id"]').val(_id);
-        cg_pic.find('input[name="pic"]').val('');
-        cg_pic.show(500);
-        cg_pic.find('input[name="pic"]').focus();
-    },
     'click #change_picture_apply': function (e) {
         e.preventDefault();
-        var collec = cg_pic.find('input[name="collec"]').val();
-        var id = cg_pic.find('input[name="_id"]').val();
-        var picture = cg_pic.find('input[name="pic"]').val();
+        var collec = $cg_pic.find('input[name="collec"]').val();
+        var id = $cg_pic.find('input[name="_id"]').val();
+        var picture = $cg_pic.find('input[name="pic"]').val();
 
         if (collec === "animes") {
             Anime.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
                 if (err)
                     alert(err);
                 if (res > 0)
-                    cg_pic.hide(500);
+                    $cg_pic.hide(500);
             });
         } else if (collec === "series") {
             Serie.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
                 if (err)
                     alert(err);
                 if (res > 0)
-                    cg_pic.hide(500);
+                    $cg_pic.hide(500);
             });
         } else {
             alert('Error while applying picture.');
         }
     },
-    'change .show_commentary': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-        var collec = $form.parents('section').attr('id');
-        var id = $form.parent().parent().parent().find('input[name="id"]').val();
-        var commentary = $form.val();
-
-        var glyph = $form.parent().parent().parent().find('.glyphicon-save');
-        if (glyph.hasClass('disabled')) {
-            return false;
-        }
-        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').addClass('disabled');
-        if (collec === "animes") {
-            Anime.update({_id: id}, {$set: {commentary: commentary}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0) {
-                    Meteor.setTimeout(function () {
-                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                    }, 2000);
-                }
-            });
-        } else if (collec === "series") {
-            Serie.update({_id: id}, {$set: {commentary: commentary}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0) {
-                    Meteor.setTimeout(function () {
-                        glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green').removeClass('disabled');
-                    }, 2000);
-                }
-            });
-        } else {
-            alert('Error while applying commentary.');
-        }
-    },
-    'click .change_link': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-        var collec = $form.parents('section').attr('id');
-        var _id = $form.parents('form').find('input[name="id"]').val();
-        cg_link.find('input[name="collec"]').val(collec);
-        cg_link.find('input[name="_id"]').val(_id);
-        cg_link.find('input[name="link"]').val('');
-        cg_link.show(500);
-        cg_link.find('input[name="link"]').focus();
-    },
     'click #change_link_apply': function (e) {
         e.preventDefault();
-        var collec = cg_link.find('input[name="collec"]').val();
-        var id = cg_link.find('input[name="_id"]').val();
-        var link = cg_link.find('input[name="link"]').val();
+        var collec = $cg_link.find('input[name="collec"]').val();
+        var id = $cg_link.find('input[name="_id"]').val();
+        var link = $cg_link.find('input[name="link"]').val();
 
         if (collec === "animes") {
             Anime.update({_id: id}, {$set: {link: link}}, function (err, res) {
                 if (err)
                     alert(err);
                 if (res > 0)
-                    cg_link.hide(500);
+                    $cg_link.hide(500);
             });
         } else if (collec === "series") {
             Serie.update({_id: id}, {$set: {link: link}}, function (err, res) {
                 if (err)
                     alert(err);
                 if (res > 0)
-                    cg_link.hide(500);
+                    $cg_link.hide(500);
             });
         } else {
             alert('Error while changing link.');
         }
     },
-    'click .save': function (e) {
+    'click #confirmChangeBackground': function (e) {
         e.preventDefault();
-        var $form = $(e.target).parents('form');
-        var collec = $form.parents('section').attr('id');
-
-        obj = {};
-        obj._id = $form.find('input[name="id"]').val();
-        obj.status = $form.find('select[name="status"]').val();
-        obj.season = $form.find('input[name="season"]').val();
-        obj.episode = $form.find('input[name="episode"]').val();
-
-        var glyph = $(e.target).hasClass('glyphicon') ? $(e.target) : $($(e.target).find('.glyphicon'));
-        if (glyph.hasClass('disabled') && (e.clientX && e.clientY)) {
-            return false;
-        }
-        glyph.addClass('glyphicon-saved').addClass('green').removeClass('glyphicon-save').removeClass('light-green').addClass('disabled');
-        if (collec === "animes") {
-            Anime.update({_id: obj._id}, {
-                $set: {
-                    status: obj.status,
-                    season: obj.season,
-                    episode: obj.episode
-                }
-            }, function (error, result) {
-                if (result > 0) {
-                    Meteor.setTimeout(function () {
-                        glyph.addClass('glyphicon-save').addClass('light-green').removeClass('glyphicon-saved').removeClass('green').removeClass('disabled');
-                    }, 100);
+        var input = $md_chg_back.find('input').val();
+        if (Meteor.userId() != null) {
+            Meteor.call('changeUserBackground', input, function (error, result) {
+                if (result) {
+                    $md_chg_back.hide();
                 }
             });
-        } else if (collec === "series") {
-            Serie.update({_id: obj._id}, {
-                $set: {
-                    status: obj.status,
-                    season: obj.season,
-                    episode: obj.episode
-                }
-            }, function (error, result) {
-                if (result > 0) {
-                    Meteor.setTimeout(function () {
-                        glyph.addClass('glyphicon-save').addClass('light-green').removeClass('glyphicon-saved').removeClass('green').removeClass('disabled');
-                    }, 100);
-                }
-            });
-        } else {
-            throwError('Error while creating. not inside a section tag.');
         }
     },
-    'click .add_season': function (e) {
+    'click #resetChangeBackground': function (e) {
         e.preventDefault();
-        var $form = $(e.target).closest('form');
-        var $input = $form.find('input[name="season"]');
-
-        $input.val(1 + parseInt($input.val()));
-        $form.find('.save')[0].click();
-        return false;
-    },
-    'click .add_episode': function (e) {
-        e.preventDefault();
-        var $form = $(e.target).closest('form');
-        var $input = $form.find('input[name="episode"]');
-
-        $input.val(1 + parseInt($input.val()));
-        $form.find('.save')[0].click();
-        return false;
-    },
-    'click .remove_item': function (e) {
-        e.preventDefault();
-        var name = $(e.target).parents('.item').find('big').text();
-        var id = $(e.target).parents('form').find('input[name="id"]').val();
-        var collec = $(e.target).parents('section').attr('id');
-        var r = confirm("Are you sure you want to remove " + name + " from your " + collec + " list ?");
-        if (r === true) {
-            if (collec === "animes") {
-                Anime.remove({_id: id}, function () {
-                });
-            } else if (collec === "series") {
-                Serie.remove({_id: id}, function () {
-                });
-            } else {
-                alert('Error while deleting. not inside a section tag.');
-            }
+        if (Meteor.userId()) {
+            Meteor.call('changeUserBackground', null, function (error, result) {
+                if (result) {
+                    $md_chg_back.hide();
+                }
+            });
         }
     },
     'click #import_json': function (e) {
         e.preventDefault();
-        var json = md_imp_exp.find("textarea").val();
+        var json = $md_imp_exp.find("textarea").val();
         try {
             var obj = JSON.parse(json);
         } catch (e) {
@@ -555,167 +338,7 @@ Template.yield.events({
                 ++count;
             }
         });
-        md_imp_exp.hide(500);
+        $md_imp_exp.hide(500);
         alert("Imported " + count + " elements.");
-    },
-    'click #confirmChangeBackground': function (e) {
-        e.preventDefault();
-        var input = md_chg_back.find('input').val();
-        if (Meteor.userId() != null) {
-            Meteor.call('changeUserBackground', input, function (error, result) {
-                if (result) {
-                    md_chg_back.hide();
-                }
-            });
-        }
-    },
-    'click #resetChangeBackground': function (e) {
-        e.preventDefault();
-        if (Meteor.userId()) {
-            Meteor.call('changeUserBackground', null, function (error, result) {
-                if (result) {
-                    md_chg_back.hide();
-                }
-            });
-        }
     }
 });
-
-Template.animes.helpers({
-    number: function (st) {
-        if (!st) {
-            return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
-        } else {
-            return Anime.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
-            }).count();
-        }
-    },
-    animes: function (st) {
-        var filter = {sort: {}};
-        filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
-        if (!st) {
-            return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
-        } else {
-            return Anime.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
-            }, filter);
-        }
-    },
-    stateVisible: function (st) {
-        if (!!Session.get('reload')) {
-            return ($('#animes').find('h3.' + st.id).next('ul').is(":visible"));
-        } else {
-            return false;
-        }
-    }
-});
-
-Template.series.helpers({
-    number: function (st) {
-        if (!st) {
-            return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
-        } else {
-            return Serie.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
-            }).count();
-        }
-    },
-    series: function (st) {
-        var filter = {sort: {}};
-        filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
-        if (!st) {
-            return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
-        } else {
-            return Serie.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
-            }, filter);
-        }
-    },
-    stateVisible: function (st) {
-        if (!!Session.get('reload')) {
-            return ($('#series').find('h3.' + st.id).next('ul').is(":visible"));
-        } else {
-            return false;
-        }
-    }
-});
-
-Template.addItem.events({
-    'submit .addItem': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-        var collec = $form.parents('section').attr('id');
-
-        obj = {};
-        obj.name = $form.find('input[name="name"]').val();
-        obj.status = $form.find('select[name="status"]').val();
-        obj.season = $form.find('input[name="season"]').val();
-        obj.episode = $form.find('input[name="episode"]').val();
-        obj.owner = Meteor.userId();
-
-        if (collec === "animes") {
-            Anime.insert(obj, function (err, res) {
-                if (!err && res) {
-                    $form.trigger('reset');
-                }
-            });
-        } else if (collec === "series") {
-            Serie.insert(obj, function (err, res) {
-                if (!err && res) {
-                    $form.trigger('reset');
-                }
-            });
-        } else {
-            console.log('Error while creating. not inside a section tag.');
-        }
-    }
-});
-
-Template.addItem.helpers({
-    shownames: function () {
-        return [
-            {
-                name: 'animes',
-                valueKey: 'name',
-                displayKey: 'name',
-                local: function () {
-                    return Anime.find().fetch();
-                },
-                template: 'showsuggest',
-                header: '<p><em class="tt-title">Animes</em></p>'
-            },
-            {
-                name: 'series',
-                valueKey: 'name',
-                displayKey: 'name',
-                local: function () {
-                    return Serie.find().fetch();
-                },
-                template: 'showsuggest',
-                header: '<p><em class="tt-title">Series</em></p>'
-            }
-        ];
-    }
-});
-
-Template.showsuggest.helpers({
-    getOwner: function (ow) {
-        return Meteor.users.findOne({_id: ow}).username;
-    }
-});
-
-Template.errors.helpers({
-    errors: function () {
-        return Errors.find();
-    }
-});
-
