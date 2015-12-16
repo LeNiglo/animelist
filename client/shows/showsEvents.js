@@ -179,7 +179,7 @@ Template.item.events({
     'dblclick .editable-name': function (e, t) {
         return Session.set("TargetedItem", t.data._id);
     },
-    'change, blur .edited-name': function (e) {
+    'change .edited-name, blur .edited-name': function (e) {
         var $this = $(e.target);
         var collec = $this.parents('section').attr('id');
         var newName = $this.val();
