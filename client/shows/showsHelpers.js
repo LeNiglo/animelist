@@ -6,12 +6,14 @@
 Template.animes.helpers({
     number: function (st) {
         if (!st) {
-            return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+            return Show.find({
+                type: 'anime',owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')}).count();
         } else {
-            return Anime.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
+            return Show.find({
+                type: 'anime',
+                owner: Meteor.userId(),
+                status: st,
+                name: new RegExp(Session.get('searchQ'), 'i')
             }).count();
         }
     },
@@ -19,12 +21,14 @@ Template.animes.helpers({
         var filter = {sort: {}};
         filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
         if (!st) {
-            return Anime.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
+            return Show.find({
+                type: 'anime',owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')}, filter);
         } else {
-            return Anime.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
+            return Show.find({
+                type: 'anime',
+                owner: Meteor.userId(),
+                status: st,
+                name: new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         }
     },
@@ -40,9 +44,14 @@ Template.animes.helpers({
 Template.series.helpers({
     number: function (st) {
         if (!st) {
-            return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}).count();
+            return Show.find({
+                type: 'serie',
+                owner: Meteor.userId(),
+                name: new RegExp(Session.get('searchQ'), 'i')
+            }).count();
         } else {
-            return Serie.find({
+            return Show.find({
+                type: 'serie',
                 'owner': Meteor.userId(),
                 'status': st,
                 'name': new RegExp(Session.get('searchQ'), 'i')
@@ -53,12 +62,17 @@ Template.series.helpers({
         var filter = {sort: {}};
         filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
         if (!st) {
-            return Serie.find({'owner': Meteor.userId(), 'name': new RegExp(Session.get('searchQ'), 'i')}, filter);
+            return Show.find({
+                type: 'serie',
+                owner: Meteor.userId(),
+                name: new RegExp(Session.get('searchQ'), 'i')
+            }, filter);
         } else {
-            return Serie.find({
-                'owner': Meteor.userId(),
-                'status': st,
-                'name': new RegExp(Session.get('searchQ'), 'i')
+            return Show.find({
+                type: 'serie',
+                owner: Meteor.userId(),
+                status: st,
+                name: new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         }
     },
@@ -79,7 +93,7 @@ Template.addItem.helpers({
                 valueKey: 'name',
                 displayKey: 'name',
                 local: function () {
-                    return Anime.find().fetch();
+                    return Show.find({type: "anime"}).fetch();
                 },
                 template: 'showsuggest',
                 header: '<p><em class="tt-title">Animes</em></p>'
@@ -89,7 +103,7 @@ Template.addItem.helpers({
                 valueKey: 'name',
                 displayKey: 'name',
                 local: function () {
-                    return Serie.find().fetch();
+                    return Show.find({type: "serie"}).fetch();
                 },
                 template: 'showsuggest',
                 header: '<p><em class="tt-title">Series</em></p>'

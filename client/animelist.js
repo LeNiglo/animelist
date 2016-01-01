@@ -5,17 +5,13 @@ Session.setDefault('showFinished', false);
 Session.setDefault('searchQ', '');
 Session.set('reload', 0);
 
-Meteor.subscribe('mylist');
+Meteor.subscribe('myAnimes');
+Meteor.subscribe('mySeries');
 Meteor.subscribe('showNames');
 
 var showNames = [];
 
-var deltaPress = 200;
-var lastUpPress = 0;
-var lastDownPress = 0;
-
 Errors = new Meteor.Collection(null);
-
 errorid = 0;
 
 throwError = function (message, type) {
@@ -52,6 +48,22 @@ var substringMatcher = function (strs) {
     };
 };
 
+mySave = function ($glyph, id, setter) {
+    if ($glyph !== null)
+        $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
+    Show.update({_id: id}, {$set: setter}, function (err, res) {
+        if (err)
+            throwError(err, 'danger');
+        if (res > 0) {
+            if ($glyph !== null)
+                Meteor.setTimeout(function () {
+                    $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
+                }, 2000);
+        }
+        return res;
+    });
+};
+
 Template.yield.rendered = function () {
     $cg_pic = $('#change_picture');
     $cg_link = $('#change_link');
@@ -59,7 +71,7 @@ Template.yield.rendered = function () {
     $md_chg_back = $("#modal_change_background");
     $search = $("#search");
     $body = $("body");
-    header = $("header");
+    $header = $("header");
 
     $('*[data-dismiss]').click(function () {
         $('.modal').hide(500);
@@ -164,18 +176,18 @@ Template.yield.rendered = function () {
         return true;
     });
 
-    header.affix({
+    $header.affix({
         offset: {
             top: 69
         }
     });
 
-    header.on('affix.bs.affix', function () {
-        header.transition({height: '75px'}, 300, 'ease');
+    $header.on('affix.bs.affix', function () {
+        $header.transition({height: '75px'}, 300, 'ease');
     });
 
-    header.on('affix-top.bs.affix', function () {
-        header.transition({height: '130px'}, 250, 'ease');
+    $header.on('affix-top.bs.affix', function () {
+        $header.transition({height: '130px'}, 250, 'ease');
     });
 
     Meteor.setTimeout(function () {
@@ -200,51 +212,27 @@ Template.yield.events({
     },
     'click #change_picture_apply': function (e) {
         e.preventDefault();
-        var collec = $cg_pic.find('input[name="collec"]').val();
         var id = $cg_pic.find('input[name="_id"]').val();
         var picture = $cg_pic.find('input[name="pic"]').val();
 
-        if (collec === "animes") {
-            Anime.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0)
-                    $cg_pic.hide(500);
-            });
-        } else if (collec === "series") {
-            Serie.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0)
-                    $cg_pic.hide(500);
-            });
-        } else {
-            alert('Error while applying picture.');
-        }
+        Show.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
+            if (err)
+                alert(err);
+            if (res > 0)
+                $cg_pic.hide(500);
+        });
     },
     'click #change_link_apply': function (e) {
         e.preventDefault();
-        var collec = $cg_link.find('input[name="collec"]').val();
         var id = $cg_link.find('input[name="_id"]').val();
         var link = $cg_link.find('input[name="link"]').val();
 
-        if (collec === "animes") {
-            Anime.update({_id: id}, {$set: {link: link}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0)
-                    $cg_link.hide(500);
-            });
-        } else if (collec === "series") {
-            Serie.update({_id: id}, {$set: {link: link}}, function (err, res) {
-                if (err)
-                    alert(err);
-                if (res > 0)
-                    $cg_link.hide(500);
-            });
-        } else {
-            alert('Error while changing link.');
-        }
+        Show.update({_id: id}, {$set: {link: link}}, function (err, res) {
+            if (err)
+                alert(err);
+            if (res > 0)
+                $cg_link.hide(500);
+        });
     },
     'click #confirmChangeBackground': function (e) {
         e.preventDefault();
@@ -267,29 +255,31 @@ Template.yield.events({
             });
         }
     },
-    'click #import_json': function (e) {
-        e.preventDefault();
+    'click #import_json': function (event) {
+        event.preventDefault();
         var json = $md_imp_exp.find("textarea").val();
         try {
             var obj = JSON.parse(json);
-        } catch (e) {
+        } catch (error) {
             $("#modal_import_export").hide(500);
-            alert("Don't try to trick us !\nJSON isn't well formatted.\n" + e.toString());
+            alert("Don't try to trick us !\nJSON isn't well formatted.\n" + error.toString());
             return false;
         }
         var animes = obj.animes;
         var series = obj.series;
         var count = 0;
-        animes.forEach(function (e) {
-            var test = Anime.findOne({name: e.name});
+        animes.forEach(function (elem) {
+            var test = Show.findOne({name: elem.name});
             if (test) {
-                if (test.updatedAt === null || e.updatedAt > test.updatedAt) {
-                    Anime.update({name: e.name}, {
+                if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
+                    Show.update({name: elem.name}, {
                         $set: {
-                            pic: e.pic,
-                            status: e.status,
-                            season: e.season,
-                            episode: e.episode,
+                            type: 'anime',
+                            pic: elem.pic,
+                            status: elem.status,
+                            season: elem.season,
+                            episode: elem.episode,
+                            link: elem.link,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -297,28 +287,32 @@ Template.yield.events({
                     });
                 }
             } else {
-                Anime.insert({
-                    name: e.name,
-                    status: e.status,
-                    season: e.season,
-                    episode: e.episode,
-                    pic: e.pic,
+                Show.insert({
+                    type: 'anime',
+                    name: elem.name,
+                    status: elem.status,
+                    season: elem.season,
+                    episode: elem.episode,
+                    pic: elem.pic,
+                    link: elem.link,
                     owner: Meteor.userId(),
-                    createdAt: e.createdAt
+                    createdAt: elem.createdAt
                 });
                 ++count;
             }
         });
-        series.forEach(function (e) {
-            var test = Serie.findOne({name: e.name});
+        series.forEach(function (elem) {
+            var test = Show.findOne({name: elem.name});
             if (test) {
-                if (test.updatedAt === null || e.updatedAt > test.updatedAt) {
-                    Serie.update({name: e.name}, {
+                if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
+                    Show.update({name: elem.name}, {
                         $set: {
-                            pic: e.pic,
-                            status: e.status,
-                            season: e.season,
-                            episode: e.episode,
+                            type: 'serie',
+                            pic: elem.pic,
+                            status: elem.status,
+                            season: elem.season,
+                            episode: elem.episode,
+                            link: elem.link,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -326,14 +320,16 @@ Template.yield.events({
                     });
                 }
             } else {
-                Serie.insert({
-                    name: e.name,
-                    status: e.status,
-                    season: e.season,
-                    episode: e.episode,
-                    pic: e.pic,
+                Show.insert({
+                    type: 'serie',
+                    name: elem.name,
+                    status: elem.status,
+                    season: elem.season,
+                    episode: elem.episode,
+                    pic: elem.pic,
+                    link: elem.link,
                     owner: Meteor.userId(),
-                    createdAt: e.createdAt
+                    createdAt: elem.createdAt
                 });
                 ++count;
             }

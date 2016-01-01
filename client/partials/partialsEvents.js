@@ -20,14 +20,14 @@ Template.header.events({
     'click #showCategories': function (e) {
         e.preventDefault();
         Session.set('showCat', (Session.get('showCat') !== true));
-        console.log('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"));
+        throwError('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"), "info");
         $body.focus();
     },
 
     'click #showFinished': function (e) {
         e.preventDefault();
         Session.set('showFinished', (Session.get('showFinished') !== true));
-        console.log('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"));
+        throwError('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"), "info");
         $body.focus();
     },
 
@@ -39,10 +39,10 @@ Template.header.events({
         e.preventDefault();
         if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
             Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
+            throwError('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"), "info");
         } else {
             Session.set('sortBy', 'name');
-            console.log('Sort By changed to : Alpha');
+            throwError('Sort By changed to : Alpha', "info");
         }
         $body.focus();
     },
@@ -50,10 +50,10 @@ Template.header.events({
         e.preventDefault();
         if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
             Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
+            throwError('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"), "info");
         } else {
             Session.set('sortBy', 'updatedAt');
-            console.log('Sort By changed to : Date');
+            throwError('Sort By changed to : Date', "info");
         }
         $body.focus();
     }
@@ -66,9 +66,9 @@ Template.login.events({
         $form = $(e.target);
         Meteor.loginWithPassword($form.find('input[name="username"]').val(), $form.find('input[name="password"]').val(), function (res) {
             if (res) {
-                console.log(res.reason);
+                throwError(res.reason, "danger");
             } else {
-                console.log('Logged In. Have Fun using My Super Anime List !');
+                throwError('Logged In. Have Fun using My Super Anime List !', "success");
             }
         });
     }
@@ -78,14 +78,14 @@ Template.footer.events({
     'click #logout': function (e) {
         e.preventDefault();
         Meteor.logout(function () {
-            console.log('Logged Out. Thanks for using My Super Anime List !');
+            throwError('Logged Out. Thanks for using My Super Anime List !', "success");
         });
     },
     'click #export': function (e) {
         e.preventDefault();
         var json = {
-            animes: Anime.find({'owner': Meteor.userId()}).fetch(),
-            series: Serie.find({'owner': Meteor.userId()}).fetch()
+            animes: Show.find({type: 'anime', owner: Meteor.userId()}).fetch(),
+            series: Show.find({type: 'serie', owner: Meteor.userId()}).fetch()
         };
         $md_imp_exp.show(500).find("textarea").focus().val(JSON.stringify(json));
     },

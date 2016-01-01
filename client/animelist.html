@@ -67,6 +67,13 @@
 </template>
 
 <template name="toTop">
-    {{> addItem}}
-    <p><a class="btn btn-info col-xs-12 back2top" href="#" tabindex="-1" style="border-radius: 0;">Back to Top</a></p>
+    {{> addItem .}}
+    <div class="container-fluid">
+        <div class="row">
+            <p>
+                <a class="btn btn-info col-xs-12 back2top" href="#" tabindex="-1" style="border-radius: 0;">Back to
+                    Top</a>
+            </p>
+        </div>
+    </div>
 </template>

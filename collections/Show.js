@@ -1,6 +1,6 @@
-Serie = new Meteor.Collection('series');
+Show = new Meteor.Collection('shows');
 
-Serie.allow({
+Show.allow({
     insert: function (userId, doc) {
         // the user must be logged in, and the document must be owned by the user
         return (userId && doc.owner === userId);
@@ -16,7 +16,7 @@ Serie.allow({
     fetch: ['owner']
 });
 
-Serie.before.insert(function (userId, it) {
+Show.before.insert(function (userId, it) {
 
     if (!userId) {
         return false;
@@ -37,7 +37,7 @@ Serie.before.insert(function (userId, it) {
         return false;
     }
 
-    if (!(Match.test(it.name, String) && Match.test(it.pic, String) && Match.test(it.link, String) && Match.test(it.season, Number) &&
+    if (!(Match.test(it.name, String) && Match.test(it.type, String) && Match.test(it.pic, String) && Match.test(it.link, String) && Match.test(it.season, Number) &&
         Match.test(it.episode, Number) && Match.test(it.status, String) && Match.test(it.owner, String))) {
         return false;
     }
@@ -45,17 +45,15 @@ Serie.before.insert(function (userId, it) {
     var d = new Date();
     it.createdAt = it.createdAt || d.YYYYMMDDHHMMSS();
     it.updatedAt = d.YYYYMMDDHHMMSS();
+    return true;
 });
 
-Serie.before.update(function (userId, it) {
-    if (userId == it.owner) {
-        var d = new Date();
-        it.updatedAt = d.YYYYMMDDHHMMSS();
-    } else {
-        return false;
-    }
+Show.before.update(function (userId, it) {
+    var d = new Date();
+    it.updatedAt = d.YYYYMMDDHHMMSS();
+    return true;
 });
 
-Serie.before.remove(function (userId, it) {
+Show.before.remove(function (userId, it) {
     return userId == it.owner;
 });
