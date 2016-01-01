@@ -1,0 +1,30 @@
+<template name="mainLayout">
+    {{#if loggingIn}}
+
+        {{> loader}}
+
+    {{else}}
+
+        {{#if currentUser}}
+
+            {{ changeBackground }}
+            {{> header}}
+            {{> errors}}
+            <div class="container-full">
+                {{> yield}}
+            </div>
+            {{> footer}}
+
+        {{else}}
+            <div class="container-fluid">
+                <div class="row">
+                    <section class="col-md-12">
+                        <h1 class="page-header text-center white">My Super AnimeList</h1>
+                    </section>
+                </div>
+                {{> yield}}
+            </div>
+        {{/if}}
+    {{/if}}
+    {{> analytics}}
+</template>

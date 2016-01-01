@@ -1,0 +1,21 @@
+<template name="showsuggest">
+    <p class=""> &mdash; {{ name }}<span class="pull-right">({{ status }}) <em>{{ getOwner owner }}</em></span></p>
+</template>
+
+<template name="toTop">
+    {{> addItem .}}
+    <div class="container-fluid">
+        <div class="row">
+            <p>
+                <a class="btn btn-info col-xs-12 back2top" href="#" tabindex="-1" style="border-radius: 0;">Back to
+                    Top</a>
+            </p>
+        </div>
+    </div>
+</template>
+
+<template name="loader">
+    <p class="text-center lead" style="padding: 200px;">
+        Loading ...
+    </p>
+</template>

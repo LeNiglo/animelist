@@ -5,29 +5,22 @@ Session.setDefault('showFinished', false);
 Session.setDefault('searchQ', '');
 Session.set('reload', 0);
 
-Meteor.subscribe('myAnimes');
-Meteor.subscribe('mySeries');
-Meteor.subscribe('showNames');
-
 var showNames = [];
 
-Errors = new Meteor.Collection(null);
-errorid = 0;
-
-throwError = function (message, type) {
-    if (!message)
-        return false;
-    if (!type)
-        type = "danger";
-
-    ++errorid;
-    var errorsave = "error" + errorid;
-    Errors.insert({type: type, message: message, _id: errorsave});
-
-    Meteor.setTimeout(function () {
-        Errors.remove({_id: errorsave});
-    }, 3000);
-    return false;
+mySave = function ($glyph, id, setter) {
+    if ($glyph !== null)
+        $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
+    Show.update({_id: id}, {$set: setter}, function (err, res) {
+        if (err)
+            throwError(err, 'danger');
+        if (res > 0) {
+            if ($glyph !== null)
+                Meteor.setTimeout(function () {
+                    $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
+                }, 2000);
+        }
+        return res;
+    });
 };
 
 var substringMatcher = function (strs) {
@@ -48,23 +41,7 @@ var substringMatcher = function (strs) {
     };
 };
 
-mySave = function ($glyph, id, setter) {
-    if ($glyph !== null)
-        $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
-    Show.update({_id: id}, {$set: setter}, function (err, res) {
-        if (err)
-            throwError(err, 'danger');
-        if (res > 0) {
-            if ($glyph !== null)
-                Meteor.setTimeout(function () {
-                    $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
-                }, 2000);
-        }
-        return res;
-    });
-};
-
-Template.yield.rendered = function () {
+Template.home.rendered = function () {
     $cg_pic = $('#change_picture');
     $cg_link = $('#change_link');
     $md_imp_exp = $("#modal_import_export");
@@ -197,7 +174,7 @@ Template.yield.rendered = function () {
     Meteor.typeahead.inject();
 };
 
-Template.yield.events({
+Template.home.events({
     'click .hide-section': function (e) {
         e.preventDefault();
         var $this = $(e.target);
