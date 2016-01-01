@@ -1,5 +1,5 @@
 <template name="item">
-    <div class="item">
+    <div class="item" data-type="{{type}}">
         <div class="row">
             {{#if isDesktop}}
                 <div class="pull-left col-md-3">
@@ -25,6 +25,7 @@
                 </h2>
                 <form style="padding-top: 10px;">
                     <input type="hidden" name="id" value="{{_id}}"/>
+                    <input type="hidden" name="type" value="{{type}}"/>
 
                     <div class="col-xs-9">
                         <div class="row">
@@ -54,13 +55,13 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <a class="input-group-addon save" title="Save." tabindex="-1"><i
+                        <a class="input-group-addon save" title="Save" tabindex="-1"><i
                                 class="glyphicon glyphicon-save light-green"></i></a>
-                        <a class="input-group-addon change_link" title="Link." tabindex="-1"><i
+                        <a class="input-group-addon change_link" title="Link" tabindex="-1"><i
                                 class="glyphicon glyphicon-link purple"></i></a>
                         <a class="input-group-addon change_pic" title="Change Picture" tabindex="-1"><i
                                 class="glyphicon glyphicon-picture orange"></i></a>
-                        <a class="input-group-addon remove_item" title="Delete." tabindex="-1"><i
+                        <a class="input-group-addon remove_item" title="Delete" tabindex="-1"><i
                                 class="glyphicon glyphicon-remove red"></i></a>
                     </div>
                     <div class="col-xs-12">

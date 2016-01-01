@@ -1,31 +1,18 @@
-Meteor.publish('mylist', function () {
+Meteor.publish('myAnimes', function () {
     return [
+        Show.find({owner: this.userId, type: "anime"})
+    ];
+});
 
-        Anime.find({owner: this.userId}),
-        Serie.find({owner: this.userId})
-
+Meteor.publish('mySeries', function () {
+    return [
+        Show.find({owner: this.userId, type: "serie"})
     ];
 });
 
 Meteor.publish('showNames', function () {
-    var animes = Anime.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}}),
-        series = Serie.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}});
-
     return [
-
-        animes,
-        series,
+        Show.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}}),
         Meteor.users.find({}, {fields: {'username': 1, '_id': 1}})
-
     ];
-});
-
-Meteor.methods({
-    changeUserBackground: function(newPic) {
-        if (Meteor.userId()) {
-            return Meteor.users.update({_id: Meteor.userId()}, { $set:{"profile.background": newPic}});
-        } else {
-            return false;
-        }
-    }
 });
