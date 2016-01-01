@@ -280,6 +280,7 @@ Template.yield.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
+                            commentary: elem.commentary,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -295,6 +296,7 @@ Template.yield.events({
                     episode: elem.episode,
                     pic: elem.pic,
                     link: elem.link,
+                    commentary: elem.commentary,
                     owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });
@@ -313,6 +315,7 @@ Template.yield.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
+                            commentary: elem.commentary,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -328,6 +331,7 @@ Template.yield.events({
                     episode: elem.episode,
                     pic: elem.pic,
                     link: elem.link,
+                    commentary: elem.commentary,
                     owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });
