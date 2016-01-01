@@ -10,7 +10,7 @@
                 <h2 class="row less-page-header">
                     <div class="col-xs-9">
                         {{#if currentlyEditing}}
-                            <input type="text" tabindex="-1" class="edited-name" value="{{name}}" autofocus/>
+                            <input type="text" tabindex="-1" class="edited-name" value="{{name}}" autofocus autocomplete="off"/>
                         {{else}}
                             <strong class="editable-name">{{name}}</strong>
                         {{/if}}
