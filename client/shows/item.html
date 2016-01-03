@@ -10,7 +10,8 @@
                 <h2 class="row less-page-header">
                     <div class="col-xs-9">
                         {{#if currentlyEditing}}
-                            <input type="text" tabindex="-1" class="edited-name" value="{{name}}" autofocus autocomplete="off"/>
+                            <input type="text" tabindex="-1" class="edited-name" name="name" value="{{name}}" autofocus
+                                   autocomplete="off"/>
                         {{else}}
                             <strong class="editable-name">{{name}}</strong>
                         {{/if}}
@@ -55,8 +56,6 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <a class="input-group-addon save" title="Save" tabindex="-1"><i
-                                class="glyphicon glyphicon-save light-green"></i></a>
                         <a class="input-group-addon change_link" title="Link" tabindex="-1"><i
                                 class="glyphicon glyphicon-link purple"></i></a>
                         <a class="input-group-addon change_pic" title="Change Picture" tabindex="-1"><i
@@ -65,7 +64,10 @@
                                 class="glyphicon glyphicon-remove red"></i></a>
                     </div>
                     <div class="col-xs-12">
-                        <small><input type="text" tabindex="-1" class="show_commentary" value="{{commentary}}"/></small>
+                        <small>
+                            <input type="text" tabindex="-1" class="show_commentary" name="commentary"
+                                   value="{{commentary}}"/>
+                        </small>
                     </div>
                 </form>
             </div>

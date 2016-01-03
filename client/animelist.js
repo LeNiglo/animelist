@@ -48,18 +48,10 @@ var substringMatcher = function (strs) {
     };
 };
 
-mySave = function ($glyph, id, setter) {
-    if ($glyph !== null)
-        $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
-    Show.update({_id: id}, {$set: setter}, function (err, res) {
+mySave = function (id, update) {
+    Show.update({_id: id}, update, function (err, res) {
         if (err)
             throwError(err, 'danger');
-        if (res > 0) {
-            if ($glyph !== null)
-                Meteor.setTimeout(function () {
-                    $glyph.toggleClass('glyphicon-save glyphicon-saved').toggleClass('light-green green');
-                }, 2000);
-        }
         return res;
     });
 };
@@ -114,7 +106,7 @@ Template.yield.rendered = function () {
 
     window.addEventListener("keydown", function (e) {
         // arrow keys
-        if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        if ([38, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }, false);
@@ -190,9 +182,7 @@ Template.yield.rendered = function () {
         $header.transition({height: '130px'}, 250, 'ease');
     });
 
-    Meteor.setTimeout(function () {
-        Session.set('reload', 1);
-    }, 500);
+    Meteor.setTimeout(function () { Session.set('reload', 1); }, 2000);
 
     Meteor.typeahead.inject();
 };
@@ -202,9 +192,9 @@ Template.yield.events({
         e.preventDefault();
         var $this = $(e.target);
         var $list = $this.parent().parent().parent().next('ul');
-        Meteor.setTimeout(function () {
-            Session.set('reload', Session.get('reload') + 1);
-        }, 150);
+
+        Meteor.setTimeout(function () { Session.set('reload', Session.get('reload') + 1); }, 150);
+
         if ($list.is(":visible"))
             $list.slideUp(100);
         else
