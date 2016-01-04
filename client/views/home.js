@@ -170,8 +170,8 @@ Template.home.onRendered(function () {
         Session.set('reload', 1);
     }, 500);
 
-    Meteor.typeahead.inject();
     $search.focus();
+    Meteor.typeahead.inject();
 
     window.onbeforeunload = function () {
         var session = {

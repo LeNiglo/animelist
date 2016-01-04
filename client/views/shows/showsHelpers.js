@@ -2,12 +2,33 @@
  * Created by leniglo on 15/12/15.
  */
 
+Meteor.subscribe('showNames');
+
+var substringMatcher = function (strs) {
+    return function findMatches(q, cb) {
+        var matches, substrRegex;
+
+        matches = [];
+
+        substrRegex = new RegExp(q, 'i');
+
+        $.each(strs, function (i, str) {
+            if (substrRegex.test(str)) {
+                matches.push({value: str});
+            }
+        });
+
+        cb(matches);
+    };
+};
+
 
 Template.animes.helpers({
     number: function (st) {
         if (!st) {
             return Show.find({
-                type: 'anime',owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')}).count();
+                type: 'anime', owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')
+            }).count();
         } else {
             return Show.find({
                 type: 'anime',
@@ -22,7 +43,8 @@ Template.animes.helpers({
         filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
         if (!st) {
             return Show.find({
-                type: 'anime',owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')}, filter);
+                type: 'anime', owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')
+            }, filter);
         } else {
             return Show.find({
                 type: 'anime',
@@ -93,7 +115,7 @@ Template.addItem.helpers({
                 valueKey: 'name',
                 displayKey: 'name',
                 local: function () {
-                    return Show.find({type: "anime"}).fetch();
+                    return Show.find({type: 'anime'}).fetch();
                 },
                 template: 'showsuggest',
                 header: '<p><em class="tt-title">Animes</em></p>'
@@ -103,7 +125,7 @@ Template.addItem.helpers({
                 valueKey: 'name',
                 displayKey: 'name',
                 local: function () {
-                    return Show.find({type: "serie"}).fetch();
+                    return Show.find({type: 'serie'}).fetch();
                 },
                 template: 'showsuggest',
                 header: '<p><em class="tt-title">Series</em></p>'
