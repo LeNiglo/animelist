@@ -23,9 +23,7 @@ Built with [MeteorJS](http://meteor.com), it's very lightweight and fast.
 ## Basics Usage
 
 You can add a show , serie or anime, by simply filling the name !
-It will be added to your wishlist (what you have to see) or you can specify a state (Running, Waiting, To See, Finished) and where you are in the show (Season, Episode).
+It will be added to your wishlist (what you have to see) or you can specify a state (Running, Waiting, To See, Finished) and where you are in the show (Season, Episode). Multiple sorting and searching tools are included.
 You can setup your anime by choosing a custom picture and viewpoint from an external source.
 
 ![Here](http://puu.sh/mjFog.png)
-
-Multiple sorting and searching tools are included.
