@@ -1,18 +1,16 @@
 Meteor.publish('myAnimes', function () {
-    return [
-        Show.find({owner: this.userId, type: "anime"})
-    ];
+    return Show.find({owner: this.userId, type: "anime", active: true});
 });
 
 Meteor.publish('mySeries', function () {
-    return [
-        Show.find({owner: this.userId, type: "serie"})
-    ];
+    return Show.find({owner: this.userId, type: "serie", active: true});
 });
 
 Meteor.publish('showNames', function () {
+    var shows = Show.find({}, {fields: {name: 1, type: 1, status: 1, owner: 1}});
+
     return [
-        Show.find({}, {fields: {'name': 1, 'status': 1, 'owner': 1}}),
-        Meteor.users.find({}, {fields: {'username': 1, '_id': 1}})
+        shows,
+        Meteor.users.find({}, {fields: {username: 1, _id: 1}})
     ];
 });
