@@ -1,10 +1,8 @@
 Meteor.publish('myAnimes', function () {
-    console.log(this.userId);
     return Show.find({owner: this.userId, type: "anime", active: true});
 });
 
 Meteor.publish('mySeries', function () {
-    console.log(this.userId);
     return Show.find({owner: this.userId, type: "serie", active: true});
 });
 
