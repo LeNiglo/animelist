@@ -13,7 +13,6 @@ caching-compiler@1.0.0
 caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
-chuangbo:cookie@1.1.0
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.2
@@ -52,12 +51,9 @@ logging@1.0.8
 matb33:collection-hooks@0.8.1
 meteor@1.1.10
 meteor-base@1.0.1
-meteorhacks:fast-render@2.11.0
-meteorhacks:inject-data@1.4.1
 meteorhacks:kadira@2.26.3
 meteorhacks:kadira-debug@1.3.3
 meteorhacks:meteorx@1.4.1
-meteorhacks:picker@1.0.3
 minifiers@1.1.7
 minimongo@1.0.10
 mobile-experience@1.0.1
