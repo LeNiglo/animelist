@@ -7,12 +7,12 @@
             {{#if show_cat}}
                 {{#each state}}
                     <h3 class="col-md-6 col-md-offset-3 text-center page-header {{#if isDesktop}}onHover{{/if}} {{id}}">
-                        <span class="pull-left">
+                        <span class="pull-left onHoverChild">
                             <a class="hide-section" tabindex="-1" style="text-decoration: none;">
                                 {{#if stateVisible .}}
-                                    <i class="glyphicon glyphicon-resize-small"></i>
+                                    <i class="fa fa-compress"></i>
                                 {{else}}
-                                    <i class="glyphicon glyphicon-resize-full"></i>
+                                    <i class="fa fa-expand"></i>
                                 {{/if}}
                             </a>
                         </span>
@@ -42,6 +42,6 @@
                 </ul>
             {{/if}}
         </div>
-        {{> toTop "anime"}}
+        {{> addItem "anime"}}
     </section>
 </template>

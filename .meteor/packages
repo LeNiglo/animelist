@@ -26,3 +26,5 @@ ejson
 spacebars
 check
 iron:router
+mrt:flash-messages
+fortawesome:fontawesome

@@ -9,5 +9,12 @@ Meteor.methods({
         } else {
             return false;
         }
+    },
+    changeUserSettings: function (opts) {
+        if (Meteor.userId()) {
+            return Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.settings": opts}});
+        } else {
+            return false;
+        }
     }
 });

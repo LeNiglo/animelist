@@ -1,5 +1,5 @@
 /**
- * Created by leniglo on 15/12/15.
+ * Created by leniglo on 04/01/16.
  */
 
 Template.header.events({
@@ -20,15 +20,13 @@ Template.header.events({
     'click #showCategories': function (e) {
         e.preventDefault();
         Session.set('showCat', (Session.get('showCat') !== true));
-        throwError('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"), "info");
-        $body.focus();
+        console.log('Show Categories changed to : ' + (Session.get('showCat') === true ? "true" : "false"));
     },
 
     'click #showFinished': function (e) {
         e.preventDefault();
         Session.set('showFinished', (Session.get('showFinished') !== true));
-        throwError('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"), "info");
-        $body.focus();
+        console.log('Show Finished changed to : ' + (Session.get('showFinished') === true ? "true" : "false"));
     },
 
     /*
@@ -39,23 +37,21 @@ Template.header.events({
         e.preventDefault();
         if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
             Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            throwError('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"), "info");
+            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
         } else {
             Session.set('sortBy', 'name');
-            throwError('Sort By changed to : Alpha', "info");
+            console.log('Sort By changed to : Alpha');
         }
-        $body.focus();
     },
     'click #sortDate': function (e) {
         e.preventDefault();
         if ($(e.target).hasClass('active') || $(e.target).parent().hasClass('active')) {
             Session.set('sortOrder', (Session.get('sortOrder') === 1 ? -1 : 1));
-            throwError('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"), "info");
+            console.log('Sort Order changed to : ' + (Session.get('sortOrder') === 1 ? "ASC" : "DESC"));
         } else {
             Session.set('sortBy', 'updatedAt');
-            throwError('Sort By changed to : Date', "info");
+            console.log('Sort By changed to : Date');
         }
-        $body.focus();
     }
 
 });

@@ -11,9 +11,9 @@ Template.login.events({
 
         Meteor.loginWithPassword(username, password, function (res) {
             if (res) {
-                throwError(res.reason, "danger");
+                FlashMessages.sendError(res.reason);
             } else {
-                throwError('Logged In. Have Fun using My Super Anime List !', "success");
+                FlashMessages.sendSuccess('Logged In. Have Fun using My Super Anime List !');
             }
         });
     }

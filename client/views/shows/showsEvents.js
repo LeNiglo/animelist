@@ -38,8 +38,8 @@ Template.item.events({
 
         $cg_pic.find('input[name="_id"]').val(this._id);
         $cg_pic.find('input[name="pic"]').val(this.pic);
-        $cg_pic.show(500);
-        $cg_pic.find('input[name="pic"]').focus().select();
+        $cg_pic.modal('show');
+        $cg_pic.find('input[name="pic"]').select();
     },
     'click .change_link': function (e) {
         e.preventDefault();
@@ -47,8 +47,8 @@ Template.item.events({
 
         $cg_link.find('input[name="_id"]').val(this._id);
         $cg_link.find('input[name="link"]').val(this.link);
-        $cg_link.show(500);
-        $cg_link.find('input[name="link"]').focus().select();
+        $cg_link.modal('show');
+        $cg_link.find('input[name="link"]').select();
     },
     'click .add_season': function (e) {
         e.preventDefault();

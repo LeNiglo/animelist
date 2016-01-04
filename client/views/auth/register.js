@@ -13,7 +13,7 @@ Template.register.events({
         var email = $('#email').val();
 
         if (password !== password2) {
-            throwError("Passwords must match.", "warning", 5000);
+            FlashMessages.sendWarning("Passwords must match.");
             $('#password2').addClass('has-warning').val('').focus();
         }
 
@@ -24,6 +24,8 @@ Template.register.events({
             profile: {
                 name: username
             }
+        }, function (err) {
+            FlashMessages.sendError(err, {autoHide: false});
         });
 
         return false;

@@ -7,22 +7,34 @@
 
         {{#if currentUser}}
 
-            {{ changeBackground }}
             {{> header}}
-            {{> errors}}
+            <div id="errors">
+                {{> flashMessages}}
+            </div>
             <div class="container-full">
                 {{> yield}}
             </div>
             {{> footer}}
 
         {{else}}
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
-                    <section class="col-md-12">
-                        <h1 class="page-header text-center white">My Super AnimeList</h1>
-                    </section>
+                    <div class="col-md-12">
+                        <div id="errors">
+                            {{> flashMessages}}
+                        </div>
+                    </div>
                 </div>
-                {{> yield}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header text-center white">My Super AnimeList</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{> yield}}
+                    </div>
+                </div>
             </div>
         {{/if}}
     {{/if}}
