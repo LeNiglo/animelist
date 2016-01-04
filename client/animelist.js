@@ -41,7 +41,8 @@ var substringMatcher = function (strs) {
     };
 };
 
-Template.home.rendered = function () {
+
+Template.yield.rendered = function () {
     $cg_pic = $('#change_picture');
     $cg_link = $('#change_link');
     $md_imp_exp = $("#modal_import_export");
@@ -91,7 +92,7 @@ Template.home.rendered = function () {
 
     window.addEventListener("keydown", function (e) {
         // arrow keys
-        if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        if ([38, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }, false);
@@ -167,9 +168,7 @@ Template.home.rendered = function () {
         $header.transition({height: '130px'}, 250, 'ease');
     });
 
-    Meteor.setTimeout(function () {
-        Session.set('reload', 1);
-    }, 500);
+    Meteor.setTimeout(function () { Session.set('reload', 1); }, 2000);
 
     Meteor.typeahead.inject();
 };
@@ -179,9 +178,9 @@ Template.home.events({
         e.preventDefault();
         var $this = $(e.target);
         var $list = $this.parent().parent().parent().next('ul');
-        Meteor.setTimeout(function () {
-            Session.set('reload', Session.get('reload') + 1);
-        }, 150);
+
+        Meteor.setTimeout(function () { Session.set('reload', Session.get('reload') + 1); }, 150);
+
         if ($list.is(":visible"))
             $list.slideUp(100);
         else
@@ -257,6 +256,7 @@ Template.home.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
+                            commentary: elem.commentary,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -272,6 +272,7 @@ Template.home.events({
                     episode: elem.episode,
                     pic: elem.pic,
                     link: elem.link,
+                    commentary: elem.commentary,
                     owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });
@@ -290,6 +291,7 @@ Template.home.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
+                            commentary: elem.commentary,
                             owner: Meteor.userId()()
                         }
                     }, function () {
@@ -305,6 +307,7 @@ Template.home.events({
                     episode: elem.episode,
                     pic: elem.pic,
                     link: elem.link,
+                    commentary: elem.commentary,
                     owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });

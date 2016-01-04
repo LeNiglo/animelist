@@ -145,6 +145,7 @@ footer {
 
 a {
   color: @base !important;
+  outline: 0 !important;
 
   &:hover {
     color: darken(@base, 15%) !important;
@@ -153,6 +154,15 @@ a {
 
 a.back2top {
   color: white;
+}
+
+a.hide-section {
+  cursor: pointer;
+}
+
+a.item-title {
+  color: @base;
+  text-decoration: none;
 }
 
 .show_commentary {
@@ -171,11 +181,6 @@ input.edited-name {
   color: #111;
   border-bottom: 3px solid @base;
   font-style: italic;
-}
-
-a.item-title {
-  color: @base;
-  text-decoration: none;
 }
 
 .item {

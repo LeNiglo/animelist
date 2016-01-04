@@ -25,92 +25,54 @@ Template.addItem.events({
 });
 
 Template.item.events({
+    // TWO WAY DATA-BINDING
+    'change input, change select': function (e) {
+        var $this = $(e.target);
+
+        var set = {};
+        set[$this.prop("name")] = $this.val();
+        Show.update({_id: this._id}, {$set: set});
+    },
     'click .change_pic': function (e) {
         e.preventDefault();
-        var $form = $(e.target);
-        var _id = $form.parents('form').find('input[name="id"]').val();
-        $cg_pic.find('input[name="_id"]').val(_id);
-        $cg_pic.find('input[name="pic"]').val('');
+
+        $cg_pic.find('input[name="_id"]').val(this._id);
+        $cg_pic.find('input[name="pic"]').val(this.pic);
         $cg_pic.show(500);
-        $cg_pic.find('input[name="pic"]').focus();
-    },
-    'change .show_commentary': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-        var id = $form.parent().parent().parent().find('input[name="id"]').val();
-        var commentary = $form.val();
-
-        var $glyph = $form.parent().parent().parent().find('.glyphicon-save');
-        mySave($glyph, id, {commentary: commentary});
-    },
-    'click .save': function (e) {
-        e.preventDefault();
-        var $form = $(e.target).closest('form');
-
-        var obj = {};
-        obj._id = $form.find('input[name="id"]').val();
-        obj.status = $form.find('select[name="status"]').val();
-        obj.season = $form.find('input[name="season"]').val();
-        obj.episode = $form.find('input[name="episode"]').val();
-
-        var $glyph = $form.find('.glyphicon-save');
-        if (e.clientX && e.clientY) {
-            throwError("clientX : " + e.clientX + ", clientY" + e.clientY, "warning");
-            return false;
-        }
-        mySave($glyph, obj._id, {
-            status: obj.status,
-            season: obj.season,
-            episode: obj.episode
-        });
-    },
-    'click .add_season': function (e) {
-        e.preventDefault();
-        var $form = $(e.target).closest('form');
-        var $input = $form.find('input[name="season"]');
-
-        $input.val(1 + parseInt($input.val()));
-        $form.find('.save')[0].click();
-        return false;
-    },
-    'click .add_episode': function (e) {
-        e.preventDefault();
-        var $form = $(e.target).closest('form');
-        var $input = $form.find('input[name="episode"]');
-
-        $input.val(1 + parseInt($input.val()));
-        $form.find('.save')[0].click();
-        return false;
-    },
-    'click .remove_item': function (e) {
-        e.preventDefault();
-        var name = $(e.target).parents('.item').find('big').text();
-        var id = $(e.target).parents('form').find('input[name="id"]').val();
-
-        var r = confirm("Are you sure you want to remove " + name + " from your " + collec + " list ?");
-        if (r === true) {
-            Show.remove({_id: id}, function () {
-            });
-        }
+        $cg_pic.find('input[name="pic"]').focus().select();
     },
     'click .change_link': function (e) {
         e.preventDefault();
         var $form = $(e.target);
-        var _id = $form.parents('form').find('input[name="id"]').val();
-        $cg_link.find('input[name="_id"]').val(_id);
-        $cg_link.find('input[name="link"]').val('');
-        $cg_link.show(500);
-        $cg_link.find('input[name="link"]').focus();
-    },
-    'dblclick .editable-name': function (e, t) {
-        return Session.set("TargetedItem", t.data._id);
-    },
-    'change .edited-name, blur .edited-name': function (e) {
-        var $this = $(e.target);
-        var newName = $this.val();
 
-        var $glyph = $this.closest('.item').find('.glyphicon-save');
-        mySave($glyph, this._id, {name: newName});
+        $cg_link.find('input[name="_id"]').val(this._id);
+        $cg_link.find('input[name="link"]').val(this.link);
+        $cg_link.show(500);
+        $cg_link.find('input[name="link"]').focus().select();
+    },
+    'click .add_season': function (e) {
+        e.preventDefault();
+
+        Show.update({_id: this._id}, {$inc: {season: 1}});
+        return false;
+    },
+    'click .add_episode': function (e) {
+        e.preventDefault();
+
+        Show.update({_id: this._id}, {$inc: {episode: 1}});
+        return false;
+    },
+    'click .remove_item': function (e) {
+        e.preventDefault();
+
+        if (confirm("Are you sure you want to remove " + this.name + " from your " + this.type + " list ?") === true) {
+            Show.remove({_id: this._id});
+        }
+    },
+    'dblclick .editable-name': function (e) {
+        return Session.set("TargetedItem", this._id);
+    },
+    'change .edited-name, blur .edited-name': function () {
         Session.set("TargetedItem", null);
     }
 });

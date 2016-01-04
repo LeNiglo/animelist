@@ -13,9 +13,7 @@ UI.registerHelper('showFinished', function (st) {
     }
 });
 
-UI.registerHelper('state', function () {
-    return status_array;
-});
+UI.registerHelper('state', function () { return status_array; });
 
 UI.registerHelper('glyphicon', function (status) {
     if (status === status_array[2].st)
@@ -38,12 +36,7 @@ UI.registerHelper('select_status', function (status) {
     return str;
 });
 
-UI.registerHelper('same', function (v1, v2) {
-    if (v1 === v2)
-        return true;
-    else
-        return false;
-});
+UI.registerHelper('same', function (v1, v2) { return v1 === v2; });
 
 UI.registerHelper('show_cat', function () {
     return (Session.get('showCat') ? 'active' : '');
