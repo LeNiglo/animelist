@@ -22,6 +22,10 @@ Show.before.insert(function (userId, it) {
         return false;
     }
 
+    if (!it.type || it.type === '') {
+        return false;
+    }
+
     if (it.name === '') {
         return false;
     }
@@ -29,6 +33,7 @@ Show.before.insert(function (userId, it) {
     it.pic = it.pic ? it.pic : '/img/noPic.png';
     it.link = it.link ? it.link : '';
     it.owner = it.owner == userId ? it.owner : userId;
+    it.active = true;
 
     try {
         it.season = (it.season === '' ? 0 : parseInt(it.season));
@@ -50,10 +55,15 @@ Show.before.insert(function (userId, it) {
 
 Show.before.update(function (userId, it) {
     var d = new Date();
+    it.active = true;
     it.updatedAt = d.YYYYMMDDHHMMSS();
     return true;
 });
 
 Show.before.remove(function (userId, it) {
-    return userId == it.owner;
+    if (userId == it.owner) {
+        it.active = false;
+        it.updatedAt = d.YYYYMMDDHHMMSS();
+    }
+    return false;
 });

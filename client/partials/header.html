@@ -7,31 +7,30 @@
 						<ul class="sortBy nav navbar-nav navbar-right">
                             <li>
                                 <a id="go2new" tabindex="-1" title="Create New" href="#" class="">
-                                    <i class="glyphicon glyphicon-certificate"></i>
+                                    <i class="fa fa-plus-square-o"></i>
+                                </a>
+                            </li>
+                           <li>
+                                <a id="showCategories" tabindex="-1" title="Sort by Category" href="#"
+                                   class="{{show_cat}}">
+                                    <i class="fa fa-list-alt"></i>
                                 </a>
                             </li>
                             <li>
-                                <a id="back2top" tabindex="-1" title="Back to Top" href="#" class="">
-                                    <i class="glyphicon glyphicon-arrow-up"></i>
+                                <a id="showFinished" tabindex="-1" title="Show Finished ones" href="#"
+                                   class="{{show_finished}}">
+                                    <i class="fa fa-check-square-o"></i>
                                 </a>
                             </li>
                             <li>
-                                <a id="showCategories" tabindex="-1" title="Sort by Category" href="#" class="{{show_cat}}">
-                                    <i class="glyphicon glyphicon-sort-by-attributes"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a id="showFinished" tabindex="-1" title="Show Finished ones" href="#" class="{{show_finished}}">
-                                    <i class="glyphicon glyphicon-ok"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a id="sortAlpha" tabindex="-1" title="Sort by Alpha" href="#" class="{{sort_alpha "class"}}">
+                                <a id="sortAlpha" tabindex="-1" title="Sort by Alpha" href="#"
+                                   class="{{sort_alpha "class"}}">
                                     {{{sort_alpha "glyph"}}}
                                 </a>
                             </li>
                             <li>
-                                <a id="sortDate" tabindex="-1" title="Sort by Date" href="#" class="{{sort_date "class"}}">
+                                <a id="sortDate" tabindex="-1" title="Sort by Date" href="#"
+                                   class="{{sort_date "class"}}">
                                     {{{sort_date "glyph"}}}
                                 </a>
                             </li>
@@ -42,11 +41,7 @@
                         </ul>
 					</span>
 					<span id="site-title">
-                        {{#if isDesktop}}
-                            <span class="hidden-xs hidden-sm">My Super Anime List</span> ({{ currentUser.username }})
-                        {{else}}
-                            {{ currentUser.username }} #MSAL
-                        {{/if}}
+                        Hi, <em>{{ currentUser.username }}</em> !
                     </span>
 
                     <div class="col-md-4" id="navigation-affix" style="margin-top: -19px;">

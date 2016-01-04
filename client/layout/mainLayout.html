@@ -1,0 +1,42 @@
+<template name="mainLayout">
+    {{#if loggingIn}}
+
+        {{> loader}}
+
+    {{else}}
+
+        {{#if currentUser}}
+
+            {{> header}}
+            <div id="errors">
+                {{> flashMessages}}
+            </div>
+            <div class="container-full">
+                {{> yield}}
+            </div>
+            {{> footer}}
+
+        {{else}}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="errors">
+                            {{> flashMessages}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header text-center white">My Super AnimeList</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{> yield}}
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    {{/if}}
+    {{> analytics}}
+</template>

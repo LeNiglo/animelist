@@ -2,11 +2,12 @@
 .idea
 
 ## No need to include dependencies
-.meteor/local
-.meteor/meteorite
-node_mobules
-bower_components
+/.meteor/local
+/.meteor/meteorite
+/node_mobules
+/bower_components
+/packages
 
 ## Secret files
-server/users.js
-server/kadira.js
+/private
+/server/kadira.js

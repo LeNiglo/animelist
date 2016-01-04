@@ -9,18 +9,30 @@ html {
 }
 
 body {
-  padding: 130px 0 0 0;
+  padding: 130px 0 0 0 !important;
   margin: 0;
   width: 100%;
   height: 100%;
   font-family: Ubuntu, 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif !important;
-  background: #222 url("/img/back.png") no-repeat fixed center;
-  background-size: cover;
+
+  background: #444 url("/img/pattern.png");
+
+  &.animelist {
+    background: #222 url("/img/back.png") no-repeat fixed center;
+    background-size: cover;
+  }
+}
+
+.container-full {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 section#animes {
   background-size: cover;
   background: rgba(221, 221, 221, 0.85) no-repeat center;
+  border-bottom: 5px solid @base;
   .show_commentary {
     border-bottom: 1px #ccc solid;
   }
@@ -42,12 +54,16 @@ header {
   top: 0;
   left: 0;
   right: 0;
+
+  -webkit-transition: height 250ms;
+  -moz-transition: height 250ms;
+  -ms-transition: height 250ms;
+  -o-transition: height 250ms;
+  transition: height 250ms;
+
   &.affix {
     height: 75px;
     overflow: hidden;
-    #back2top {
-      display: inline-block;
-    }
     #go2new {
       display: inline-block;
     }
@@ -64,9 +80,6 @@ header {
   &.affix-top {
     height: 130px;
     overflow: visible;
-    #back2top {
-      display: none;
-    }
     #go2new {
       display: none;
     }
@@ -114,50 +127,58 @@ header {
     height: 48px;
     border-radius: 0;
   }
+
+  #site-title {
+    font-weight: 300;
+  }
 }
 
 #errors {
   left: 10%;
   right: 10%;
-  margin: auto;
+  margin: 40px auto;
   position: fixed;
   z-index: 900;
-  width: 500px;
-}
-
-.error {
-  width: 100%;
-  position: relative;
-  margin-bottom: 0px;
-  margin-top: 7px;
   text-align: center;
 }
 
+#loader {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 800;
+  display: table;
+
+  .content {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
 footer {
+  padding-top: 15px;
   border-top: 5px solid @base;
   background-color: white;
 }
 
 a {
-  color: @base !important;
+  color: @base;
   outline: 0 !important;
+  text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     color: darken(@base, 15%) !important;
   }
-}
-
-a.back2top {
-  color: white;
-}
-
-a.hide-section {
-  cursor: pointer;
-}
-
-a.item-title {
-  color: @base;
-  text-decoration: none;
 }
 
 .show_commentary {
@@ -221,20 +242,41 @@ input.edited-name {
 }
 
 .grey {
-  color: darkgrey !important;
+  color: #555 !important;
+}
+
+
+@media (min-width: 768px) {
+  .spacer {
+    height: 30px;
+  }
+}
+
+@media (min-width: 992px) {
+  .spacer {
+    height: 75px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .spacer {
+    height: 100px;
+  }
 }
 
 .spacer {
-  height: 10px;
+  display: block;
+  content: "";
+  background-color: transparent !important;
   width: 100%;
 }
 
 .onHover {
-  .pull-left {
+  .onHoverChild {
     visibility: hidden;
   }
   &:hover {
-    .pull-left {
+    .onHoverChild {
       visibility: visible;
     }
   }
