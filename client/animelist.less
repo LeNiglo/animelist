@@ -23,6 +23,16 @@ body {
   }
 }
 
+::-moz-selection {
+  background: @secondary;
+  text-shadow: 1px 2px 1px darken(@secondary, 20%);
+}
+
+::selection {
+  background: @secondary;
+  text-shadow: 1px 2px 1px darken(@secondary, 20%);
+}
+
 .container-full {
   width: 100%;
   margin: 0;
@@ -244,7 +254,6 @@ input.edited-name {
 .grey {
   color: #555 !important;
 }
-
 
 @media (min-width: 768px) {
   .spacer {

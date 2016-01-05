@@ -7,10 +7,8 @@ Meteor.publish('mySeries', function () {
 });
 
 Meteor.publish('showNames', function () {
-    var shows = Show.find({}, {fields: {name: 1, type: 1, status: 1, owner: 1}});
-
     return [
-        shows,
+        Show.find({active: true}, {fields: {name: 1, type: 1, status: 1, owner: 1}}),
         Meteor.users.find({}, {fields: {username: 1, _id: 1}})
     ];
 });

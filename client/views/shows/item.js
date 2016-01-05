@@ -2,30 +2,8 @@
  * Created by leniglo on 15/12/15.
  */
 
-Template.addItem.events({
-    'submit .addItem': function (e) {
-        e.preventDefault();
-        var $form = $(e.target);
-
-        var obj = {};
-        obj.name = $form.find('input[name="name"]').val();
-        obj.status = $form.find('select[name="status"]').val();
-        obj.season = $form.find('input[name="season"]').val();
-        obj.episode = $form.find('input[name="episode"]').val();
-        obj.type = $form.data('type');
-        obj.owner = Meteor.userId();
-
-        Show.insert(obj, function (err, res) {
-            console.log(obj, err, res);
-            if (!err && res) {
-                $form.trigger('reset');
-            }
-        });
-    }
-});
-
 Template.item.events({
-    // TWO WAY DATA-BINDING
+    // TWO WAY DATA-BINDING, PURE JS SKILLS :p
     'change input, change select': function (e) {
         var $this = $(e.target);
 
@@ -74,5 +52,15 @@ Template.item.events({
     },
     'change .edited-name, blur .edited-name': function () {
         Session.set("TargetedItem", null);
+    }
+});
+
+Template.item.helpers({
+    currentlyEditing: function () {
+        return Session.get("TargetedItem") && Session.get("TargetedItem") === this._id;
+    },
+    validLink: function () {
+        var links = [undefined, null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
+        return (links.indexOf(this.link) === -1);
     }
 });

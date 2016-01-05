@@ -53,17 +53,16 @@ Show.before.insert(function (userId, it) {
     return true;
 });
 
-Show.before.update(function (userId, it) {
+Show.before.update(function (userId, it, fieldNames, modifier, options) {
     var d = new Date();
-    it.active = true;
-    it.updatedAt = d.YYYYMMDDHHMMSS();
+    modifier.$set = modifier.$set || {};
+    modifier.$set.updatedAt = d.YYYYMMDDHHMMSS();
     return true;
 });
 
 Show.before.remove(function (userId, it) {
     if (userId == it.owner) {
-        it.active = false;
-        it.updatedAt = d.YYYYMMDDHHMMSS();
+        Show.update({_id: it._id}, {$set: {active: false}});
     }
     return false;
 });
