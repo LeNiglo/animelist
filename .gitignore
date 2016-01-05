@@ -11,3 +11,6 @@
 ## Secret files
 /private
 /server/kadira.js
+
+## Conflicts with production
+/.meteor/versions
