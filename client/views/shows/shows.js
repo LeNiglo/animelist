@@ -2,36 +2,19 @@
  * Created by leniglo on 15/12/15.
  */
 
-Meteor.subscribe('showNames');
-
-var substringMatcher = function (strs) {
-    return function findMatches(q, cb) {
-        var matches, substrRegex;
-
-        matches = [];
-
-        substrRegex = new RegExp(q, 'i');
-
-        $.each(strs, function (i, str) {
-            if (substrRegex.test(str)) {
-                matches.push({value: str});
-            }
-        });
-
-        cb(matches);
-    };
-};
-
-
 Template.animes.helpers({
     number: function (st) {
         if (!st) {
             return Show.find({
-                type: 'anime', owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')
+                type: 'anime',
+                active: true,
+                owner: Meteor.userId(),
+                name: new RegExp(Session.get('searchQ'), 'i')
             }).count();
         } else {
             return Show.find({
                 type: 'anime',
+                active: true,
                 owner: Meteor.userId(),
                 status: st,
                 name: new RegExp(Session.get('searchQ'), 'i')
@@ -43,11 +26,15 @@ Template.animes.helpers({
         filter.sort[Session.get('sortBy')] = Session.get('sortOrder');
         if (!st) {
             return Show.find({
-                type: 'anime', owner: Meteor.userId(), name: new RegExp(Session.get('searchQ'), 'i')
+                type: 'anime',
+                active: true,
+                owner: Meteor.userId(),
+                name: new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         } else {
             return Show.find({
                 type: 'anime',
+                active: true,
                 owner: Meteor.userId(),
                 status: st,
                 name: new RegExp(Session.get('searchQ'), 'i')
@@ -68,12 +55,14 @@ Template.series.helpers({
         if (!st) {
             return Show.find({
                 type: 'serie',
+                active: true,
                 owner: Meteor.userId(),
                 name: new RegExp(Session.get('searchQ'), 'i')
             }).count();
         } else {
             return Show.find({
                 type: 'serie',
+                active: true,
                 'owner': Meteor.userId(),
                 'status': st,
                 'name': new RegExp(Session.get('searchQ'), 'i')
@@ -86,12 +75,14 @@ Template.series.helpers({
         if (!st) {
             return Show.find({
                 type: 'serie',
+                active: true,
                 owner: Meteor.userId(),
                 name: new RegExp(Session.get('searchQ'), 'i')
             }, filter);
         } else {
             return Show.find({
                 type: 'serie',
+                active: true,
                 owner: Meteor.userId(),
                 status: st,
                 name: new RegExp(Session.get('searchQ'), 'i')
@@ -104,48 +95,5 @@ Template.series.helpers({
         } else {
             return false;
         }
-    }
-});
-
-Template.addItem.helpers({
-    shownames: function () {
-        return [
-            {
-                name: 'animes',
-                valueKey: 'name',
-                displayKey: 'name',
-                local: function () {
-                    return Show.find({type: 'anime'}).fetch();
-                },
-                template: 'showsuggest',
-                header: '<p><em class="tt-title">Animes</em></p>'
-            },
-            {
-                name: 'series',
-                valueKey: 'name',
-                displayKey: 'name',
-                local: function () {
-                    return Show.find({type: 'serie'}).fetch();
-                },
-                template: 'showsuggest',
-                header: '<p><em class="tt-title">Series</em></p>'
-            }
-        ];
-    }
-});
-
-Template.showsuggest.helpers({
-    getOwner: function (ow) {
-        return Meteor.users.findOne({_id: ow}).username;
-    }
-});
-
-Template.item.helpers({
-    currentlyEditing: function () {
-        return Session.get("TargetedItem") && Session.get("TargetedItem") === this._id;
-    },
-    validLink: function () {
-        var links = [undefined, null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
-        return (links.indexOf(this.link) === -1);
     }
 });
