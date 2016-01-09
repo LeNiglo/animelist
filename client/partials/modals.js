@@ -62,7 +62,7 @@ Template.modals.events({
         var series = obj.series;
         var count = 0;
         animes.forEach(function (elem) {
-            var test = Show.findOne({name: elem.name});
+            var test = Show.findOne({$and: [{name: elem.name}, {owner: Meteor.userId()}]});
             if (test) {
                 if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
                     Show.update({name: elem.name}, {
@@ -97,7 +97,7 @@ Template.modals.events({
             }
         });
         series.forEach(function (elem) {
-            var test = Show.findOne({name: elem.name});
+            var test = Show.findOne({$and: [{name: elem.name}, {owner: Meteor.userId()}]});
             if (test) {
                 if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
                     Show.update({name: elem.name}, {
