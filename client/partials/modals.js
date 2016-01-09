@@ -62,7 +62,14 @@ Template.modals.events({
         var series = obj.series;
         var count = 0;
         animes.forEach(function (elem) {
-            var test = Show.findOne({$and: [{name: elem.name}, {owner: Meteor.userId()}]});
+            var test = Show.findOne({
+                $and: [
+                    {name: elem.name},
+                    {type: 'serie'},
+                    {active: true},
+                    {owner: Meteor.userId()}
+                ]
+            });
             if (test) {
                 if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
                     Show.update({name: elem.name}, {
@@ -74,7 +81,6 @@ Template.modals.events({
                             episode: elem.episode,
                             link: elem.link,
                             commentary: elem.commentary,
-                            owner: Meteor.userId()()
                         }
                     }, function () {
                         ++count;
@@ -90,14 +96,20 @@ Template.modals.events({
                     pic: elem.pic,
                     link: elem.link,
                     commentary: elem.commentary,
-                    owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });
                 ++count;
             }
         });
         series.forEach(function (elem) {
-            var test = Show.findOne({$and: [{name: elem.name}, {owner: Meteor.userId()}]});
+            var test = Show.findOne({
+                $and: [
+                    {name: elem.name},
+                    {type: 'serie'},
+                    {active: true},
+                    {owner: Meteor.userId()}
+                ]
+            });
             if (test) {
                 if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
                     Show.update({name: elem.name}, {
