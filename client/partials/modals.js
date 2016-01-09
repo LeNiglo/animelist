@@ -65,7 +65,7 @@ Template.modals.events({
             var test = Show.findOne({
                 $and: [
                     {name: elem.name},
-                    {type: 'serie'},
+                    {type: 'anime'},
                     {active: true},
                     {owner: Meteor.userId()}
                 ]
@@ -80,7 +80,7 @@ Template.modals.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
-                            commentary: elem.commentary,
+                            commentary: elem.commentary
                         }
                     }, function () {
                         ++count;
@@ -120,8 +120,7 @@ Template.modals.events({
                             season: elem.season,
                             episode: elem.episode,
                             link: elem.link,
-                            commentary: elem.commentary,
-                            owner: Meteor.userId()()
+                            commentary: elem.commentary
                         }
                     }, function () {
                         ++count;
@@ -137,7 +136,6 @@ Template.modals.events({
                     pic: elem.pic,
                     link: elem.link,
                     commentary: elem.commentary,
-                    owner: Meteor.userId(),
                     createdAt: elem.createdAt
                 });
                 ++count;
