@@ -11,11 +11,13 @@ Template.footer.events({
     },
     'click #export': function (e) {
         e.preventDefault();
-        var json = {
-            animes: Show.find({type: 'anime', owner: Meteor.userId()}).fetch(),
-            series: Show.find({type: 'serie', owner: Meteor.userId()}).fetch()
-        };
-        $md_imp_exp.modal('show').find("textarea").val(JSON.stringify(json)).select();
+        Meteor.call('export', function (error, result) {
+            if (error) {
+                FlashMessages.sendAlert(error);
+            } else {
+                $md_imp_exp.modal('show').find("textarea").val(JSON.stringify(result)).select().focus();
+            }
+        });
     },
     'click #import': function (e) {
         e.preventDefault();

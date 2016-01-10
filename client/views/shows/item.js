@@ -8,7 +8,7 @@ Template.item.events({
         var $this = $(e.target);
 
         var set = {};
-        set[$this.prop("name")] = $this.val();
+        set[$this.prop("name")] = $this.prop("type") === "number" ? parseInt($this.val()) : $this.val();
         Show.update({_id: this._id}, {$set: set});
     },
     'click .change_pic': function (e) {
@@ -21,7 +21,6 @@ Template.item.events({
     },
     'click .change_link': function (e) {
         e.preventDefault();
-        var $form = $(e.target);
 
         $cg_link.find('input[name="_id"]').val(this._id);
         $cg_link.find('input[name="link"]').val(this.link);

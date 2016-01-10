@@ -36,10 +36,7 @@ Template.addItem.events({
         obj.owner = Meteor.userId();
 
         Show.insert(obj, function (err, res) {
-            console.log(obj, err, res);
-            if (!err && res) {
-                $form.trigger('reset');
-            }
+            if (!err && res) { $form.trigger('reset'); }
         });
     }
 });

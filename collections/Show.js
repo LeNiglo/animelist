@@ -42,8 +42,14 @@ Show.before.insert(function (userId, it) {
         return false;
     }
 
-    if (!(Match.test(it.name, String) && Match.test(it.type, String) && Match.test(it.pic, String) && Match.test(it.link, String) && Match.test(it.season, Number) &&
-        Match.test(it.episode, Number) && Match.test(it.status, String) && Match.test(it.owner, String))) {
+    if (!(Match.test(it.name, String) &&
+        Match.test(it.type, String) &&
+        Match.test(it.pic, String) &&
+        Match.test(it.link, String) &&
+        Match.test(it.season, Number) &&
+        Match.test(it.episode, Number) &&
+        Match.test(it.status, String) &&
+        Match.test(it.owner, String))) {
         return false;
     }
 

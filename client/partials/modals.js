@@ -50,98 +50,18 @@ Template.modals.events({
     },
     'click #import_json': function (event) {
         event.preventDefault();
+
         var json = $md_imp_exp.find("textarea").val();
         try {
             var obj = JSON.parse(json);
+            Meteor.call('import', obj, function (error, result) {
+                $md_imp_exp.modal('hide');
+                FlashMessages.sendSuccess("Imported " + result + " element(s).", {autoHide: false});
+            });
         } catch (error) {
             $("#modal_import_export").modal('hide');
             alert("Don't try to trick us !\nJSON isn't well formatted.\n" + error.toString());
             return false;
         }
-        var animes = obj.animes;
-        var series = obj.series;
-        var count = 0;
-        animes.forEach(function (elem) {
-            var test = Show.findOne({
-                $and: [
-                    {name: elem.name},
-                    {type: 'anime'},
-                    {active: true},
-                    {owner: Meteor.userId()}
-                ]
-            });
-            if (test) {
-                if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
-                    Show.update({name: elem.name}, {
-                        $set: {
-                            type: 'anime',
-                            pic: elem.pic,
-                            status: elem.status,
-                            season: elem.season,
-                            episode: elem.episode,
-                            link: elem.link,
-                            commentary: elem.commentary
-                        }
-                    }, function () {
-                        ++count;
-                    });
-                }
-            } else {
-                Show.insert({
-                    type: 'anime',
-                    name: elem.name,
-                    status: elem.status,
-                    season: elem.season,
-                    episode: elem.episode,
-                    pic: elem.pic,
-                    link: elem.link,
-                    commentary: elem.commentary,
-                    createdAt: elem.createdAt
-                });
-                ++count;
-            }
-        });
-        series.forEach(function (elem) {
-            var test = Show.findOne({
-                $and: [
-                    {name: elem.name},
-                    {type: 'serie'},
-                    {active: true},
-                    {owner: Meteor.userId()}
-                ]
-            });
-            if (test) {
-                if (test.updatedAt === null || elem.updatedAt > test.updatedAt) {
-                    Show.update({name: elem.name}, {
-                        $set: {
-                            type: 'serie',
-                            pic: elem.pic,
-                            status: elem.status,
-                            season: elem.season,
-                            episode: elem.episode,
-                            link: elem.link,
-                            commentary: elem.commentary
-                        }
-                    }, function () {
-                        ++count;
-                    });
-                }
-            } else {
-                Show.insert({
-                    type: 'serie',
-                    name: elem.name,
-                    status: elem.status,
-                    season: elem.season,
-                    episode: elem.episode,
-                    pic: elem.pic,
-                    link: elem.link,
-                    commentary: elem.commentary,
-                    createdAt: elem.createdAt
-                });
-                ++count;
-            }
-        });
-        $md_imp_exp.modal('hide');
-        FlashMessages.sendSuccess("Imported " + count + " elements.", {autoHide: false});
     }
 });
