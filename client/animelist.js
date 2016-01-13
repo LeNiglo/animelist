@@ -8,11 +8,6 @@ status_array = [
     {id: "finished", st: "Finished"}
 ];
 
-var selectOptionsStr = '';
-status_array.forEach(function (elem, index, array) {
-    selectOptionsStr += '<option value="' + elem.st + '" ' + (elem.st === status ? 'selected' : '') + '>' + elem.st + '</option>';
-});
-
 UI.registerHelper('showFinished', function (st) {
     if (st === status_array[3].st) {
         if (Session.get('showFinished') === false)
@@ -47,6 +42,10 @@ UI.registerHelper('glyphicon', function (status) {
 });
 
 UI.registerHelper('select_status', function (status) {
+    var selectOptionsStr = '';
+    status_array.forEach(function (elem, index, array) {
+        selectOptionsStr += '<option value="' + elem.st + '" ' + (elem.st === status ? 'selected' : '') + '>' + elem.st + '</option>';
+    });
     return selectOptionsStr;
 });
 
