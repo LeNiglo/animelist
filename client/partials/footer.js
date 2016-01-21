@@ -15,16 +15,16 @@ Template.footer.events({
             if (error) {
                 FlashMessages.sendAlert(error);
             } else {
-                $md_imp_exp.modal('show').find("textarea").val(JSON.stringify(result)).select().focus();
+                $md_imp_exp.modal('show').find("textarea").val(JSON.stringify(result));
             }
         });
     },
     'click #import': function (e) {
         e.preventDefault();
-        $md_imp_exp.modal('show').find("textarea").val("").focus();
+        $md_imp_exp.modal('show');
     },
     'click #changeBackground': function (e) {
         e.preventDefault();
-        $md_chg_back.modal('show').find("input").val("").focus();
+        $md_chg_back.modal('show');
     }
 });

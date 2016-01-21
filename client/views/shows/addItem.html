@@ -7,16 +7,17 @@
         <form class="form-horinzontal addItem" data-type="{{.}}" autocomplete="off">
             <div class="row" style="border-bottom: 1px solid #e1e1e1; padding-bottom: 7px; margin-bottom: 7px;">
                 <div class="col-xs-6">
-                    <input type="search" class="form-control typeahead" name="name" placeholder="Name" autocomplete="off"
+                    <input type="search" class="form-control typeahead" name="name" placeholder="Name"
+                           autocomplete="off"
                            spellcheck="off" data-sets="shownames" data-template="showsuggest" data-hint="true"
                            data-highlight="true" data-autoselect="true" data-value-key="name"/>
-                    <select class="form-control" tabindex="-1" name="status">
+                    <select class="form-control" name="status">
                         {{{select_status "To See"}}}
                     </select>
                 </div>
                 <div class="col-xs-6">
-                    <input type="number" tabindex="-1" class="form-control" name="season" placeholder="Season"/>
-                    <input type="number" tabindex="-1" class="form-control" name="episode" placeholder="Episode"/>
+                    <input type="number" class="form-control" name="season" placeholder="Season"/>
+                    <input type="number" class="form-control" name="episode" placeholder="Episode"/>
                 </div>
             </div>
             <div class="row" style="margin-bottom: 7px;">

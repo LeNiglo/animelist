@@ -57,6 +57,12 @@ Template.home.onRendered(function () {
         $('.modal').modal('hide');
     });
 
+    $('.modal').on('shown.bs.modal', function (e) {
+       var $this = $(this);
+
+        $this.find('input, select, textarea').focus().select();
+    });
+
     $('ul.nav-justified a').click(function (e) {
         e.preventDefault();
         var section = $(this).attr('href');
