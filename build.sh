@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-sudo meteor update
 git pull
 sudo meteor update
 sudo meteor build .
