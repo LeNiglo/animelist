@@ -2,8 +2,9 @@
     <div class="item" data-type="{{type}}">
         <div class="row">
             {{#if isDesktop}}
-                <div class="pull-left col-md-3">
-                    <img class="img-responsive hidden-xs hidden-sm hidden-print" src="{{pic}}" alt="{{name}}"/>
+                <div class="pull-left col-md-3 hidden-xs hidden-sm">
+                    <img class="img-responsive hidden-print" src="{{pic}}" alt="{{name}}"/>
+                    <p class="text-center text-primary"><small>Last update {{updatedAtHumanized}}</small></p>
                 </div>
             {{/if}}
             <div class="col-xs-12 col-md-9">

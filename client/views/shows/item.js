@@ -12,14 +12,7 @@ Template.item.events({
         Show.update({_id: this._id}, {$set: set}, function (err, count) {
             if (!err && count) {
                 if (window.location.href.indexOf("local") <= -1) {
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'Show',
-                        eventAction: 'Update',
-                        eventLabel: this.type,
-                        eventValue: this.name,
-                        nonInteraction: true
-                    });
+                    ga('send', 'event', 'Show', 'Update', this.type, this.name);
                 }
             }
         });
@@ -58,14 +51,7 @@ Template.item.events({
             Show.remove({_id: this._id}, function (err, count) {
                 if (!err && count) {
                     if (window.location.href.indexOf("local") <= -1) {
-                        ga('send', {
-                            hitType: 'event',
-                            eventCategory: 'Show',
-                            eventAction: 'Remove',
-                            eventLabel: obj.type,
-                            eventValue: obj.name,
-                            nonInteraction: true
-                        });
+                        ga('send', 'event', 'Show', 'Remove', obj.type, obj.name);
                     }
                 }
             });
@@ -84,7 +70,10 @@ Template.item.helpers({
         return Session.get("TargetedItem") && Session.get("TargetedItem") === this._id;
     },
     validLink: function () {
-        var links = [undefined, null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
-        return (links.indexOf(this.link) === -1);
+        var invalidLinks = [undefined, null, '', ' ', '#', '/', 'http://localhost:3000', 'http://animelist.lefrantguillaume.com', 'http://animelist.lefrantguillaume.com/', 'http://animelist.lefrantguillaume.com#', 'http://animelist.lefrantguillaume.com/#'];
+        return (invalidLinks.indexOf(this.link) === -1);
+    },
+    updatedAtHumanized: function () {
+        return moment(this.updatedAt, "YYYYMMDDHHmmss").fromNow();
     }
 });

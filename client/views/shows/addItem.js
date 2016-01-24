@@ -39,14 +39,7 @@ Template.addItem.events({
             if (!err && res) {
                 $form.trigger('reset');
                 if (window.location.href.indexOf("local") <= -1) {
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'Show',
-                        eventAction: 'Add',
-                        eventLabel: obj.type,
-                        eventValue: obj.name,
-                        nonInteraction: true
-                    });
+                    ga('send', 'event', 'Show', 'Insert', obj.type, obj.name);
                 }
             }
         });
