@@ -9,10 +9,11 @@ Template.item.events({
 
         var set = {};
         set[$this.prop("name")] = $this.prop("type") === "number" ? parseInt($this.val()) : $this.val();
+        var obj = this;
         Show.update({_id: this._id}, {$set: set}, function (err, count) {
             if (!err && count) {
                 if (window.location.href.indexOf("local") <= -1) {
-                    ga('send', 'event', 'Show', 'Update', this.type, this.name);
+                    ga('send', 'event', 'Show', 'Update', obj.type, obj.name);
                 }
             }
         });
@@ -74,6 +75,6 @@ Template.item.helpers({
         return (invalidLinks.indexOf(this.link) === -1);
     },
     updatedAtHumanized: function () {
-        return moment(this.updatedAt, "YYYYMMDDHHmmss").fromNow();
+        return moment.tz(this.updatedAt, 'YYYYMMDDHHmmss', 'Europe/London').fromNow();
     }
 });

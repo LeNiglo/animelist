@@ -30,3 +30,4 @@ mrt:flash-messages
 fortawesome:fontawesome
 gadicohen:sitemaps
 momentjs:moment
+mrt:moment-timezone
