@@ -36,7 +36,19 @@ Template.addItem.events({
         obj.owner = Meteor.userId();
 
         Show.insert(obj, function (err, res) {
-            if (!err && res) { $form.trigger('reset'); }
+            if (!err && res) {
+                $form.trigger('reset');
+                if (window.location.href.indexOf("local") <= -1) {
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'Show',
+                        eventAction: 'Add',
+                        eventLabel: obj.type,
+                        eventValue: obj.name,
+                        nonInteraction: true
+                    });
+                }
+            }
         });
     }
 });

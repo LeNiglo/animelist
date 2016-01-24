@@ -21,7 +21,7 @@ UI.registerHelper('state', function () {
     return status_array;
 });
 
-UI.registerHelper('glyphicon', function (status) {
+UI.registerHelper('statusIcon', function (status) {
     switch (status) {
         case status_array[0].st:
             return '<i class="fa fa-bolt purple"></i>';

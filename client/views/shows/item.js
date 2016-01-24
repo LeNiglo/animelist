@@ -9,7 +9,20 @@ Template.item.events({
 
         var set = {};
         set[$this.prop("name")] = $this.prop("type") === "number" ? parseInt($this.val()) : $this.val();
-        Show.update({_id: this._id}, {$set: set});
+        Show.update({_id: this._id}, {$set: set}, function (err, count) {
+            if (!err && count) {
+                if (window.location.href.indexOf("local") <= -1) {
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'Show',
+                        eventAction: 'Update',
+                        eventLabel: this.type,
+                        eventValue: this.name,
+                        nonInteraction: true
+                    });
+                }
+            }
+        });
     },
     'click .change_pic': function (e) {
         e.preventDefault();
@@ -41,7 +54,21 @@ Template.item.events({
         e.preventDefault();
 
         if (confirm("Are you sure you want to remove " + this.name + " from your " + this.type + " list ?") === true) {
-            Show.remove({_id: this._id});
+            var obj = this;
+            Show.remove({_id: this._id}, function (err, count) {
+                if (!err && count) {
+                    if (window.location.href.indexOf("local") <= -1) {
+                        ga('send', {
+                            hitType: 'event',
+                            eventCategory: 'Show',
+                            eventAction: 'Remove',
+                            eventLabel: obj.type,
+                            eventValue: obj.name,
+                            nonInteraction: true
+                        });
+                    }
+                }
+            });
         }
     },
     'dblclick .editable-name': function (e) {
