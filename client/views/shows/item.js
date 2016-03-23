@@ -13,7 +13,7 @@ Template.item.events({
         Show.update({_id: this._id}, {$set: set}, function (err, count) {
             if (!err && count) {
                 if (window.location.href.indexOf("local") <= -1) {
-                    ga('send', 'event', 'Show', 'Update', obj.type, obj.name);
+                    GAnalytics.event('Show', 'Update', obj.type, obj.name);
                 }
             }
         });
@@ -52,7 +52,7 @@ Template.item.events({
             Show.remove({_id: this._id}, function (err, count) {
                 if (!err && count) {
                     if (window.location.href.indexOf("local") <= -1) {
-                        ga('send', 'event', 'Show', 'Remove', obj.type, obj.name);
+                        GAnalytics.event('Show', 'Remove', obj.type, obj.name);
                     }
                 }
             });
