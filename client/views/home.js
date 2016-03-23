@@ -46,10 +46,10 @@ Template.home.onCreated(function () {
 
 
 Template.home.onRendered(function () {
-    $cg_pic = $('#change_picture');
-    $cg_link = $('#change_link');
+    $md_cg_pic = $('#modal_change_picture');
+    $md_cg_link = $('#modal_change_link');
     $md_imp_exp = $("#modal_import_export");
-    $md_chg_back = $("#modal_change_background");
+    $md_cg_back = $("#modal_change_background");
     $search = $("#search");
     $header = $("header");
 
