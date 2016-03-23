@@ -1,9 +1,5 @@
-Meteor.publish('myAnimes', function () {
-    return Show.find({owner: this.userId, type: "anime", active: true});
-});
-
-Meteor.publish('mySeries', function () {
-    return Show.find({owner: this.userId, type: "serie", active: true});
+Meteor.publish('myShows', function () {
+    return Show.find({owner: this.userId, active: true});
 });
 
 Meteor.publish('showNames', function () {
