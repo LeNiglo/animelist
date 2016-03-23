@@ -4,7 +4,7 @@
 
 ## Author
 
-LeNiglo (lefrantguillaume@gmail.com) @ http://lefrantguillaume.com
+[LeNiglo](https://github.com/LeNiglo) (lefrantguillaume@gmail.com) @ http://lefrantguillaume.com
 
 Project available @ http://animelist.lefrantguillaume.com
 
