@@ -25,6 +25,7 @@ Template.footer.events({
     },
     'click #changeBackground': function (e) {
         e.preventDefault();
-        $md_chg_back.modal('show');
+        $md_cg_back.find('input').val(Meteor.user().profile.background ? Meteor.user().profile.background  : '');
+        $md_cg_back.modal('show');
     }
 });

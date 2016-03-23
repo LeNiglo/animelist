@@ -21,16 +21,16 @@ Template.item.events({
     'click .change_pic': function (e) {
         e.preventDefault();
 
-        $cg_pic.find('input[name="_id"]').val(this._id);
-        $cg_pic.find('input[name="pic"]').val(this.pic);
-        $cg_pic.modal('show');
+        $md_cg_pic.find('input[name="_id"]').val(this._id);
+        $md_cg_pic.find('input[name="pic"]').val(this.pic);
+        $md_cg_pic.modal('show');
     },
     'click .change_link': function (e) {
         e.preventDefault();
 
-        $cg_link.find('input[name="_id"]').val(this._id);
-        $cg_link.find('input[name="link"]').val(this.link);
-        $cg_link.modal('show');
+        $md_cg_link.find('input[name="_id"]').val(this._id);
+        $md_cg_link.find('input[name="link"]').val(this.link);
+        $md_cg_link.modal('show');
     },
     'click .add_season': function (e) {
         e.preventDefault();

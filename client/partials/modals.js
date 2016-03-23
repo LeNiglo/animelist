@@ -3,53 +3,64 @@
  */
 
 Template.modals.events({
-    'click #change_picture_apply': function (e) {
+    'submit #form_change_picture': function (e) {
         e.preventDefault();
-        var id = $cg_pic.find('input[name="_id"]').val();
-        var picture = $cg_pic.find('input[name="pic"]').val();
+        e.stopPropagation();
+
+        var id = $md_cg_pic.find('input[name="_id"]').val();
+        var picture = $md_cg_pic.find('input[name="pic"]').val();
 
         Show.update({_id: id}, {$set: {pic: picture}}, function (err, res) {
             if (err)
                 alert(err);
             if (res > 0)
-                $cg_pic.modal('hide');
+                $md_cg_pic.modal('hide');
         });
     },
-    'click #change_link_apply': function (e) {
+    'submit #form_change_link': function (e) {
         e.preventDefault();
-        var id = $cg_link.find('input[name="_id"]').val();
-        var link = $cg_link.find('input[name="link"]').val();
+        e.stopPropagation();
+
+        var id = $md_cg_link.find('input[name="_id"]').val();
+        var link = $md_cg_link.find('input[name="link"]').val();
 
         Show.update({_id: id}, {$set: {link: link}}, function (err, res) {
             if (err)
                 alert(err);
             if (res > 0)
-                $cg_link.modal('hide');
+                $md_cg_link.modal('hide');
         });
     },
-    'click #confirmChangeBackground': function (e) {
+    'submit #form_change_background': function (e) {
         e.preventDefault();
-        var input = $md_chg_back.find('input').val();
+        e.stopPropagation();
+
+        var input = $md_cg_back.find('input').val();
         if (Meteor.userId() != null) {
             Meteor.call('changeUserBackground', input, function (error, result) {
                 if (result) {
-                    $md_chg_back.modal('hide');
+                    $body.css('background-image', 'url(' + Meteor.user().profile.background + ')');
+                    $md_cg_back.modal('hide');
                 }
             });
         }
     },
-    'click #resetChangeBackground': function (e) {
+    'click #reset_change_background': function (e) {
         e.preventDefault();
+        e.stopPropagation();
+
         if (Meteor.userId()) {
             Meteor.call('changeUserBackground', null, function (error, result) {
                 if (result) {
-                    $md_chg_back.modal('hide');
+                    $body.css('background-image', '');
+                    $md_cg_back.modal('hide');
                 }
             });
         }
     },
-    'click #import_json': function (event) {
-        event.preventDefault();
+    'submit #form_import_export': function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
         var json = $md_imp_exp.find("textarea").val();
         try {
