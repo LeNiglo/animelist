@@ -13,4 +13,5 @@
 /server/kadira.js
 
 ## Conflicts with production
+/settings.json
 /.meteor/versions
