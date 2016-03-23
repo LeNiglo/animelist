@@ -69,7 +69,8 @@ if (Meteor.isServer) {
 
     Show.before.remove(function (userId, it) {
         if (userId == it.owner) {
-            Show.update({_id: it._id}, {$set: {active: false}});
+            var d = new Date();
+            Show.update({_id: it._id}, {$set: {active: false, updatedAt: d.YYYYMMDDHHMMSS()}});
         }
         return false;
     });

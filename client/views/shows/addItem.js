@@ -39,7 +39,7 @@ Template.addItem.events({
             if (!err && res) {
                 $form.trigger('reset');
                 if (window.location.href.indexOf("local") <= -1) {
-                    ga('send', 'event', 'Show', 'Insert', obj.type, obj.name);
+                    GAnalytics.event('Show', 'Insert', obj.type, obj.name);
                 }
             }
         });
