@@ -3,6 +3,9 @@
  */
 
 Meteor.methods({
+    ping: function () {
+        return this.userId;
+    },
     changeUserBackground: function (newPic) {
         if (Meteor.userId()) {
             return Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.background": newPic}});
