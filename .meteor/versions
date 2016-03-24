@@ -13,6 +13,7 @@ caching-compiler@1.0.0
 caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
+datariot:ganalytics@0.2.1
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.2
@@ -82,6 +83,12 @@ sergeyt:typeahead@0.11.1_8
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
+simple:authenticate-user-by-token@1.0.1
+simple:json-routes@2.1.0
+simple:rest@1.1.1
+simple:rest-accounts-password@1.1.2
+simple:rest-bearer-token-parser@1.0.1
+simple:rest-json-error-handler@1.0.1
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
