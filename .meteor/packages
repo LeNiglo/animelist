@@ -11,13 +11,11 @@ mystor:device-detection
 less
 sergeyt:typeahead
 meteorhacks:kadira-debug
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
 blaze-html-templates
 session
-jquery
 tracker
 logging
 reload
@@ -34,3 +32,7 @@ mrt:moment-timezone
 simple:rest
 simple:rest-accounts-password
 datariot:ganalytics
+standard-minifier-css
+standard-minifier-js
+jquery
+matb33:bootstrap-full

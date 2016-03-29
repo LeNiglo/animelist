@@ -23,11 +23,6 @@ Template.home.onCreated(function () {
     $body = $("body");
     var me = Meteor.user();
 
-    Session.setDefault('sortBy', 'name');
-    Session.setDefault('sortOrder', 1);
-    Session.setDefault('showCat', true);
-    Session.setDefault('showFinished', false);
-
     $body.addClass('animelist');
     if (me != null) {
         if (me.profile.background)
@@ -58,7 +53,7 @@ Template.home.onRendered(function () {
     });
 
     $('.modal').on('shown.bs.modal', function (e) {
-       var $this = $(this);
+        var $this = $(this);
 
         $this.find('input, select, textarea').focus().select();
     });

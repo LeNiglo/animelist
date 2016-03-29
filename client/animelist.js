@@ -1,5 +1,11 @@
-Session.setDefault('searchQ', '');
-Session.set('reload', 0);
+Meteor.startup(function () {
+    Session.setDefault('searchQ', '');
+    Session.set('reload', 0);
+    Session.setDefault('sortBy', 'name');
+    Session.setDefault('sortOrder', 1);
+    Session.setDefault('showCat', true);
+    Session.setDefault('showFinished', false);
+});
 
 status_array = [
     {id: "running", st: "Running"},
