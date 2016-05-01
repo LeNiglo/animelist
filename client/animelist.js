@@ -83,3 +83,11 @@ UI.registerHelper('sort_date', function (o) {
         return Session.get('sortOrder') === 1 ? '<i class="fa fa-sort-numeric-asc"></i>' : '<i class="fa fa-sort-numeric-desc"></i>';
     }
 });
+
+UI.registerHelper('proxyPic', function (pic) {
+    if (pic.startsWith('http')) {
+        return "https://www.lefrantguillaume.com/tools/picture-proxying?img=" + pic;
+    } else {
+        return pic;
+    }
+});
