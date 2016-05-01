@@ -26,7 +26,7 @@ Template.home.onCreated(function () {
     $body.addClass('animelist');
     if (me != null) {
         if (me.profile.background)
-            $body.css('background-image', 'url(' + me.profile.background + ')');
+            $body.css('background-image', 'url(https://www.lefrantguillaume.com/tools/picture-proxying?img=' + me.profile.background + ')');
         else
             $body.css('background-image', '');
 
