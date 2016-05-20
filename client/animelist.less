@@ -227,8 +227,21 @@ input.edited-name {
 }
 
 .item {
-  padding: 15px;
   margin: 15px 0;
+  height: 215px;
+
+  >.row {
+    height: 100%;
+
+    >.pull-left {
+      height: 100%;
+
+      >img.img-responsive {
+        max-height: 85%;
+        margin: auto;
+      }
+    }
+  }
 }
 
 .item .input-group-addon {
