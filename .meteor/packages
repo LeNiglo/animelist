@@ -4,25 +4,25 @@
 # but you can also edit it by hand.
 
 matb33:collection-hooks
-accounts-password
+accounts-password@1.2.12
 
 meteorhacks:kadira
 mystor:device-detection
-less
+less@2.7.4
 sergeyt:typeahead
 meteorhacks:kadira-debug
-meteor-base
-mobile-experience
-mongo
-blaze-html-templates
-session
-tracker
-logging
-reload
-random
-ejson
-spacebars
-check
+meteor-base@1.0.4
+mobile-experience@1.0.4
+mongo@1.1.10
+blaze-html-templates@1.0.4
+session@1.1.6
+tracker@1.1.0
+logging@1.1.14
+reload@1.1.10
+random@1.0.10
+ejson@1.0.12
+spacebars@1.0.12
+check@1.2.3
 iron:router
 mrt:flash-messages
 fortawesome:fontawesome
@@ -32,7 +32,7 @@ mrt:moment-timezone
 simple:rest
 simple:rest-accounts-password
 datariot:ganalytics
-standard-minifier-css
-standard-minifier-js
-jquery
+standard-minifier-css@1.1.8
+standard-minifier-js@1.1.8
+jquery@1.11.9
 matb33:bootstrap-full
