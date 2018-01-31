@@ -1,15 +1,17 @@
-#!/usr/bin/env sh
-rm .meteor/versions
-git pull
-sudo meteor update
-sudo meteor build .
-sudo mv animelist.tar.gz /opt/animelist/.
-cd /opt/animelist/
+#!/usr/bin/env bash
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Not running as root"
+    exit
+fi
+
+sudo meteor --allow-superuser build --server-only /home/animelist/.
+cd /home/animelist/
 sudo rm -rf bundle/
 sudo tar -xzf animelist.tar.gz
 sudo rm -f animelist.tar.gz
 cd bundle/programs/server/
-sudo npm install
-cd /opt/animelist
-sudo chown animelist -R /opt/animelist
-sudo service animelist restart
+sudo npm install --production
+sudo chown animelist:animelist -R /home/animelist
+sudo pm2 restart /home/leniglo/ecosystem.config.js --only animelist
+sudo pm2 show animelist
