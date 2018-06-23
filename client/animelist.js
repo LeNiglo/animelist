@@ -85,8 +85,8 @@ UI.registerHelper('sort_date', function (o) {
 });
 
 UI.registerHelper('proxyPic', function (pic) {
-    if (pic.startsWith('http')) {
-        return "https://www.lefrantguillaume.com/tools/picture-proxying?img=" + pic;
+    if (pic.startsWith('http://')) {
+        return "https://images.weserv.nl/?url=" + pic.replace(/(^\w+:|^)\/\//, '');
     } else {
         return pic;
     }
